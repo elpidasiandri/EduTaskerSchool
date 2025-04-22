@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">EduTasker</string>
+    <string name="select_your_role">Welcome! Choose Your Role</string>
+    <string name="professor">Professor</string>
+    <string name="student">Student</string>
+    <string name="sign_in">Sign In</string>
+    <string name="password">Password</string>
+    <string name="email">Email</string>
+    <string name="login">Login</string>
+    <string name="no_internet_connection">No internet connection</string>
+    <string name="incorrect_data">Something is incorrect</string>
+    <string name="something_went_wrong">Something went wrong. Please try again.</string>
+</resources>
