@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/professor_nav"
+    app:startDestination="@id/professorFragment">
+
+    <fragment
+        android:id="@+id/professorFragment"
+        android:name="com.example.edutasker.screens.professor.screens.ProfessorFragment"
+        android:label="ProfessorFragment" />
+</navigation>

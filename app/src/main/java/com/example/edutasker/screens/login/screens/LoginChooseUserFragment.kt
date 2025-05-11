@@ -14,10 +14,10 @@ import com.example.edutasker.R
 import com.example.edutasker.composable.login.LoginChooseUserComposable
 import com.example.edutasker.screens.login.viewModelState.LoginScreenViewModel
 import com.example.edutasker.screens.login.viewModelState.LoginUiEvents
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
 class LoginChooseUserFragment : Fragment() {
-    private val loginViewModel: LoginScreenViewModel by sharedViewModel()
+    private val loginViewModel: LoginScreenViewModel by activityViewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

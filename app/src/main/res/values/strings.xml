@@ -10,4 +10,8 @@
     <string name="no_internet_connection">No internet connection</string>
     <string name="incorrect_data">Something is incorrect</string>
     <string name="something_went_wrong">Something went wrong. Please try again.</string>
+    <string name="edu_tasker_professor">EduTasker - Professor Panel</string>
+    <string name="to_do">To Do</string>
+    <string name="in_progress">In progress</string>
+    <string name="done">Done</string>
 </resources>

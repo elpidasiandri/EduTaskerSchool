@@ -1,4 +1,4 @@
-package com.example.edutasker.screens.login.screens
+package com.example.edutasker.screens.professor.screens
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,12 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
-import com.example.edutasker.composable.login.LoginScreenComposable
-import com.example.edutasker.screens.login.viewModelState.LoginScreenViewModel
-import org.koin.androidx.viewmodel.ext.android.activityViewModel
+import com.example.edutasker.composable.professor.ProfessorScreen
 
-class LoginFragment() : Fragment() {
-    private val loginViewModel: LoginScreenViewModel by activityViewModel()
+class ProfessorFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -19,7 +16,7 @@ class LoginFragment() : Fragment() {
     ): View {
         return ComposeView(requireContext()).apply {
             setContent {
-                LoginScreenComposable(onEvent = loginViewModel::onEvent)
+                ProfessorScreen()
             }
         }
     }

@@ -87,7 +87,7 @@ class LoginScreenViewModel(
                             getStudentAccount(email)
                             _state.update {
                                 it.copy(
-                                    uiEvents = LoginUiEvents.GoToProfessorScreen
+                                    uiEvents = LoginUiEvents.GoToStudentScreen
                                 )
                             }
                         } else {
@@ -111,7 +111,7 @@ class LoginScreenViewModel(
                             getProfessorAccount(email)
                             _state.update {
                                 it.copy(
-                                    uiEvents = LoginUiEvents.GoToStudentScreen
+                                    uiEvents = LoginUiEvents.GoToProfessorScreen
                                 )
                             }
                         } else {

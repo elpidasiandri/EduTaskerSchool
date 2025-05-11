@@ -4,24 +4,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_login"
     app:startDestination="@id/loginChooseUserFragment">
-    <!--        tools:layout="@layout/fragment_login_choose_user">-->
-
 
     <fragment
         android:id="@+id/loginChooseUserFragment"
         android:name="com.example.edutasker.screens.login.screens.LoginChooseUserFragment"
-        android:label="LoginChooseUserFragment"
+        android:label="LoginChooseUserFragment">
 
-        >
         <action
             android:id="@+id/action_loginChooseUserFragment_to_loginFragment2"
-            app:destination="@id/loginFragment2" />
+            app:destination="@id/loginFragment2"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+
     </fragment>
+
     <fragment
         android:id="@+id/loginFragment2"
         android:name="com.example.edutasker.screens.login.screens.LoginFragment"
         android:label="LoginFragment"
-      />
-
+        app:enterAnim="@anim/slide_in_right"
+        app:exitAnim="@anim/slide_out_left"
+        app:popEnterAnim="@anim/slide_in_left"
+        app:popExitAnim="@anim/slide_out_right" />
 
 </navigation>

@@ -28,8 +28,9 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".screens.professorActivities.ProfessorActivity"
-            android:exported="true" />
+            android:name=".screens.professor.ProfessorActivity"
+            android:exported="true"
+            android:theme="@style/Theme.EduTaskerDark"/>
 
     </application>
 

@@ -4,19 +4,25 @@ import com.example.edutasker.entities.ProfessorEntity
 import com.example.edutasker.entities.StudentEntity
 import com.example.edutasker.entities.TaskEntity
 import com.example.edutasker.useCases.TaskUseCases
+import com.example.edutasker.useCases.professor.InsertProfessorUseCase
+import com.example.edutasker.useCases.student.InsertStudentUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 object MockDataProvider {
-    fun insertMockData(taskUseCases: TaskUseCases) {
+    fun insertMockData(
+        taskUseCases: TaskUseCases,
+        insertProfessor: InsertProfessorUseCase,
+        insertStudent: InsertStudentUseCase,
+    ) {
         CoroutineScope(Dispatchers.IO).launch {
             // Professors
             val prof1 = ProfessorEntity(
                 "p1",
                 "John",
                 "Smith",
-                "josnsmith@mail.com",
+                "jo@mail.com",
                 "1234",
                 "https://i.guim.co.uk/img/media/59baecefbc73d3bcf4a47b017453a27f19b55175/331_488_2481_1489/master/2481.jpg?width=1200&height=900&quality=85&auto=format&fit=crop&s=285e4f639f1c71cbdf27c57315394bb1"
             )
@@ -30,9 +36,9 @@ object MockDataProvider {
             )
             val prof3 = ProfessorEntity("p3", "Mike", "Brown", "mikeBrown@mail.com", "1234", "")
 
-            taskUseCases.insertProfessor(prof1)
-            taskUseCases.insertProfessor(prof2)
-            taskUseCases.insertProfessor(prof3)
+            insertProfessor(prof1)
+            insertProfessor(prof2)
+            insertProfessor(prof3)
 
             // Students
             val students = listOf(
@@ -41,7 +47,7 @@ object MockDataProvider {
                     "Alex",
                     "Papadopoulos",
                     "https://t4.ftcdn.net/jpg/02/24/86/95/360_F_224869519_aRaeLneqALfPNBzg0xxMZXghtvBXkfIA.jpg",
-                    "alexPapa@mail.com",
+                    "al@mail.com",
                     "1234",
                     listOf("Math", "Physics")
                 ),
@@ -50,7 +56,7 @@ object MockDataProvider {
                     "Kate",
                     "Papadopoulou",
                     "",
-                    "katePapa@mail.com",
+                    "kat@mail.com",
                     "1234",
                     listOf("Math", "Biology")
                 ),
@@ -59,7 +65,7 @@ object MockDataProvider {
                     "John",
                     "Papas",
                     "https://s39613.pcdn.co/wp-content/uploads/2018/01/student-backpack-id683911900-FF180119.jpg",
-                    "johnPapas@mail.com",
+                    "pas@mail.com",
                     "1234",
                     listOf("Chemistry")
                 ),
@@ -68,7 +74,7 @@ object MockDataProvider {
                     "Lisa",
                     "Jone",
                     "",
-                    "lisaJone@mail.com",
+                    "lis@mail.com",
                     "1234",
                     listOf("History", "Math")
                 ),
@@ -77,7 +83,7 @@ object MockDataProvider {
                     "Maria",
                     "Marou",
                     "https://img.freepik.com/free-photo/portrait-young-student-happy-be-back-university_23-2148586577.jpg?semt=ais_hybrid&w=740",
-                    "mariaMarou@mail.com",
+                    "maria@mail.com",
                     "1234",
                     listOf("Physics")
                 ),
@@ -86,33 +92,86 @@ object MockDataProvider {
                     "Nick",
                     "James",
                     "",
-                    "nickJames@mail.com",
+                    "nick@mail.com",
                     "1234",
                     listOf("Math", "History")
                 ),
             )
 
-            students.forEach { taskUseCases.insertStudent(it) }
+            students.forEach { insertStudent(it) }
 
             // Tasks
             val tasks = listOf(
-                TaskEntity("t1", "Math", "Solve integrals", "p1",
-//                    "s1"
+                TaskEntity(
+                    "t1",
+                    "Math",
+                    "Solve integrals",
+                    "p1",
+                    "26/06/2025",
+                    creationDate = "11/05/2025",
+                    assignTo = listOf("s1", "s2"),
+                    progress = "TODO"
                 ),
-                TaskEntity("t2", "Physics", "Newton’s laws", "p1"),
-                TaskEntity("t3", "Math", "Linear equations", "p1"),
-                TaskEntity("t4", "Biology", "Cell structure", "p2"),
-                TaskEntity("t5", "History", "WWII timeline", "p2"),
-                TaskEntity("t6", "Math", "Matrix multiplication", "p2"),
-                TaskEntity("t7", "Chemistry", "Periodic table", "p3"),
-                TaskEntity("t8", "Math", "Derivatives", "p3"),
-                TaskEntity("t9", "Physics", "Electricity", "p3"),
-                TaskEntity("t10", "History", "Ancient Greece", "p3"),
+                TaskEntity(
+                    "t2",
+                    "Physics",
+                    "Newton’s laws",
+                    "p1",
+                    "28/06/2025",
+                    creationDate = "22/05/2025",
+                    assignTo = listOf("s1", "s2"),
+                    progress = "TODO"
+                ),
+                TaskEntity(
+                    "t3",
+                    "Math",
+                    "Linear equations",
+                    "p1",
+                    "28/06/2025",
+                    creationDate = "22/05/2025",
+                    assignTo = listOf("s2", "s3"),
+                    progress = "TODO"
+                ),
+                TaskEntity("t4", "Biology", "Cell structure", "p2","28/06/2025",
+                    creationDate = "22/05/2025",
+                    assignTo = listOf("s2", "s3"),
+                    progress = "TODO"
+                ),
+                TaskEntity("t5", "History", "WWII timeline", "p2","28/06/2025",
+                    creationDate = "22/05/2025",
+                    assignTo = listOf("s2", "s3"),
+                    progress = "TODO"
+                ),
+                TaskEntity("t6", "Math", "Matrix multiplication", "p2",
+                    "28/06/2025",
+                    creationDate = "22/05/2025",
+                    assignTo = listOf("s2", "s3"),
+                    progress = "TODO"
+                ),
+                TaskEntity("t7", "Chemistry", "Periodic table", "p3","28/06/2025",
+                    creationDate = "22/05/2025",
+                    assignTo = listOf("s1", "s4"),
+                    progress = "TODO"
+                ),
+                TaskEntity("t8", "Math", "Derivatives", "p3","28/06/2025",
+                    creationDate = "22/05/2025",
+                    assignTo = listOf("s4", "s3"),
+                    progress = "TODO"
+                ),
+                TaskEntity("t9", "Physics", "Electricity", "p3","28/06/2025",
+                    creationDate = "22/05/2025",
+                    assignTo = listOf("s5"),
+                    progress = "TODO"
+                ),
+                TaskEntity("t10", "History", "Ancient Greece", "p3","28/06/2025",
+                    creationDate = "22/05/2025",
+                    assignTo = listOf("s2", "s5"),
+                    progress = "TODO"
+                ),
             )
 
             tasks.forEach { taskUseCases.insertTask(it) }
 
-            // Connect tasks to students (randomly or based on subject match)
             val taskStudentMap = mapOf(
                 "t1" to listOf("s1", "s2", "s4"),
                 "t2" to listOf("s1", "s5"),

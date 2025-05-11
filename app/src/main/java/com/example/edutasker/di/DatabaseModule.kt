@@ -44,18 +44,27 @@ val databaseModule = module {
         get<EduTaskerDatabase>().professorDao()
     }
     single {
+        InsertStudentUseCase(get())
+    }
+    single {
+        InsertProfessorUseCase(get())
+    }
+    single {
+        GetStudentByEmailUseCase(get())
+    }
+    single {
+        GetProfessorByEmailUseCase(get())
+    }
+
+    single {
         TaskUseCases(
-            insertStudent = InsertStudentUseCase(get()),
-            insertProfessor = InsertProfessorUseCase(get()),
             insertTask = InsertTaskUseCase(get()),
             assignTaskToStudents = AssignTaskToStudentsUseCase(get()),
             getTasksForStudent = GetTasksForStudentUseCase(get()),
             getTaskCountByProfessor = GetTaskCountByProfessorUseCase(get()),
             getTaskCountPerSubject = GetTaskCountPerSubjectUseCase(get()),
             getTasksByProfessor = GetTasksByProfessorUseCase(get()),
-            getTasksForSubject = GetTasksForSubjectUseCase(get()),
-            getStudentByEmail  = GetStudentByEmailUseCase(get()),
-            getProfessorByEmail  = GetProfessorByEmailUseCase(get()),
+            getTasksForSubject = GetTasksForSubjectUseCase(get())
         )
     }
 

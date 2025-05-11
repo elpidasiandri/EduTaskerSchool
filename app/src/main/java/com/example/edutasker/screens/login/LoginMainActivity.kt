@@ -2,36 +2,41 @@ package com.example.edutasker.screens.login
 
 import android.os.Bundle
 import com.example.edutasker.screens.login.viewModelState.LoginScreenViewModel
-import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.runtime.key
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.NavHostFragment
+import com.example.edutasker.BaseActivity
+import com.example.edutasker.R
 import com.example.edutasker.composable.errorToast.CustomToast
-import com.example.edutasker.databinding.LoginActivityBinding
+import com.example.edutasker.databinding.ActivityBaseBinding
 import com.example.edutasker.di.loginModule
 import com.example.edutasker.screens.login.viewModelState.LoginUiEvents
-import com.example.edutasker.screens.professorActivities.ProfessorActivity
+import com.example.edutasker.screens.professor.ProfessorActivity
 import kotlinx.coroutines.launch
 import org.koin.core.context.loadKoinModules
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.koin.core.context.unloadKoinModules
 
-class LoginMainActivity() : AppCompatActivity() {
+class LoginMainActivity() : BaseActivity<ActivityBaseBinding>() {
     private val loginViewModel: LoginScreenViewModel by viewModel()
-    private lateinit var binding: LoginActivityBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         loadKoinModules(loginModule)
-        binding = LoginActivityBinding.inflate(layoutInflater)
-        setContentView(binding.root)
         setUpViewModel()
+        setNavGraph()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        unloadKoinModules(loginModule)
+    override fun inflateBinding(): ActivityBaseBinding {
+        return ActivityBaseBinding.inflate(layoutInflater)
+    }
+
+    private fun setNavGraph() {
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        val navController = navHostFragment.navController
+        navController.setGraph(R.navigation.nav_login)
     }
 
     private fun setUpViewModel() {

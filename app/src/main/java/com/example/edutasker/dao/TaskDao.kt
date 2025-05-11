@@ -16,7 +16,6 @@ import com.example.edutasker.entities.TaskStudentCrossRef
 interface TaskDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertTask(task: TaskEntity)
-//    suspend fun insertTask(task: TaskStudentCrossRef)
 
     @Insert
     suspend fun insertTaskStudentCrossRef(crossRef: TaskStudentCrossRef)

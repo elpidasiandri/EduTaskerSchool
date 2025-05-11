@@ -1,0 +1,18 @@
+package com.example.edutasker.screens.professor.mapper
+
+import com.example.edutasker.entities.TaskEntity
+import com.example.edutasker.model.TaskModel
+
+
+fun TaskModel.taskDomainToTaskEntity(): TaskEntity {
+    return TaskEntity(
+        taskId = this.taskId,
+        subjectName = this.subjectName,
+        description = this.description,
+        assignBy = this.assignByProfessor,
+        deadlineDate = this.deadlineDate,
+        creationDate = this.creationDate,
+        assignTo = this.assignTo,
+        progress = this.progress.name
+    )
+}

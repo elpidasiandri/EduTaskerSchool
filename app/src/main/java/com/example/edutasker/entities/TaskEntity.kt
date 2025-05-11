@@ -9,4 +9,8 @@ data class TaskEntity(
     val subjectName: String,
     val description: String,
     val assignBy: String,
+    val deadlineDate: String,
+    val creationDate: String,
+    val assignTo: List<String>,
+    val progress: String,
 )
