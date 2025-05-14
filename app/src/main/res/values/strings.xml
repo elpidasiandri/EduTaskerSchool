@@ -14,4 +14,15 @@
     <string name="to_do">To Do</string>
     <string name="in_progress">In progress</string>
     <string name="done">Done</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="subject">Subject</string>
+    <string name="deadline">Deadline</string>
+    <string name="new_task">New Task</string>
+    <string name="description">Description</string>
+    <string name="attach_file">Attach a file</string>
+    <string name="attached_file">Attached file</string>
+    <string name="assign_to">Assign To</string>
+    <string name="assigned_to">Assigned To</string>
+    <string name="success_new_task">The addition was successful.</string>
 </resources>

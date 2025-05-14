@@ -13,9 +13,10 @@ import com.example.edutasker.useCases.task.GetTasksForSubjectUseCase
 import com.example.edutasker.useCases.professor.InsertProfessorUseCase
 import com.example.edutasker.useCases.student.InsertStudentUseCase
 import com.example.edutasker.useCases.task.InsertTaskUseCase
-import com.example.edutasker.useCases.TaskUseCases
+import com.example.edutasker.useCases.task.TaskUseCases
 import com.example.edutasker.useCases.professor.GetProfessorByEmailUseCase
 import com.example.edutasker.useCases.student.GetStudentByEmailUseCase
+import com.example.edutasker.useCases.task.GetLastTaskIdUseCase
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 
@@ -55,7 +56,9 @@ val databaseModule = module {
     single {
         GetProfessorByEmailUseCase(get())
     }
-
+    single {
+        GetLastTaskIdUseCase(get())
+    }
     single {
         TaskUseCases(
             insertTask = InsertTaskUseCase(get()),

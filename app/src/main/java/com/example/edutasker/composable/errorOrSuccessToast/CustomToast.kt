@@ -1,4 +1,4 @@
-package com.example.edutasker.composable.errorToast
+package com.example.edutasker.composable.errorOrSuccessToast
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -20,13 +20,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.delay
 
-
 @Composable
 fun CustomToast(
+    isError: Boolean,
     message: String,
     modifier: Modifier = Modifier,
     position: Alignment = Alignment.BottomCenter,
-    duration: Long = 2000L
+    duration: Long = 2000L,
 ) {
     val isVisible = remember { mutableStateOf(true) }
 
@@ -44,7 +44,10 @@ fun CustomToast(
                 modifier = modifier
                     .fillMaxWidth()
                     .height(56.dp)
-                    .background(Color.Red, shape = RoundedCornerShape(8.dp))
+                    .background(
+                        if (isError) Color.Red else Color.Green,
+                        shape = RoundedCornerShape(8.dp)
+                    )
                     .padding(8.dp),
                 contentAlignment = Alignment.Center
             ) {

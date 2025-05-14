@@ -30,4 +30,9 @@ interface ProfessorDao {
 
     @Query("SELECT * FROM ProfessorEntity WHERE email = :email LIMIT 1")
     suspend fun getProfessorByEmail(email: String): ProfessorEntity?
+
+    @Query("SELECT * FROM ProfessorEntity WHERE profId = :professorId")
+    suspend fun getProfessorById(professorId: String): ProfessorEntity?
+
 }
+

@@ -12,5 +12,5 @@ data class StudentEntity(
     val image: String,
     val email:String,
     val password: String,
-    val subject: List<String>
+    val subjects: List<String>
 )

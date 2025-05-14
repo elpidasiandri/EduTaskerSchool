@@ -1,4 +1,4 @@
-package com.example.edutasker.utils
+package com.example.edutasker.mockData
 
 object CurrentUser {
     var userId: String? = null

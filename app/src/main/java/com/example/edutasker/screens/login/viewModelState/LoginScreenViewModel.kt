@@ -1,15 +1,18 @@
 package com.example.edutasker.screens.login.viewModelState
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.edutasker.R
+import com.example.edutasker.screens.login.viewModelState.stateAndEvents.LoginEvents
+import com.example.edutasker.screens.login.viewModelState.stateAndEvents.LoginState
+import com.example.edutasker.screens.login.viewModelState.stateAndEvents.LoginUiEvents
 import com.example.edutasker.useCases.professor.GetProfessorByEmailUseCase
 import com.example.edutasker.useCases.professor.LoginProfessorUseCase
 import com.example.edutasker.useCases.student.GetStudentByEmailUseCase
 import com.example.edutasker.useCases.student.LoginStudentUseCase
-import com.example.edutasker.utils.CurrentUser
+import com.example.edutasker.mockData.CurrentUser
 import com.example.edutasker.utils.catchAndHandleError
+import com.example.edutasker.utils.showErrorBasedErrorCode
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -62,63 +65,69 @@ class LoginScreenViewModel(
         }
     }
 
-    private fun showErrorBasedErrorCode(errorCode: Int) {
-        when (errorCode) {
-            500 -> showError(R.string.no_internet_connection)
-            else -> showError(R.string.something_went_wrong)
-        }
-    }
 
     private fun login(email: String, password: String) {
         viewModelScope.launch(Dispatchers.IO) {
             when (state.value.isStudent) {
                 true -> {
-                    flow {
-                        emit(
-                            loginStudent(
-                                email = email,
-                                password = password
-                            )
-                        )
-                    }.catchAndHandleError { errorMessage, errorCode ->
-                        showErrorBasedErrorCode(errorCode)
-                    }.collect { student ->
-                        if (student != null) {
-                            getStudentAccount(email)
-                            _state.update {
-                                it.copy(
-                                    uiEvents = LoginUiEvents.GoToStudentScreen
-                                )
-                            }
-                        } else {
-                            showError(R.string.incorrect_data)
-                        }
-                    }
+                    connectAsAStudent(email, password)
                 }
 
                 false -> {
-                    flow {
-                        emit(
-                            loginProfessor(
-                                email = email,
-                                password = password
-                            )
-                        )
-                    }.catchAndHandleError { errorMessage, errorCode ->
-                        showErrorBasedErrorCode(errorCode)
-                    }.collect { professor ->
-                        if (professor != null) {
-                            getProfessorAccount(email)
-                            _state.update {
-                                it.copy(
-                                    uiEvents = LoginUiEvents.GoToProfessorScreen
-                                )
-                            }
-                        } else {
-                            showError(R.string.incorrect_data)
-                        }
-                    }
+                    connectAsAProfessor(email, password)
                 }
+            }
+        }
+    }
+
+    private suspend fun connectAsAProfessor(email: String, password: String) {
+        flow {
+            emit(
+                loginProfessor(
+                    email = email,
+                    password = password
+                )
+            )
+        }.catchAndHandleError { errorMessage, errorCode ->
+            showError(
+                errorCode.showErrorBasedErrorCode()
+            )
+        }.collect { professor ->
+            if (professor != null) {
+                getProfessorAccount(email)
+                _state.update {
+                    it.copy(
+                        uiEvents = LoginUiEvents.GoToProfessorScreen
+                    )
+                }
+            } else {
+                showError(R.string.incorrect_data)
+            }
+        }
+    }
+
+    private suspend fun connectAsAStudent(email: String, password: String) {
+        flow {
+            emit(
+                loginStudent(
+                    email = email,
+                    password = password
+                )
+            )
+        }.catchAndHandleError { errorMessage, errorCode ->
+            showError(
+                errorCode.showErrorBasedErrorCode()
+            )
+        }.collect { student ->
+            if (student != null) {
+                getStudentAccount(email)
+                _state.update {
+                    it.copy(
+                        uiEvents = LoginUiEvents.GoToStudentScreen
+                    )
+                }
+            } else {
+                showError(R.string.incorrect_data)
             }
         }
     }

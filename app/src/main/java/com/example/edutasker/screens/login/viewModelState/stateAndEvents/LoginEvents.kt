@@ -1,4 +1,4 @@
-package com.example.edutasker.screens.login.viewModelState
+package com.example.edutasker.screens.login.viewModelState.stateAndEvents
 
 sealed class LoginEvents {
     data object None : LoginEvents()

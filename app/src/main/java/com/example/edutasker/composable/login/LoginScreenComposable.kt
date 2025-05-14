@@ -1,8 +1,6 @@
 package com.example.edutasker.composable.login
 
-import android.util.Log
 import androidx.compose.foundation.background
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Icon
@@ -24,8 +22,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
-import com.example.edutasker.screens.login.viewModelState.LoginEvents
-import com.example.edutasker.screens.login.viewModelState.LoginState
+import com.example.edutasker.screens.login.viewModelState.stateAndEvents.LoginEvents
 import com.example.edutasker.ui.theme.Blue
 import com.example.edutasker.ui.theme.LightBlue
 import androidx.compose.material3.Button
@@ -73,9 +70,9 @@ fun LoginScreenComposable(
                     onValueChange = { newEmail ->
                         email = newEmail
                     },
-                    label = { Text(stringResource(R.string.email)) },
+                    label = { Text(stringResource(R.string.email), fontSize = 20.sp) },
                     singleLine = true,
-                    textStyle = TextStyle(color = Color.Black),
+                    textStyle = TextStyle(color = Color.White, fontSize = 18.sp),
                     modifier = Modifier
                         .fillMaxWidth(),
                     colors = TextFieldDefaults.colors(
@@ -95,8 +92,9 @@ fun LoginScreenComposable(
                     onValueChange = { newPassword ->
                         password = newPassword
                     },
-                    label = { Text(stringResource(R.string.password)) },
+                    label = { Text(stringResource(R.string.password), fontSize = 20.sp) },
                     singleLine = true,
+                    textStyle = TextStyle(color = Color.White, fontSize = 18.sp),
                     visualTransformation = if (isPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
                     trailingIcon = {
                         val icon = if (isPasswordVisible)
@@ -137,7 +135,7 @@ fun LoginScreenComposable(
                         onEvent(LoginEvents.TryToConnect(email, password))
                     },
                     enabled = buttonIsEnabled,
-                    colors  = ButtonDefaults.buttonColors(
+                    colors = ButtonDefaults.buttonColors(
                         containerColor = if (buttonIsEnabled) Color.White else Color.White,
                         contentColor = if (buttonIsEnabled) Blue else Color.DarkGray
                     )

@@ -2,8 +2,8 @@ package com.example.edutasker
 
 import android.app.Application
 import com.example.edutasker.di.databaseModule
-import com.example.edutasker.mockData.MockDataProvider
-import com.example.edutasker.useCases.TaskUseCases
+import com.example.edutasker.mockData.MockData
+import com.example.edutasker.useCases.task.TaskUseCases
 import com.example.edutasker.useCases.professor.InsertProfessorUseCase
 import com.example.edutasker.useCases.student.InsertStudentUseCase
 import org.koin.android.ext.koin.androidContext
@@ -19,7 +19,7 @@ class EduTaskerApp : Application() {
             val taskUseCases: TaskUseCases = getKoin().get()
             val insertProfessorUseCase: InsertProfessorUseCase = getKoin().get()
             val insertStudentUseCases: InsertStudentUseCase = getKoin().get()
-            MockDataProvider.insertMockData(
+            MockData.insertMockData(
                 taskUseCases,
                 insertProfessorUseCase,
                 insertStudentUseCases

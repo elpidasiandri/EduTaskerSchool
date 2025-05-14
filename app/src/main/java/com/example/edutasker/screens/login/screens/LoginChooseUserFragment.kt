@@ -13,7 +13,7 @@ import androidx.navigation.findNavController
 import com.example.edutasker.R
 import com.example.edutasker.composable.login.LoginChooseUserComposable
 import com.example.edutasker.screens.login.viewModelState.LoginScreenViewModel
-import com.example.edutasker.screens.login.viewModelState.LoginUiEvents
+import com.example.edutasker.screens.login.viewModelState.stateAndEvents.LoginUiEvents
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
 class LoginChooseUserFragment : Fragment() {

@@ -3,6 +3,7 @@ package com.example.edutasker.utils
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.ui.Modifier
+import com.example.edutasker.R
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 
@@ -36,4 +37,11 @@ fun <T> Flow<T>.catchAndHandleError(
                 }
             }
         }
+}
+
+ fun Int.showErrorBasedErrorCode():Int {
+     return when (this) {
+         500 -> R.string.no_internet_connection
+         else -> R.string.something_went_wrong
+     }
 }

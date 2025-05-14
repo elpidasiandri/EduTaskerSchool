@@ -32,7 +32,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.edutasker.R
-import com.example.edutasker.screens.login.viewModelState.LoginEvents
+import com.example.edutasker.screens.login.viewModelState.stateAndEvents.LoginEvents
 import com.example.edutasker.ui.theme.Blue
 import com.example.edutasker.ui.theme.LightBlue
 import com.example.edutasker.utils.noRippleClickable

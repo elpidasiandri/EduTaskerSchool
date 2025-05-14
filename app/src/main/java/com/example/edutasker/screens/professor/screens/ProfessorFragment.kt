@@ -4,11 +4,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import com.example.edutasker.composable.professor.ProfessorScreen
+import com.example.edutasker.screens.professor.viewModel.ProfessorViewModel
+import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
 class ProfessorFragment : Fragment() {
+
+    private val viewModel: ProfessorViewModel by activityViewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -16,7 +22,11 @@ class ProfessorFragment : Fragment() {
     ): View {
         return ComposeView(requireContext()).apply {
             setContent {
-                ProfessorScreen()
+                val state by viewModel.state.collectAsState()
+                ProfessorScreen(
+                    onEvent = viewModel::onEvent,
+                    state = state,
+                )
             }
         }
     }

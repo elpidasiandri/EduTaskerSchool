@@ -7,6 +7,7 @@ import androidx.room.Query
 import androidx.room.Transaction
 import com.example.edutasker.entities.StudentEntity
 import com.example.edutasker.entities.TaskStudentCrossRef
+import com.example.edutasker.model.StudentBasicInfoForPreviewIntoList
 
 @Dao
 interface StudentDao {
@@ -35,4 +36,14 @@ interface StudentDao {
 
     @Query("SELECT * FROM StudentEntity WHERE email = :email LIMIT 1")
     suspend fun getStudentByEmail(email: String): StudentEntity?
+
+    @Query("SELECT studentId, username, image, subjects FROM StudentEntity")
+    suspend fun getAllStudentsForFiltering(): List<StudentBasicInfoForPreviewIntoList>
+
+    @Query("""
+    SELECT studentId, username, image, subjects 
+    FROM StudentEntity 
+    WHERE name LIKE '%' || :query || '%'
+""")
+    suspend fun searchStudentsByName(query: String): List<StudentBasicInfoForPreviewIntoList>
 }

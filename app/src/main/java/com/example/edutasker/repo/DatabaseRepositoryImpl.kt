@@ -1,5 +1,6 @@
 package com.example.edutasker.repo
 
+import android.util.Log
 import com.example.edutasker.dao.ProfessorDao
 import com.example.edutasker.dao.StudentDao
 import com.example.edutasker.dao.SubjectTaskCount
@@ -9,11 +10,13 @@ import com.example.edutasker.entities.ProfessorEntity
 import com.example.edutasker.entities.StudentEntity
 import com.example.edutasker.entities.TaskEntity
 import com.example.edutasker.entities.TaskStudentCrossRef
+import com.example.edutasker.model.StudentBasicInfoForPreviewIntoList
+import com.example.edutasker.model.StudentPreviewAsListModel
 
 class DatabaseRepositoryImpl(
     private val professorDao: ProfessorDao,
     private val studentDao: StudentDao,
-    private val taskDao: TaskDao
+    private val taskDao: TaskDao,
 ) : IDatabaseRepository {
     override suspend fun insertProfessor(professor: ProfessorEntity) {
         if (professorDao.isEmailExists(professor.email) == 0) {
@@ -28,6 +31,7 @@ class DatabaseRepositoryImpl(
             null
         }
     }
+
     override suspend fun insertStudent(student: StudentEntity) {
         if (studentDao.isEmailExists(student.email) == 0) {
             studentDao.insertStudent(student)
@@ -42,7 +46,6 @@ class DatabaseRepositoryImpl(
         }
     }
 
-
     override suspend fun assignTaskToStudents(taskId: String, studentIds: List<String>) {
         studentIds.forEach { studentId ->
             if (taskDao.isTaskStudentCrossRefExists(taskId, studentId) == 0) {
@@ -54,8 +57,20 @@ class DatabaseRepositoryImpl(
 
     override suspend fun insertTask(task: TaskEntity) {
         if (taskDao.isTaskIdExists(task.taskId) == 0) {
-            taskDao.insertTask(task)
+            if (task.taskId.isEmpty()) {
+                task.assignTo.map {
+                    taskDao.insertTask(task.copy(taskId = getNewTaskId(getLastTaskId())))
+                }
+            } else {
+                taskDao.insertTask(task.copy(taskId = task.taskId))
+            }
         }
+    }
+
+    private fun getNewTaskId(oldId: String): String {
+        val number = oldId.removePrefix("t").toInt() + 1
+        val newId = "t$number"
+        return newId
     }
 
     override suspend fun getTaskCountByProfessor(profId: String): Int {
@@ -77,11 +92,65 @@ class DatabaseRepositoryImpl(
     override suspend fun getTasksForSubject(subjectName: String): List<TaskEntity> {
         return taskDao.getTasksForSubject(subjectName)
     }
+
     override suspend fun getProfessorByEmail(email: String): ProfessorEntity? {
         return professorDao.getProfessorByEmail(email)
     }
+
     override suspend fun getStudentByEmail(email: String): StudentEntity? {
         return studentDao.getStudentByEmail(email)
+    }
+
+    override suspend fun getAllStudentsOfProfessorSubjects(
+        idProfessor: String,
+        specificSubject: String?,
+    ): List<StudentPreviewAsListModel> {
+        val allStudents = studentDao.getAllStudentsForFiltering()
+        return getStudentsAfterFilter(allStudents, specificSubject, idProfessor)
+
+    }
+
+    override suspend fun searchAllStudentsOfProfessorSubjects(
+        keyword: String,
+        idProfessor: String,
+        specificSubject: String?,
+    ): List<StudentPreviewAsListModel> {
+        val allStudents = studentDao.searchStudentsByName(keyword)
+        return getStudentsAfterFilter(
+            allStudents = allStudents,
+            specificSubject = specificSubject,
+            idProfessor = idProfessor
+        )
+    }
+
+    private suspend fun getStudentsAfterFilter(
+        allStudents: List<StudentBasicInfoForPreviewIntoList>,
+        specificSubject: String?,
+        idProfessor: String,
+    ): List<StudentPreviewAsListModel> {
+        val professorSubjects =
+            if (specificSubject.isNullOrBlank()) getProfessorSubjects(idProfessor) else listOf(
+                specificSubject
+            )
+        val filteredStudents = allStudents.filter { student ->
+            student.subjects.any { it in professorSubjects }
+        }.distinctBy { it.studentId }
+
+        return filteredStudents.map {
+            StudentPreviewAsListModel(
+                studentId = it.studentId,
+                username = it.username,
+                image = it.image
+            )
+        }
+    }
+
+    override suspend fun getProfessorSubjects(idProfessor: String): List<String> {
+        return professorDao.getProfessorById(idProfessor)?.subjects ?: emptyList()
+    }
+
+    private suspend fun getLastTaskId(): String {
+        return taskDao.getLastTaskId() ?: ""
     }
 
 }

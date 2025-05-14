@@ -1,4 +1,4 @@
-package com.example.edutasker.screens.login.viewModelState
+package com.example.edutasker.screens.login.viewModelState.stateAndEvents
 
 data class LoginState(
     val password: String = "",

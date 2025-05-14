@@ -47,6 +47,17 @@ interface TaskDao {
 
     @Query("SELECT COUNT(*) FROM tasks WHERE taskId = :taskId")
     suspend fun isTaskIdExists(taskId: String): Int
+
+    @Query(
+        """
+    SELECT taskId FROM tasks 
+    WHERE taskId LIKE 't%' 
+    ORDER BY CAST(SUBSTR(taskId, 2) AS INTEGER) DESC 
+    LIMIT 1
+"""
+    )
+    suspend fun getLastTaskId(): String?
+
 }
 
 data class TaskWithStudents(
@@ -57,12 +68,6 @@ data class TaskWithStudents(
         associateBy = Junction(TaskStudentCrossRef::class)
     )
     val students: List<StudentEntity>,
-)
-
-data class SubjectWithTasks(
-    val subjectName: String,
-    val taskCount: Int,
-    val tasks: List<TaskEntity>,
 )
 
 data class SubjectTaskCount(

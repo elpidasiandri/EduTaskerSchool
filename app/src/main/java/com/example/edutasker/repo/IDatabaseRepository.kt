@@ -5,6 +5,7 @@ import com.example.edutasker.dao.TaskWithStudents
 import com.example.edutasker.entities.ProfessorEntity
 import com.example.edutasker.entities.StudentEntity
 import com.example.edutasker.entities.TaskEntity
+import com.example.edutasker.model.StudentPreviewAsListModel
 
 interface IDatabaseRepository {
     suspend fun insertProfessor(professor: ProfessorEntity)
@@ -20,5 +21,16 @@ interface IDatabaseRepository {
     suspend fun getTasksForSubject(subjectName: String): List<TaskEntity>
     suspend fun getProfessorByEmail(email: String): ProfessorEntity?
     suspend fun getStudentByEmail(email: String): StudentEntity?
+    suspend fun getAllStudentsOfProfessorSubjects(
+        idProfessor: String,
+        specificSubject: String? = null,
+    ): List<StudentPreviewAsListModel>
 
+    suspend fun searchAllStudentsOfProfessorSubjects(
+        keyword: String,
+        idProfessor: String,
+        specificSubject: String? = null,
+    ): List<StudentPreviewAsListModel>
+
+    suspend fun getProfessorSubjects(idProfessor: String): List<String>
 }

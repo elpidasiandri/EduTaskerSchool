@@ -9,7 +9,10 @@ import com.example.edutasker.entities.TaskEntity
 import com.example.edutasker.entities.TaskStudentCrossRef
 
 @Database(
-    entities = [TaskEntity::class, StudentEntity::class, ProfessorEntity::class, TaskStudentCrossRef::class],
+    entities = [TaskEntity::class,
+        StudentEntity::class,
+        ProfessorEntity::class,
+        TaskStudentCrossRef::class],
     version = 1
 )
 @TypeConverters(Converters::class)

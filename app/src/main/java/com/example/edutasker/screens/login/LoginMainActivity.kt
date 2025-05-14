@@ -1,5 +1,7 @@
 package com.example.edutasker.screens.login
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import com.example.edutasker.screens.login.viewModelState.LoginScreenViewModel
 import androidx.compose.runtime.key
@@ -9,10 +11,10 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.NavHostFragment
 import com.example.edutasker.BaseActivity
 import com.example.edutasker.R
-import com.example.edutasker.composable.errorToast.CustomToast
+import com.example.edutasker.composable.errorOrSuccessToast.CustomToast
 import com.example.edutasker.databinding.ActivityBaseBinding
 import com.example.edutasker.di.loginModule
-import com.example.edutasker.screens.login.viewModelState.LoginUiEvents
+import com.example.edutasker.screens.login.viewModelState.stateAndEvents.LoginUiEvents
 import com.example.edutasker.screens.professor.ProfessorActivity
 import kotlinx.coroutines.launch
 import org.koin.core.context.loadKoinModules
@@ -65,8 +67,15 @@ class LoginMainActivity() : BaseActivity<ActivityBaseBinding>() {
         val toastId = System.currentTimeMillis()
         binding.composeToastContainer.setContent {
             key(toastId) {
-                CustomToast(message = message)
+                CustomToast(isError = true, message = message)
             }
+        }
+    }
+
+    companion object {
+        fun newInstance(context: Context) {
+            val intent = Intent(context, LoginMainActivity::class.java)
+            context.startActivity(intent)
         }
     }
 }

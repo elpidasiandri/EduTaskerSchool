@@ -35,7 +35,9 @@ import com.example.edutasker.ui.theme.Blue
 import com.example.edutasker.ui.theme.LightGray
 import kotlinx.coroutines.launch
 import androidx.compose.material.BottomAppBar
-
+import com.example.edutasker.composable.professor.assignTask.AddTaskDialog
+import com.example.edutasker.screens.professor.viewModel.stateAndEvents.ProfessorEvents
+import com.example.edutasker.screens.professor.viewModel.stateAndEvents.ProfessorState
 
 data class Task(
     val id: Int,
@@ -45,10 +47,22 @@ data class Task(
     val status: TaskStatus,
 )
 
-
 @SuppressLint("ResourceType")
 @Composable
-fun ProfessorScreen() {
+fun ProfessorScreen(
+    onEvent: (ProfessorEvents) -> Unit,
+    state: ProfessorState
+) {
+    if (state.isAddDialogVisible) {
+        if (state.professorSubjects.isEmpty()){
+            onEvent(ProfessorEvents.GetSubjectsOfProfessor)
+        }
+        AddTaskDialog(
+            onEvent = onEvent,
+            subjects = state.professorSubjects,
+            searchedStudents = state.searchedStudents
+        )
+    }
     val scaffoldState = rememberScaffoldState()
     val coroutineScope = rememberCoroutineScope()
     val context = LocalContext.current
@@ -57,6 +71,9 @@ fun ProfessorScreen() {
     }
     val notificationBitmap = remember {
         BitmapFactory.decodeStream(context.resources.openRawResource(R.raw.notification))
+    }
+    val addBitmap = remember {
+        BitmapFactory.decodeStream(context.resources.openRawResource(R.raw.add))
     }
     Scaffold(
         scaffoldState = scaffoldState,
@@ -87,18 +104,6 @@ fun ProfessorScreen() {
                         Icon(Icons.Default.Menu, contentDescription = "Menu", tint = Color.White)
                     }
                 },
-//                actions = {
-//                    IconButton(onClick = {
-//
-//                    }) {
-//                        Image(
-//                            bitmap = exitBitmap.asImageBitmap(),
-//                            contentDescription = "Exit",
-//                            modifier = Modifier
-//                                .size(32.dp)
-//                        )
-//                    }
-//                }
             )
         },
         bottomBar = {
@@ -108,7 +113,15 @@ fun ProfessorScreen() {
             ) {
                 Spacer(modifier = Modifier.weight(1f))
                 IconButton(onClick = {
-                    // Ενέργεια ειδοποιήσεων
+                    onEvent(ProfessorEvents.WillingToAddTask)
+                }) {
+                    Image(
+                        bitmap = addBitmap.asImageBitmap(),
+                        contentDescription = "Add",
+                        modifier = Modifier.size(28.dp)
+                    )
+                }
+                IconButton(onClick = {
                 }) {
                     Image(
                         bitmap = notificationBitmap.asImageBitmap(),
@@ -117,7 +130,7 @@ fun ProfessorScreen() {
                     )
                 }
                 IconButton(onClick = {
-                    // Ενέργεια εξόδου
+                    onEvent(ProfessorEvents.Logout)
                 }) {
                     Image(
                         bitmap = exitBitmap.asImageBitmap(),
