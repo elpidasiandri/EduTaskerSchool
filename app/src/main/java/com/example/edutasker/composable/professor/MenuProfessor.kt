@@ -1,18 +1,45 @@
 package com.example.edutasker.composable.professor
 
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.ScaffoldState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.example.edutasker.R
+import com.example.edutasker.screens.professor.viewModel.stateAndEvents.ProfessorEvents
+import com.example.edutasker.utils.noRippleClickable
+import kotlinx.coroutines.launch
 
 @Composable
-fun MenuProfessor() {
+fun MenuProfessor(onEvent: (ProfessorEvents) -> Unit, scaffoldState: ScaffoldState) {
+    val interactionSource = remember { MutableInteractionSource() }
+    val coroutineScope = rememberCoroutineScope()
+
     Column {
-        Text("Dashboard", modifier = Modifier.padding(16.dp))
-        Text("Assignments", modifier = Modifier.padding(16.dp))
-        Text("Submissions", modifier = Modifier.padding(16.dp))
-        Text("Reports", modifier = Modifier.padding(16.dp))
+        Text(stringResource(R.string.dashboard), modifier = Modifier.padding(16.dp).noRippleClickable(
+            interactionSource = interactionSource,
+            onClick = {
+                coroutineScope.launch {
+                    scaffoldState.drawerState.close()
+                }
+            }
+        ))
+        Text(stringResource(R.string.assignments), modifier = Modifier.padding(16.dp))
+        Text(stringResource(R.string.add_new_task), modifier = Modifier.padding(16.dp).noRippleClickable(
+            interactionSource = interactionSource,
+            onClick = {
+                onEvent(ProfessorEvents.OpenDialogToAddNewTask)
+                coroutineScope.launch {
+                    scaffoldState.drawerState.close()
+                }
+            }
+        ))
+        Text(stringResource(R.string.notifications), modifier = Modifier.padding(16.dp))
     }
 }

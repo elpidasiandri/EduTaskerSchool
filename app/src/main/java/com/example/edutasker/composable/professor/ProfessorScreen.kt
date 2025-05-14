@@ -51,10 +51,10 @@ data class Task(
 @Composable
 fun ProfessorScreen(
     onEvent: (ProfessorEvents) -> Unit,
-    state: ProfessorState
+    state: ProfessorState,
 ) {
     if (state.isAddDialogVisible) {
-        if (state.professorSubjects.isEmpty()){
+        if (state.professorSubjects.isEmpty()) {
             onEvent(ProfessorEvents.GetSubjectsOfProfessor)
         }
         AddTaskDialog(
@@ -78,7 +78,7 @@ fun ProfessorScreen(
     Scaffold(
         scaffoldState = scaffoldState,
         drawerContent = {
-            MenuProfessor()
+            MenuProfessor(onEvent, scaffoldState)
         },
         topBar = {
             TopAppBar(

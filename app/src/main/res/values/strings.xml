@@ -25,4 +25,8 @@
     <string name="assign_to">Assign To</string>
     <string name="assigned_to">Assigned To</string>
     <string name="success_new_task">The addition was successful.</string>
+    <string name="add_new_task">Add New Task</string>
+    <string name="notifications">Notifications</string>
+    <string name="assignments">Assignments</string>
+    <string name="dashboard">Dashboard</string>
 </resources>

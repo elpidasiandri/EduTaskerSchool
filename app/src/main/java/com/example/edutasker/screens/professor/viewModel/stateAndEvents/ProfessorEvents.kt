@@ -10,6 +10,7 @@ sealed class ProfessorEvents {
     ) : ProfessorEvents()
 
     data object Logout : ProfessorEvents()
+    data object OpenDialogToAddNewTask : ProfessorEvents()
     data object DismissAddTaskScreen : ProfessorEvents()
     data object GetSubjectsOfProfessor : ProfessorEvents()
     data object SearchProfessorStudents : ProfessorEvents()

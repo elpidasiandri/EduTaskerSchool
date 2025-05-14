@@ -62,7 +62,13 @@ class ProfessorViewModel(
                     event.subjectName
                 )
             }
-
+            ProfessorEvents.OpenDialogToAddNewTask->{
+                _state.update {
+                    it.copy(
+                        isAddDialogVisible = true
+                    )
+                }
+            }
             ProfessorEvents.Logout -> {
                 _state.update {
                     it.copy(

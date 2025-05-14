@@ -48,7 +48,6 @@ fun AddTaskDialog(
     subjects: List<String>,
     searchedStudents: List<StudentPreviewAsListModel>,
 ) {
-    val subjectName by remember { mutableStateOf("") }
     var fileUriInfo by remember { mutableStateOf("") }
     var deadlineDate by remember { mutableStateOf("") }
     var description by remember { mutableStateOf("") }
@@ -73,7 +72,6 @@ fun AddTaskDialog(
                     deadlineDate.isNotBlank()
         }
     }
-
 
     AlertDialog(
         onDismissRequest = {
