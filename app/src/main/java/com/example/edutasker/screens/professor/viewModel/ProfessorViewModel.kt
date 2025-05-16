@@ -77,6 +77,16 @@ class ProfessorViewModel(
                 )
             }
 
+            is ProfessorEvents.SelectStudentToSeeBacklog -> {
+                _state.update {
+                    it.copy(
+                        searchedStudents = listOf(),
+                        selectedStudentIdFromSearch = event.studentId,
+                        keyword = ""
+                    )
+                }
+            }
+
             ProfessorEvents.OpenDialogToAddNewTask -> {
                 _state.update {
                     it.copy(
@@ -114,7 +124,8 @@ class ProfessorViewModel(
             }.collect() { res ->
                 _state.update {
                     it.copy(
-                        searchedStudents = if (keyword.isEmpty()) listOf() else res
+                        searchedStudents = if (keyword.isEmpty()) listOf() else res,
+                        keyword = keyword
                     )
                 }
             }

@@ -18,6 +18,7 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowForward
+import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -39,7 +40,8 @@ import kotlinx.coroutines.launch
 @Composable
 fun StudentAvatarRowComposable(
     students: List<StudentPreviewAsListModel>,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    selectedStudentIdFromSearch :String
 ) {
     val listState = rememberLazyListState()
     val coroutineScope = rememberCoroutineScope()
@@ -65,6 +67,17 @@ fun StudentAvatarRowComposable(
                             .border(1.dp, Color.Gray, CircleShape),
                         contentScale = ContentScale.Crop
                     )
+                    if (id == selectedStudentIdFromSearch) {
+                        Spacer(modifier = Modifier.height(4.dp))
+                        Icon(
+                            imageVector = Icons.Default.CheckCircle,
+                            contentDescription = "Selected",
+                            tint = Color(0xFF2196F3),
+                            modifier = Modifier.size(16.dp)
+                        )
+                    } else {
+                        Spacer(modifier = Modifier.height(4.dp))
+                    }
                     Spacer(modifier = Modifier.height(4.dp))
                     Text(
                         text = username,

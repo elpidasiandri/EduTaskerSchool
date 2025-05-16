@@ -47,14 +47,16 @@ interface StudentDao {
     @Query("""
     SELECT studentId, username, image, subjects 
     FROM StudentEntity 
-    WHERE name LIKE '%' || :keyword || '%'
+WHERE name LIKE '%' || :keyword || '%' 
+       OR username LIKE '%' || :keyword || '%'
 """)
     suspend fun searchStudentsByName(keyword: String): List<StudentBasicInfoForPreviewIntoList>
 
     @Query("""
     SELECT studentId, username, image 
     FROM StudentEntity 
-    WHERE name LIKE '%' || :keyword || '%'
+  WHERE name LIKE '%' || :keyword || '%' 
+       OR username LIKE '%' || :keyword || '%'
 """)
     suspend fun searchStudents(keyword: String): List<StudentPreviewAsListModel>
 

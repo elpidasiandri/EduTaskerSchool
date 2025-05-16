@@ -22,11 +22,16 @@ import com.example.edutasker.R
 
 @Composable
 fun StudentSearchBarComposable(
+    selectedStudentIdFromSearch: String,
+    keyword: String,
     onQueryChange: (String) -> Unit,
 ) {
     var localQuery by remember { mutableStateOf("") }
     TextField(
-        value = localQuery,
+        value = if (selectedStudentIdFromSearch.isNotEmpty() && keyword.isEmpty()) {
+            localQuery = ""
+            ""
+        } else localQuery,
         onValueChange = {
             localQuery = it
             onQueryChange(it)

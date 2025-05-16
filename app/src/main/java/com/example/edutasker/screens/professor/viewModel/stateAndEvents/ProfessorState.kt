@@ -12,4 +12,6 @@ data class ProfessorState(
     val studentsToAppearOnCentralRow: List<StudentPreviewAsListModel> = listOf(),
     val messageErrorId: Int = -1,
     val searchedStudents: List<StudentPreviewAsListModel> = listOf(),
+    val selectedStudentIdFromSearch: String = "",
+    val keyword :String = ""
 )
