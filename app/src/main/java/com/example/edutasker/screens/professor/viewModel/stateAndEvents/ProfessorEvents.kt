@@ -19,6 +19,7 @@ sealed class ProfessorEvents {
     data object GetSubjectsOfProfessor : ProfessorEvents()
     data object SearchProfessorStudents : ProfessorEvents()
     data object Initialize : ProfessorEvents()
+    data class GetAllTasksByStudent(val studentId:String) : ProfessorEvents()
     data class SelectStudentToSeeBacklog(val student : StudentPreviewAsListModel) : ProfessorEvents()
     data object None : ProfessorEvents()
 }

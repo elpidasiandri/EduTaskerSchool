@@ -73,4 +73,16 @@ interface TaskDao {
     """)
     suspend fun getTasksByAssignerWithStudentImages(assignerId: String): List<TaskWithStudents>
 
+    @Transaction
+    @Query("""
+        SELECT * FROM tasks 
+        WHERE assignBy = :assignerId 
+        AND taskId IN (
+            SELECT taskId FROM TaskStudentCrossRef WHERE studentId = :studentId
+        )
+    """)
+    suspend fun getTasksByAssignerAndStudent(
+        assignerId: String,
+        studentId: String
+    ): List<TaskWithStudents>
 }

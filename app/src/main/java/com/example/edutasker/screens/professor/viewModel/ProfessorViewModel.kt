@@ -24,7 +24,6 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -80,13 +79,7 @@ class ProfessorViewModel(
             }
 
             is ProfessorEvents.SelectStudentToSeeBacklog -> {
-                _state.update {
-                    it.copy(
-                        searchedStudents = listOf(),
-                        selectedStudentFromSearch = event.student,
-                        keyword = ""
-                    )
-                }
+                getAllTasksBySpecificProfessorOfStudent(event.student)
             }
 
             ProfessorEvents.OpenDialogToAddNewTask -> {
@@ -105,12 +98,33 @@ class ProfessorViewModel(
                 }
             }
 
+            is ProfessorEvents.GetAllTasksByStudent -> {
+
+            }
+
             ProfessorEvents.Initialize -> {
                 getInfoOfStudentsToSetRowImages()
                 getAllTasksByEveryone()
             }
 
             else -> {}
+        }
+    }
+
+    private fun getAllTasksBySpecificProfessorOfStudent(student: StudentPreviewAsListModel) {
+        viewModelScope.launch {
+            flow { emit(taskUseCases.getAllTasksBySpecificProfessorOfStudent(student.studentId)) }.catchAndHandleError { _, errorCode ->
+                handlingError(errorCode)
+            }.collect() { res ->
+                _state.update {
+                    it.copy(
+                        searchedStudents = listOf(),
+                        selectedStudentFromSearch = student,
+                        keyword = "",
+                        allTasksByProfessorStudent = res
+                    )
+                }
+            }
         }
     }
 

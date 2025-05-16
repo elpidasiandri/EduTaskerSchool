@@ -25,6 +25,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.example.edutasker.R
 import com.example.edutasker.model.TasksWithStudentImageModel
@@ -101,8 +102,8 @@ fun TaskCardComposable(taskWithStudentImage: TasksWithStudentImageModel, student
                 )
                 Text(
                     text = taskWithStudentImage.task.deadlineDate,
-                    style = MaterialTheme.typography.bodySmall,
-                    fontWeight = FontWeight.Light
+                    fontWeight = FontWeight.Light,
+                    fontSize = 8.sp
                 )
             }
         }

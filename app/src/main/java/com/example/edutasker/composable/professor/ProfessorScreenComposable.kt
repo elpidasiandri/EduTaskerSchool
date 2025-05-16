@@ -176,7 +176,7 @@ fun ProfessorScreenComposable(
                         .background(LightGray)
                         .padding(padding),
                     state.selectedStudentFromSearch.image,
-                    allTasksByEveryoneWithImage = state.allTasksByEveryone
+                    allTasksByEveryoneWithImage = state.allTasksByProfessorStudent.ifEmpty { state.allTasksByEveryone }
                 )
             }
         }

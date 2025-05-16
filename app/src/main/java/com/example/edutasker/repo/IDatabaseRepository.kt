@@ -6,7 +6,6 @@ import com.example.edutasker.entities.TaskEntity
 import com.example.edutasker.entities.relations.TaskWithStudents
 import com.example.edutasker.model.StudentPreviewAsListModel
 import com.example.edutasker.model.SubjectTaskCount
-import com.example.edutasker.model.TaskModel
 import com.example.edutasker.model.TasksWithStudentImageModel
 
 interface IDatabaseRepository {
@@ -39,4 +38,5 @@ interface IDatabaseRepository {
     suspend fun searchStudents(keyword: String): List<StudentPreviewAsListModel>
     suspend fun getAllTasksOfAllStudents(): List<TasksWithStudentImageModel>
     suspend fun getAllTasksOfProfessorStudent(): List<TasksWithStudentImageModel>
+    suspend fun getAllTasksBySpecificProfessorOfStudent(studentId: String): List<TasksWithStudentImageModel>
 }

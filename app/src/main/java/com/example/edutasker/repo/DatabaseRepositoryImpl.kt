@@ -12,7 +12,6 @@ import com.example.edutasker.mockData.CurrentUser
 import com.example.edutasker.model.StudentBasicInfoForPreviewIntoList
 import com.example.edutasker.model.StudentPreviewAsListModel
 import com.example.edutasker.model.SubjectTaskCount
-import com.example.edutasker.model.TaskModel
 import com.example.edutasker.model.TasksWithStudentImageModel
 import com.example.edutasker.screens.professor.mapper.taskDomainToTasksWithStudentImageModel
 
@@ -169,6 +168,13 @@ class DatabaseRepositoryImpl(
     override suspend fun getAllTasksOfProfessorStudent(): List<TasksWithStudentImageModel> {
         return taskDao.getTasksByAssignerWithStudentImages(CurrentUser.userId ?: "")
             .map { it.taskDomainToTasksWithStudentImageModel() }
+    }
+
+    override suspend fun getAllTasksBySpecificProfessorOfStudent(studentId: String): List<TasksWithStudentImageModel> {
+        return taskDao.getTasksByAssignerAndStudent(
+            assignerId = CurrentUser.userId ?: "",
+            studentId = studentId
+        ).map { it.taskDomainToTasksWithStudentImageModel() }
     }
 
     private suspend fun getLastTaskId(): String {
