@@ -1,9 +1,11 @@
 package com.example.edutasker.screens.professor.viewModel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.edutasker.R
 import com.example.edutasker.mockData.CurrentUser
+import com.example.edutasker.model.StudentPreviewAsListModel
 import com.example.edutasker.model.TaskModel
 import com.example.edutasker.model.TaskStatus
 import com.example.edutasker.screens.professor.mapper.taskDomainToTaskEntity
@@ -13,6 +15,8 @@ import com.example.edutasker.screens.professor.viewModel.stateAndEvents.Professo
 import com.example.edutasker.useCases.task.TaskUseCases
 import com.example.edutasker.useCases.student.GetAllStudentsOfSpecificProfessorUseCase
 import com.example.edutasker.useCases.professor.GetProfessorTitlesOfSubjectUseCase
+import com.example.edutasker.useCases.student.GetNameIdsAndImageOfStudentUseCase
+import com.example.edutasker.useCases.student.SearchStudentsUseCase
 import com.example.edutasker.utils.DateHelper
 import com.example.edutasker.utils.catchAndHandleError
 import com.example.edutasker.utils.showErrorBasedErrorCode
@@ -30,16 +34,26 @@ class ProfessorViewModel(
     private val taskUseCases: TaskUseCases,
     private val getAllStudentsOfSpecificProfessorUseCase: GetAllStudentsOfSpecificProfessorUseCase,
     private val getProfessorTitlesOfSubjectUseCase: GetProfessorTitlesOfSubjectUseCase,
+    private val getNameIdsAndImageOfStudentUseCase: GetNameIdsAndImageOfStudentUseCase,
+    private val searchStudentsUseCase: SearchStudentsUseCase,
 ) : ViewModel() {
     private val _state = MutableStateFlow(ProfessorState())
     val state: StateFlow<ProfessorState> = _state
 
     private var job: Job? = null
 
+    init {
+        onEvent(ProfessorEvents.LoadStudentsForArrow)
+    }
+
     fun onEvent(event: ProfessorEvents) {
         when (event) {
             is ProfessorEvents.WillingToAddTask -> {
                 setAddDialogVisibleFlag(true)
+            }
+
+            is ProfessorEvents.SearchStudents -> {
+                searchStudents(event.keyword)
             }
 
             is ProfessorEvents.DismissAddTaskScreen -> {
@@ -62,13 +76,15 @@ class ProfessorViewModel(
                     event.subjectName
                 )
             }
-            ProfessorEvents.OpenDialogToAddNewTask->{
+
+            ProfessorEvents.OpenDialogToAddNewTask -> {
                 _state.update {
                     it.copy(
                         isAddDialogVisible = true
                     )
                 }
             }
+
             ProfessorEvents.Logout -> {
                 _state.update {
                     it.copy(
@@ -77,8 +93,59 @@ class ProfessorViewModel(
                 }
             }
 
+            ProfessorEvents.LoadStudentsForArrow -> {
+                getInfoOfStudentsToSetRowImages()
+            }
+
             else -> {}
         }
+    }
+
+    private fun searchStudents(keyword: String) {
+        viewModelScope.launch {
+            flow { emit(searchStudentsUseCase(keyword)) }.catchAndHandleError { _, errorCode ->
+                _state.update {
+                    it.copy(
+                        messageErrorId = errorCode.showErrorBasedErrorCode(),
+                        uiEvents = ProfessorUiEvents.Error,
+                        searchedStudents = listOf()
+                    )
+                }
+            }.collect() { res ->
+                _state.update {
+                    it.copy(
+                        searchedStudents = if (keyword.isEmpty()) listOf() else res
+                    )
+                }
+            }
+        }
+    }
+
+    private fun handlingError(errorCode: Int) {
+        showError(
+            errorCode.showErrorBasedErrorCode()
+        )
+    }
+
+    private fun getInfoOfStudentsToSetRowImages() {
+        viewModelScope.launch {
+            flow { emit(getNameIdsAndImageOfStudentUseCase()) }.catchAndHandleError { errorMessage, errorCode ->
+                handlingError(errorCode)
+            }.collect() { res ->
+                _state.update {
+                    it.copy(
+                        studentsToAppearOnCentralRow = res.map { student ->
+                            StudentPreviewAsListModel(
+                                studentId = student.studentId,
+                                username = student.username,
+                                image = student.image
+                            )
+                        }
+                    )
+                }
+            }
+        }
+
     }
 
     private fun getStudentsByProfessorSubject() {
@@ -89,7 +156,7 @@ class ProfessorViewModel(
                 flow { emit(getAllStudentsOfSpecificProfessorUseCase(specificSubject = null)) }.catchAndHandleError { errorMessage, errorCode ->
                     _state.update {
                         it.copy(
-                            searchedStudents = listOf(),
+                            searchedStudentsForAssignment = listOf(),
                             uiEvents = ProfessorUiEvents.Error,
                             messageErrorId = errorCode.showErrorBasedErrorCode()
                         )
@@ -97,7 +164,7 @@ class ProfessorViewModel(
                 }.collect() { res ->
                     _state.update {
                         it.copy(
-                            searchedStudents = res
+                            searchedStudentsForAssignment = res
                         )
                     }
                 }
@@ -162,9 +229,7 @@ class ProfessorViewModel(
                 )
                 emit(taskUseCases.insertTask(task.taskDomainToTaskEntity()))
             }.catchAndHandleError { _, errorCode ->
-                showError(
-                    errorCode.showErrorBasedErrorCode()
-                )
+                handlingError(errorCode)
             }.collect {
                 _state.update {
                     it.copy(

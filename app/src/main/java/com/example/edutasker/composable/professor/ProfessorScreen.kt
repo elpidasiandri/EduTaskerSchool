@@ -5,9 +5,12 @@ import android.graphics.BitmapFactory
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Icon
@@ -35,7 +38,10 @@ import com.example.edutasker.ui.theme.Blue
 import com.example.edutasker.ui.theme.LightGray
 import kotlinx.coroutines.launch
 import androidx.compose.material.BottomAppBar
+import com.example.edutasker.composable.professor.arrowWithStudents.StudentAvatarRow
 import com.example.edutasker.composable.professor.assignTask.AddTaskDialog
+import com.example.edutasker.composable.professor.searchBar.ResultsOfSearchedStudentsComposable
+import com.example.edutasker.composable.professor.searchBar.StudentSearchBar
 import com.example.edutasker.screens.professor.viewModel.stateAndEvents.ProfessorEvents
 import com.example.edutasker.screens.professor.viewModel.stateAndEvents.ProfessorState
 
@@ -60,7 +66,7 @@ fun ProfessorScreen(
         AddTaskDialog(
             onEvent = onEvent,
             subjects = state.professorSubjects,
-            searchedStudents = state.searchedStudents
+            searchedStudents = state.searchedStudentsForAssignment
         )
     }
     val scaffoldState = rememberScaffoldState()
@@ -141,11 +147,29 @@ fun ProfessorScreen(
             }
         },
         content = { padding ->
-            MainCardTasksContent(
-                Modifier
-                    .background(LightGray)
-                    .padding(padding)
-            )
+            Column(modifier = Modifier.fillMaxSize()) {
+                StudentSearchBar(
+                    onQueryChange = { keyword ->
+                        onEvent(ProfessorEvents.SearchStudents(keyword))
+                    }
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                ResultsOfSearchedStudentsComposable(state.searchedStudents
+                ) { studentId ->
+                    onEvent(ProfessorEvents.SelectStudentToSeeBacklog(studentId))
+                }
+                StudentAvatarRow(
+                    modifier = Modifier
+                        .padding(8.dp),
+                    students = state.studentsToAppearOnCentralRow
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                MainCardTasksContent(
+                    Modifier
+                        .background(LightGray)
+                        .padding(padding)
+                )
+            }
         }
     )
 }

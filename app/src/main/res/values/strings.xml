@@ -15,6 +15,7 @@
     <string name="in_progress">In progress</string>
     <string name="done">Done</string>
     <string name="save">Save</string>
+    <string name="search_student">Search student</string>
     <string name="cancel">Cancel</string>
     <string name="subject">Subject</string>
     <string name="deadline">Deadline</string>

@@ -8,6 +8,7 @@ import androidx.room.Transaction
 import com.example.edutasker.entities.StudentEntity
 import com.example.edutasker.entities.TaskStudentCrossRef
 import com.example.edutasker.model.StudentBasicInfoForPreviewIntoList
+import com.example.edutasker.model.StudentPreviewAsListModel
 
 @Dao
 interface StudentDao {
@@ -38,12 +39,23 @@ interface StudentDao {
     suspend fun getStudentByEmail(email: String): StudentEntity?
 
     @Query("SELECT studentId, username, image, subjects FROM StudentEntity")
-    suspend fun getAllStudentsForFiltering(): List<StudentBasicInfoForPreviewIntoList>
+    suspend fun getAllStudentsBySubject(): List<StudentBasicInfoForPreviewIntoList>
+
+    @Query("SELECT studentId, username, image FROM StudentEntity")
+    suspend fun getAllIdsNamesImageOfStudents(): List<StudentPreviewAsListModel>
 
     @Query("""
     SELECT studentId, username, image, subjects 
     FROM StudentEntity 
-    WHERE name LIKE '%' || :query || '%'
+    WHERE name LIKE '%' || :keyword || '%'
 """)
-    suspend fun searchStudentsByName(query: String): List<StudentBasicInfoForPreviewIntoList>
+    suspend fun searchStudentsByName(keyword: String): List<StudentBasicInfoForPreviewIntoList>
+
+    @Query("""
+    SELECT studentId, username, image 
+    FROM StudentEntity 
+    WHERE name LIKE '%' || :keyword || '%'
+""")
+    suspend fun searchStudents(keyword: String): List<StudentPreviewAsListModel>
+
 }

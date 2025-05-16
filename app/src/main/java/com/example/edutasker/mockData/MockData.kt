@@ -101,6 +101,24 @@ object MockData {
                     "1234",
                     listOf("Maths", "History")
                 ),
+                StudentEntity(
+                    "s7",
+                    "Mitso",
+                    "Mitso",
+                    "",
+                    "mitsos@mail.com",
+                    "1234",
+                    listOf("Thesis", "Physics")
+                ),
+                StudentEntity(
+                    "s8",
+                    "papa",
+                    "Maria",
+                    "",
+                    "maria@mail.com",
+                    "1234",
+                    listOf("Thesis", "History","Chemistry")
+                ),
             )
 
             students.forEach { insertStudent(it) }

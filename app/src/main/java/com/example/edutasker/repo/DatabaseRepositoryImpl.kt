@@ -1,6 +1,5 @@
 package com.example.edutasker.repo
 
-import android.util.Log
 import com.example.edutasker.dao.ProfessorDao
 import com.example.edutasker.dao.StudentDao
 import com.example.edutasker.dao.SubjectTaskCount
@@ -105,7 +104,7 @@ class DatabaseRepositoryImpl(
         idProfessor: String,
         specificSubject: String?,
     ): List<StudentPreviewAsListModel> {
-        val allStudents = studentDao.getAllStudentsForFiltering()
+        val allStudents = studentDao.getAllStudentsBySubject()
         return getStudentsAfterFilter(allStudents, specificSubject, idProfessor)
 
     }
@@ -147,6 +146,14 @@ class DatabaseRepositoryImpl(
 
     override suspend fun getProfessorSubjects(idProfessor: String): List<String> {
         return professorDao.getProfessorById(idProfessor)?.subjects ?: emptyList()
+    }
+
+    override suspend fun getNameIdAndImageOfStudents(): List<StudentPreviewAsListModel> {
+        return studentDao.getAllIdsNamesImageOfStudents()
+    }
+
+    override suspend fun searchStudents(keyword: String): List<StudentPreviewAsListModel> {
+        return studentDao.searchStudents(keyword)
     }
 
     private suspend fun getLastTaskId(): String {

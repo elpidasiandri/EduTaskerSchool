@@ -33,4 +33,6 @@ interface IDatabaseRepository {
     ): List<StudentPreviewAsListModel>
 
     suspend fun getProfessorSubjects(idProfessor: String): List<String>
+    suspend fun getNameIdAndImageOfStudents(): List<StudentPreviewAsListModel>
+    suspend fun searchStudents(keyword: String): List<StudentPreviewAsListModel>
 }
