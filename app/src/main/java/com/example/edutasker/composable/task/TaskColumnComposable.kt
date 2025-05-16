@@ -22,11 +22,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.edutasker.composable.professor.Task
 import com.example.edutasker.model.TaskModel
+import com.example.edutasker.model.TasksWithStudentImageModel
 
 @Composable
 fun TaskColumnComposable(
     title: String,
-    tasks: List<TaskModel>,
+    tasks: List<TasksWithStudentImageModel>,
     backgroundColor: Color,
     modifier: Modifier = Modifier,
     selectedStudentImage: String,

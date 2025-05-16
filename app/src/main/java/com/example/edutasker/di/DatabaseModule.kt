@@ -16,6 +16,8 @@ import com.example.edutasker.useCases.task.InsertTaskUseCase
 import com.example.edutasker.useCases.task.TaskUseCases
 import com.example.edutasker.useCases.professor.GetProfessorByEmailUseCase
 import com.example.edutasker.useCases.student.GetStudentByEmailUseCase
+import com.example.edutasker.useCases.task.GetAllTasksOfAllStudents
+import com.example.edutasker.useCases.task.GetAllTasksOfProfessorStudentUseCase
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 
@@ -63,7 +65,9 @@ val databaseModule = module {
             getTaskCountByProfessor = GetTaskCountByProfessorUseCase(get()),
             getTaskCountPerSubject = GetTaskCountPerSubjectUseCase(get()),
             getTasksByProfessor = GetTasksByProfessorUseCase(get()),
-            getTasksForSubject = GetTasksForSubjectUseCase(get())
+            getTasksForSubject = GetTasksForSubjectUseCase(get()),
+            getAllTasksOfAllStudents = GetAllTasksOfAllStudents(get()),
+            getAllTasksOfProfessorStudent = GetAllTasksOfProfessorStudentUseCase(get()),
         )
     }
 

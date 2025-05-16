@@ -159,7 +159,7 @@ fun ProfessorScreenComposable(
                 ResultsOfSearchedStudentsComposable(
                     state.searchedStudents,
                     keyword = state.keyword,
-                ) { student  ->
+                ) { student ->
                     onEvent(ProfessorEvents.SelectStudentToSeeBacklog(student))
                 }
                 StudentAvatarRowComposable(
@@ -167,7 +167,7 @@ fun ProfessorScreenComposable(
                         .padding(8.dp),
                     students = state.studentsToAppearOnCentralRow,
                     selectedStudentIdFromSearch = state.selectedStudentFromSearch.studentId
-                ){ student  ->
+                ) { student ->
                     onEvent(ProfessorEvents.SelectStudentToSeeBacklog(student))
                 }
                 Spacer(modifier = Modifier.height(8.dp))
@@ -175,7 +175,8 @@ fun ProfessorScreenComposable(
                     Modifier
                         .background(LightGray)
                         .padding(padding),
-                    state.selectedStudentFromSearch.image
+                    state.selectedStudentFromSearch.image,
+                    allTasksByEveryoneWithImage = state.allTasksByEveryone
                 )
             }
         }

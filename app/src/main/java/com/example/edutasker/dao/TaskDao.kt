@@ -10,7 +10,9 @@ import androidx.room.Relation
 import androidx.room.Transaction
 import com.example.edutasker.entities.StudentEntity
 import com.example.edutasker.entities.TaskEntity
-import com.example.edutasker.entities.TaskStudentCrossRef
+import com.example.edutasker.entities.relations.TaskStudentCrossRef
+import com.example.edutasker.entities.relations.TaskWithStudents
+import com.example.edutasker.model.SubjectTaskCount
 
 @Dao
 interface TaskDao {
@@ -58,19 +60,17 @@ interface TaskDao {
     )
     suspend fun getLastTaskId(): String?
 
+    @Transaction
+    @Query("""
+        SELECT * FROM tasks
+    """)
+    suspend fun getAllTasksWithStudentImages(): List<TaskWithStudents>
+
+    @Transaction
+    @Query("""
+        SELECT * FROM tasks
+        WHERE assignBy = :assignerId
+    """)
+    suspend fun getTasksByAssignerWithStudentImages(assignerId: String): List<TaskWithStudents>
+
 }
-
-data class TaskWithStudents(
-    @Embedded val task: TaskEntity,
-    @Relation(
-        parentColumn = "taskId",
-        entityColumn = "studentId",
-        associateBy = Junction(TaskStudentCrossRef::class)
-    )
-    val students: List<StudentEntity>,
-)
-
-data class SubjectTaskCount(
-    val subjectName: String,
-    val taskCount: Int,
-)

@@ -18,7 +18,7 @@ sealed class ProfessorEvents {
     data object DismissAddTaskScreen : ProfessorEvents()
     data object GetSubjectsOfProfessor : ProfessorEvents()
     data object SearchProfessorStudents : ProfessorEvents()
-    data object LoadStudentsForArrow : ProfessorEvents()
+    data object Initialize : ProfessorEvents()
     data class SelectStudentToSeeBacklog(val student : StudentPreviewAsListModel) : ProfessorEvents()
     data object None : ProfessorEvents()
 }

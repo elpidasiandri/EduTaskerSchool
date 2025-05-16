@@ -24,6 +24,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -43,7 +44,7 @@ class ProfessorViewModel(
     private var searchJob: Job? = null
 
     init {
-        onEvent(ProfessorEvents.LoadStudentsForArrow)
+        onEvent(ProfessorEvents.Initialize)
     }
 
     fun onEvent(event: ProfessorEvents) {
@@ -104,11 +105,32 @@ class ProfessorViewModel(
                 }
             }
 
-            ProfessorEvents.LoadStudentsForArrow -> {
+            ProfessorEvents.Initialize -> {
                 getInfoOfStudentsToSetRowImages()
+                getAllTasksByEveryone()
             }
 
             else -> {}
+        }
+    }
+
+    private fun getAllTasksByEveryone() {
+        viewModelScope.launch {
+            flow {
+                emit(
+                    taskUseCases.getAllTasksOfAllStudents()
+                )
+            }.catchAndHandleError { _, errorCode ->
+                handlingError(errorCode)
+            }
+                .collect { res ->
+                    _state.update {
+                        it.copy(
+                            allTasksByEveryone = res
+                        )
+                    }
+                }
+
         }
     }
 

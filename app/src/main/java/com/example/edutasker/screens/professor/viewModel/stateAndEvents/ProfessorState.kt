@@ -2,6 +2,7 @@ package com.example.edutasker.screens.professor.viewModel.stateAndEvents
 
 import com.example.edutasker.model.StudentPreviewAsListModel
 import com.example.edutasker.model.TaskModel
+import com.example.edutasker.model.TasksWithStudentImageModel
 
 data class ProfessorState(
     val events: ProfessorEvents = ProfessorEvents.None,
@@ -20,4 +21,6 @@ data class ProfessorState(
     ),
     val keyword: String = "",
     val tasks: List<TaskModel> = listOf(),
+    val allTasksByEveryone: List<TasksWithStudentImageModel> = listOf(),
+    val allTasksByProfessorStudent: List<TasksWithStudentImageModel> = listOf(),
 )

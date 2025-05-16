@@ -1,7 +1,6 @@
 package com.example.edutasker.useCases.task
 
-import com.example.edutasker.dao.StudentDao
-import com.example.edutasker.dao.TaskWithStudents
+import com.example.edutasker.entities.relations.TaskWithStudents
 import com.example.edutasker.repo.IDatabaseRepository
 
 class GetTasksForStudentUseCase(

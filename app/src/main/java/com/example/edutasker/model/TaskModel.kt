@@ -12,6 +12,6 @@ data class TaskModel(
     val progress: TaskStatus,
 )
 
-enum class TaskStatus {
-    TODO, IN_PROGRESS, DONE, CLOSED
+enum class TaskStatus(key: String) {
+    TODO("TODO"), IN_PROGRESS("IN_PROGRESS"), DONE("DONE"), CLOSED("CLOSED")
 }

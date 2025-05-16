@@ -2,15 +2,19 @@ package com.example.edutasker.repo
 
 import com.example.edutasker.dao.ProfessorDao
 import com.example.edutasker.dao.StudentDao
-import com.example.edutasker.dao.SubjectTaskCount
 import com.example.edutasker.dao.TaskDao
-import com.example.edutasker.dao.TaskWithStudents
 import com.example.edutasker.entities.ProfessorEntity
 import com.example.edutasker.entities.StudentEntity
 import com.example.edutasker.entities.TaskEntity
-import com.example.edutasker.entities.TaskStudentCrossRef
+import com.example.edutasker.entities.relations.TaskStudentCrossRef
+import com.example.edutasker.entities.relations.TaskWithStudents
+import com.example.edutasker.mockData.CurrentUser
 import com.example.edutasker.model.StudentBasicInfoForPreviewIntoList
 import com.example.edutasker.model.StudentPreviewAsListModel
+import com.example.edutasker.model.SubjectTaskCount
+import com.example.edutasker.model.TaskModel
+import com.example.edutasker.model.TasksWithStudentImageModel
+import com.example.edutasker.screens.professor.mapper.taskDomainToTasksWithStudentImageModel
 
 class DatabaseRepositoryImpl(
     private val professorDao: ProfessorDao,
@@ -154,6 +158,17 @@ class DatabaseRepositoryImpl(
 
     override suspend fun searchStudents(keyword: String): List<StudentPreviewAsListModel> {
         return studentDao.searchStudents(keyword)
+    }
+
+    override suspend fun getAllTasksOfAllStudents(): List<TasksWithStudentImageModel> {
+        return taskDao.getAllTasksWithStudentImages().map {
+            it.taskDomainToTasksWithStudentImageModel()
+        }
+    }
+
+    override suspend fun getAllTasksOfProfessorStudent(): List<TasksWithStudentImageModel> {
+        return taskDao.getTasksByAssignerWithStudentImages(CurrentUser.userId ?: "")
+            .map { it.taskDomainToTasksWithStudentImageModel() }
     }
 
     private suspend fun getLastTaskId(): String {

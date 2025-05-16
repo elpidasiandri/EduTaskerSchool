@@ -1,11 +1,13 @@
 package com.example.edutasker.repo
 
-import com.example.edutasker.dao.SubjectTaskCount
-import com.example.edutasker.dao.TaskWithStudents
 import com.example.edutasker.entities.ProfessorEntity
 import com.example.edutasker.entities.StudentEntity
 import com.example.edutasker.entities.TaskEntity
+import com.example.edutasker.entities.relations.TaskWithStudents
 import com.example.edutasker.model.StudentPreviewAsListModel
+import com.example.edutasker.model.SubjectTaskCount
+import com.example.edutasker.model.TaskModel
+import com.example.edutasker.model.TasksWithStudentImageModel
 
 interface IDatabaseRepository {
     suspend fun insertProfessor(professor: ProfessorEntity)
@@ -35,4 +37,6 @@ interface IDatabaseRepository {
     suspend fun getProfessorSubjects(idProfessor: String): List<String>
     suspend fun getNameIdAndImageOfStudents(): List<StudentPreviewAsListModel>
     suspend fun searchStudents(keyword: String): List<StudentPreviewAsListModel>
+    suspend fun getAllTasksOfAllStudents(): List<TasksWithStudentImageModel>
+    suspend fun getAllTasksOfProfessorStudent(): List<TasksWithStudentImageModel>
 }

@@ -1,6 +1,6 @@
 package com.example.edutasker.useCases.task
 
-import com.example.edutasker.dao.SubjectTaskCount
+import com.example.edutasker.model.SubjectTaskCount
 import com.example.edutasker.repo.IDatabaseRepository
 
 class GetTaskCountPerSubjectUseCase(

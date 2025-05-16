@@ -27,10 +27,10 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.edutasker.R
-import com.example.edutasker.model.TaskModel
+import com.example.edutasker.model.TasksWithStudentImageModel
 
 @Composable
-fun TaskCardComposable(task: TaskModel, studentImage: String) {
+fun TaskCardComposable(taskWithStudentImage: TasksWithStudentImageModel, studentImage: String) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -45,7 +45,7 @@ fun TaskCardComposable(task: TaskModel, studentImage: String) {
                 fontWeight = FontWeight.SemiBold
             )
             Text(
-                text = task.taskTitle,
+                text = taskWithStudentImage.task.taskTitle,
                 style = MaterialTheme.typography.bodySmall,
                 maxLines = 2,
                 fontWeight = FontWeight.Light,
@@ -61,7 +61,7 @@ fun TaskCardComposable(task: TaskModel, studentImage: String) {
                 fontWeight = FontWeight.SemiBold
             )
             Text(
-                text = task.description,
+                text = taskWithStudentImage.task.description,
                 style = MaterialTheme.typography.bodySmall,
                 maxLines = 3,
                 fontWeight = FontWeight.Light,
@@ -77,7 +77,7 @@ fun TaskCardComposable(task: TaskModel, studentImage: String) {
             )
 
             Text(
-                text = task.subjectName,
+                text = taskWithStudentImage.task.subjectName,
                 style = MaterialTheme.typography.bodySmall,
                 maxLines = 3,
                 fontWeight = FontWeight.Light,
@@ -100,7 +100,7 @@ fun TaskCardComposable(task: TaskModel, studentImage: String) {
                     contentScale = ContentScale.Crop
                 )
                 Text(
-                    text = task.deadlineDate,
+                    text = taskWithStudentImage.task.deadlineDate,
                     style = MaterialTheme.typography.bodySmall,
                     fontWeight = FontWeight.Light
                 )

@@ -7,5 +7,7 @@ data class TaskUseCases(
     val getTaskCountByProfessor: GetTaskCountByProfessorUseCase,
     val getTaskCountPerSubject: GetTaskCountPerSubjectUseCase,
     val getTasksByProfessor: GetTasksByProfessorUseCase,
-    val getTasksForSubject: GetTasksForSubjectUseCase
+    val getTasksForSubject: GetTasksForSubjectUseCase,
+    val getAllTasksOfAllStudents: GetAllTasksOfAllStudents,
+    val getAllTasksOfProfessorStudent: GetAllTasksOfProfessorStudentUseCase,
 )

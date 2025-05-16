@@ -6,7 +6,8 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
 import com.example.edutasker.entities.StudentEntity
-import com.example.edutasker.entities.TaskStudentCrossRef
+import com.example.edutasker.entities.relations.TaskStudentCrossRef
+import com.example.edutasker.entities.relations.TaskWithStudents
 import com.example.edutasker.model.StudentBasicInfoForPreviewIntoList
 import com.example.edutasker.model.StudentPreviewAsListModel
 

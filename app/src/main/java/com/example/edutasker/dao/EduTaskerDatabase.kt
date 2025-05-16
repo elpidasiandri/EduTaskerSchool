@@ -6,7 +6,7 @@ import androidx.room.TypeConverters
 import com.example.edutasker.entities.ProfessorEntity
 import com.example.edutasker.entities.StudentEntity
 import com.example.edutasker.entities.TaskEntity
-import com.example.edutasker.entities.TaskStudentCrossRef
+import com.example.edutasker.entities.relations.TaskStudentCrossRef
 
 @Database(
     entities = [TaskEntity::class,
