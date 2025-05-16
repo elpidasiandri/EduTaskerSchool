@@ -24,7 +24,7 @@ import com.example.edutasker.ui.theme.Purple40
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SubjectDropdown(
+fun SubjectDropdownComposable(
     selectedSubject: String,
     onSubjectSelected: (String) -> Unit,
     subjects: List<String>,

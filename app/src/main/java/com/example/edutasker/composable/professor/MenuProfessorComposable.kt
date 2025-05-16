@@ -17,7 +17,7 @@ import com.example.edutasker.utils.noRippleClickable
 import kotlinx.coroutines.launch
 
 @Composable
-fun MenuProfessor(onEvent: (ProfessorEvents) -> Unit, scaffoldState: ScaffoldState) {
+fun MenuProfessorComposable(onEvent: (ProfessorEvents) -> Unit, scaffoldState: ScaffoldState) {
     val interactionSource = remember { MutableInteractionSource() }
     val coroutineScope = rememberCoroutineScope()
 

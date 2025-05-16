@@ -19,7 +19,7 @@ import com.example.edutasker.ui.theme.LightOcean
 import com.example.edutasker.ui.theme.Yellow
 
 @Composable
-fun MainCardTasksContent(modifier: Modifier = Modifier) {
+fun MainCardTasksContentComposable(modifier: Modifier = Modifier) {
     val sampleTasks = listOf(
         Task(1, "Essay on Ethics", "Student A", "12/05/2025", TaskStatus.TODO),
         Task(2, "Research Report", "Student B", "15/05/2025", TaskStatus.IN_PROGRESS),
@@ -40,7 +40,7 @@ fun MainCardTasksContent(modifier: Modifier = Modifier) {
         val columnWidth = (screenWidth - spacing) / 3
 
 
-        TaskColumn(
+        TaskColumnComposable(
             title = stringResource(R.string.to_do),
             tasks = sampleTasks.filter { it.status == TaskStatus.TODO },
             backgroundColor = LightOcean,
@@ -48,7 +48,7 @@ fun MainCardTasksContent(modifier: Modifier = Modifier) {
                 .width(columnWidth)
                 .fillMaxHeight()
         )
-        TaskColumn(
+        TaskColumnComposable(
             title = stringResource(R.string.in_progress),
             tasks = sampleTasks.filter { it.status == TaskStatus.IN_PROGRESS },
             backgroundColor = Yellow,
@@ -56,7 +56,7 @@ fun MainCardTasksContent(modifier: Modifier = Modifier) {
                 .width(columnWidth)
                 .fillMaxHeight()
         )
-        TaskColumn(
+        TaskColumnComposable(
             title = stringResource(R.string.done),
             tasks = sampleTasks.filter { it.status == TaskStatus.DONE },
             backgroundColor = Green,

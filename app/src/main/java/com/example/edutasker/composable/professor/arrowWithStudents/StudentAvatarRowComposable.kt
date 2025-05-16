@@ -37,7 +37,7 @@ import com.example.edutasker.model.StudentPreviewAsListModel
 import kotlinx.coroutines.launch
 
 @Composable
-fun StudentAvatarRow(
+fun StudentAvatarRowComposable(
     students: List<StudentPreviewAsListModel>,
     modifier: Modifier = Modifier
 ) {

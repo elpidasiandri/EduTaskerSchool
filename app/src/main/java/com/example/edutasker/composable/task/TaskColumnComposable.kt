@@ -23,7 +23,7 @@ import androidx.compose.ui.unit.dp
 import com.example.edutasker.composable.professor.Task
 
 @Composable
-fun TaskColumn(
+fun TaskColumnComposable(
     title: String,
     tasks: List<Task>,
     backgroundColor: Color,
@@ -52,7 +52,7 @@ fun TaskColumn(
                 modifier = Modifier.fillMaxSize()
             ) {
                 items(tasks) { task ->
-                    TaskCard(task)
+                    TaskCardComposable(task)
                 }
             }
         }

@@ -12,9 +12,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.edutasker.composable.professor.Task
 
-
 @Composable
-fun TaskCard(task: Task) {
+fun TaskCardComposable(task: Task) {
     Card(
         modifier = Modifier
             .fillMaxWidth()

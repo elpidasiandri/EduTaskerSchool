@@ -10,7 +10,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.NavHostFragment
 import com.example.edutasker.BaseActivity
 import com.example.edutasker.R
-import com.example.edutasker.composable.errorOrSuccessToast.CustomToast
+import com.example.edutasker.composable.errorOrSuccessToast.CustomToastComposable
 import com.example.edutasker.databinding.ActivityBaseBinding
 import com.example.edutasker.di.professorModule
 import com.example.edutasker.screens.login.LoginMainActivity
@@ -71,7 +71,7 @@ class ProfessorActivity() : BaseActivity<ActivityBaseBinding>() {
         val toastId = System.currentTimeMillis()
         binding.composeToastContainer.setContent {
             key(toastId) {
-                CustomToast(isError = isError, message = message)
+                CustomToastComposable(isError = isError, message = message)
             }
         }
     }

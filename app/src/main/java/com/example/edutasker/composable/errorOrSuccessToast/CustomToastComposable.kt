@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.delay
 
 @Composable
-fun CustomToast(
+fun CustomToastComposable(
     isError: Boolean,
     message: String,
     modifier: Modifier = Modifier,

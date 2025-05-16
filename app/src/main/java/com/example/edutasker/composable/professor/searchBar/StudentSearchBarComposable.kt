@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.dp
 import com.example.edutasker.R
 
 @Composable
-fun StudentSearchBar(
+fun StudentSearchBarComposable(
     onQueryChange: (String) -> Unit,
 ) {
     var localQuery by remember { mutableStateOf("") }

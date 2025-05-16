@@ -32,16 +32,16 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.edutasker.R
-import com.example.edutasker.composable.task.MainCardTasksContent
+import com.example.edutasker.composable.task.MainCardTasksContentComposable
 import com.example.edutasker.model.TaskStatus
 import com.example.edutasker.ui.theme.Blue
 import com.example.edutasker.ui.theme.LightGray
 import kotlinx.coroutines.launch
 import androidx.compose.material.BottomAppBar
-import com.example.edutasker.composable.professor.arrowWithStudents.StudentAvatarRow
-import com.example.edutasker.composable.professor.assignTask.AddTaskDialog
+import com.example.edutasker.composable.professor.arrowWithStudents.StudentAvatarRowComposable
+import com.example.edutasker.composable.professor.assignTask.AddTaskDialogComposable
 import com.example.edutasker.composable.professor.searchBar.ResultsOfSearchedStudentsComposable
-import com.example.edutasker.composable.professor.searchBar.StudentSearchBar
+import com.example.edutasker.composable.professor.searchBar.StudentSearchBarComposable
 import com.example.edutasker.screens.professor.viewModel.stateAndEvents.ProfessorEvents
 import com.example.edutasker.screens.professor.viewModel.stateAndEvents.ProfessorState
 
@@ -55,7 +55,7 @@ data class Task(
 
 @SuppressLint("ResourceType")
 @Composable
-fun ProfessorScreen(
+fun ProfessorScreenComposable(
     onEvent: (ProfessorEvents) -> Unit,
     state: ProfessorState,
 ) {
@@ -63,7 +63,7 @@ fun ProfessorScreen(
         if (state.professorSubjects.isEmpty()) {
             onEvent(ProfessorEvents.GetSubjectsOfProfessor)
         }
-        AddTaskDialog(
+        AddTaskDialogComposable(
             onEvent = onEvent,
             subjects = state.professorSubjects,
             searchedStudents = state.searchedStudentsForAssignment
@@ -84,7 +84,7 @@ fun ProfessorScreen(
     Scaffold(
         scaffoldState = scaffoldState,
         drawerContent = {
-            MenuProfessor(onEvent, scaffoldState)
+            MenuProfessorComposable(onEvent, scaffoldState)
         },
         topBar = {
             TopAppBar(
@@ -148,7 +148,7 @@ fun ProfessorScreen(
         },
         content = { padding ->
             Column(modifier = Modifier.fillMaxSize()) {
-                StudentSearchBar(
+                StudentSearchBarComposable(
                     onQueryChange = { keyword ->
                         onEvent(ProfessorEvents.SearchStudents(keyword))
                     }
@@ -158,13 +158,13 @@ fun ProfessorScreen(
                 ) { studentId ->
                     onEvent(ProfessorEvents.SelectStudentToSeeBacklog(studentId))
                 }
-                StudentAvatarRow(
+                StudentAvatarRowComposable(
                     modifier = Modifier
                         .padding(8.dp),
                     students = state.studentsToAppearOnCentralRow
                 )
                 Spacer(modifier = Modifier.height(8.dp))
-                MainCardTasksContent(
+                MainCardTasksContentComposable(
                     Modifier
                         .background(LightGray)
                         .padding(padding)

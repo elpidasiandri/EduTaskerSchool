@@ -8,7 +8,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
-import com.example.edutasker.composable.professor.ProfessorScreen
+import com.example.edutasker.composable.professor.ProfessorScreenComposable
 import com.example.edutasker.screens.professor.viewModel.ProfessorViewModel
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
@@ -23,7 +23,7 @@ class ProfessorFragment : Fragment() {
         return ComposeView(requireContext()).apply {
             setContent {
                 val state by viewModel.state.collectAsState()
-                ProfessorScreen(
+                ProfessorScreenComposable(
                     onEvent = viewModel::onEvent,
                     state = state,
                 )

@@ -43,7 +43,7 @@ import com.example.edutasker.screens.professor.viewModel.stateAndEvents.Professo
 import com.example.edutasker.ui.theme.LightBlue
 
 @Composable
-fun AddTaskDialog(
+fun AddTaskDialogComposable(
     onEvent: (ProfessorEvents) -> Unit,
     subjects: List<String>,
     searchedStudents: List<StudentPreviewAsListModel>,
@@ -86,7 +86,7 @@ fun AddTaskDialog(
         },
         text = {
             Column() {
-                SubjectDropdown(
+                SubjectDropdownComposable(
                     selectedSubject = selectedSubject,
                     onSubjectSelected = { selectedSubject = it },
                     subjects = subjects
