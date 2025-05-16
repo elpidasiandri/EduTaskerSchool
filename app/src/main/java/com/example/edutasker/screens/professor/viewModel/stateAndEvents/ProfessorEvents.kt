@@ -1,8 +1,11 @@
 package com.example.edutasker.screens.professor.viewModel.stateAndEvents
 
+import com.example.edutasker.model.StudentPreviewAsListModel
+
 sealed class ProfessorEvents {
     data object WillingToAddTask : ProfessorEvents()
     data class AddTask(
+        val title: String,
         val description: String,
         val selectedUsers: List<String>,
         val deadline: String,
@@ -16,7 +19,7 @@ sealed class ProfessorEvents {
     data object GetSubjectsOfProfessor : ProfessorEvents()
     data object SearchProfessorStudents : ProfessorEvents()
     data object LoadStudentsForArrow : ProfessorEvents()
-    data class SelectStudentToSeeBacklog(val studentId: String) : ProfessorEvents()
+    data class SelectStudentToSeeBacklog(val student : StudentPreviewAsListModel) : ProfessorEvents()
     data object None : ProfessorEvents()
 }
 

@@ -49,27 +49,30 @@ fun AddTaskDialogComposable(
     searchedStudents: List<StudentPreviewAsListModel>,
 ) {
     var fileUriInfo by remember { mutableStateOf("") }
-    var deadlineDate by remember { mutableStateOf("") }
-    var description by remember { mutableStateOf("") }
-    var selectedSubject by remember { mutableStateOf("") }
+    var deadlineDateOfTask by remember { mutableStateOf("") }
+    var descriptionOfTask by remember { mutableStateOf("") }
+    var titleOfTask by remember { mutableStateOf("") }
+    var selectedSubjectOfTask by remember { mutableStateOf("") }
 
     var assignToSearch by remember { mutableStateOf("") }
-    var selectedStudents by remember { mutableStateOf(listOf<StudentPreviewAsListModel>()) }
+    var selectedStudentsOfTask by remember { mutableStateOf(listOf<StudentPreviewAsListModel>()) }
     val filteredStudents = searchedStudents.filter { student ->
         student.username.contains(assignToSearch, ignoreCase = true) &&
-                student !in selectedStudents
+                student !in selectedStudentsOfTask
     }
     val isFormValid by remember(
-        selectedSubject,
-        description,
-        selectedStudents,
-        deadlineDate
+        selectedSubjectOfTask,
+        descriptionOfTask,
+        selectedStudentsOfTask,
+        deadlineDateOfTask,
+        titleOfTask
     ) {
         derivedStateOf {
-            selectedSubject.isNotBlank() &&
-                    description.isNotBlank() &&
-                    selectedStudents.isNotEmpty() &&
-                    deadlineDate.isNotBlank()
+            selectedSubjectOfTask.isNotBlank() &&
+                    descriptionOfTask.isNotBlank() &&
+                    selectedStudentsOfTask.isNotEmpty() &&
+                    titleOfTask.isNotEmpty() &&
+                    deadlineDateOfTask.isNotBlank()
         }
     }
 
@@ -86,16 +89,19 @@ fun AddTaskDialogComposable(
         },
         text = {
             Column() {
+                WriteTaskTitleComposable({ title ->
+                    titleOfTask = title
+                })
                 SubjectDropdownComposable(
-                    selectedSubject = selectedSubject,
-                    onSubjectSelected = { selectedSubject = it },
+                    selectedSubject = selectedSubjectOfTask,
+                    onSubjectSelected = { selectedSubjectOfTask = it },
                     subjects = subjects
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
 
                 WriteDescriptionOfTaskAndAttachFileComposable(
-                    { des -> description = des },
+                    { des -> descriptionOfTask = des },
                     { info -> fileUriInfo = info })
 
                 LazyRow(
@@ -103,13 +109,13 @@ fun AddTaskDialogComposable(
                         .fillMaxWidth()
                         .padding(bottom = 8.dp, top = 8.dp)
                 ) {
-                    items(selectedStudents) { student ->
+                    items(selectedStudentsOfTask) { student ->
                         Row(
                             modifier = Modifier
                                 .padding(end = 8.dp)
                                 .background(Color.DarkGray, shape = RoundedCornerShape(16.dp))
                                 .clickable {
-                                    selectedStudents = selectedStudents - student
+                                    selectedStudentsOfTask = selectedStudentsOfTask - student
                                 }
                                 .padding(horizontal = 8.dp, vertical = 4.dp),
                             verticalAlignment = Alignment.CenterVertically
@@ -150,11 +156,11 @@ fun AddTaskDialogComposable(
                             )
                             Spacer(modifier = Modifier.width(6.dp))
                             Text(
-                                text = if (selectedStudents.isEmpty()) {
+                                text = if (selectedStudentsOfTask.isEmpty()) {
                                     stringResource(R.string.assign_to)
                                 } else {
                                     "${stringResource(R.string.assigned_to)}: ${
-                                        selectedStudents.joinToString { it.username }
+                                        selectedStudentsOfTask.joinToString { it.username }
                                     }"
                                 },
                                 color = Color.White,
@@ -175,7 +181,7 @@ fun AddTaskDialogComposable(
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .clickable {
-                                        selectedStudents = selectedStudents + student
+                                        selectedStudentsOfTask = selectedStudentsOfTask + student
                                         assignToSearch = ""
                                     }
                                     .padding(8.dp),
@@ -200,7 +206,7 @@ fun AddTaskDialogComposable(
 
                 AssignDeadlineComposable(
                     deadline = { date ->
-                        deadlineDate = date
+                        deadlineDateOfTask = date
                     }
                 )
             }
@@ -209,10 +215,11 @@ fun AddTaskDialogComposable(
             TextButton(onClick = {
                 onEvent(
                     ProfessorEvents.AddTask(
-                        subjectName = selectedSubject,
-                        description = description,
-                        deadline = deadlineDate,
-                        selectedUsers = selectedStudents.map {
+                        title = titleOfTask,
+                        subjectName = selectedSubjectOfTask,
+                        description = descriptionOfTask,
+                        deadline = deadlineDateOfTask,
+                        selectedUsers = selectedStudentsOfTask.map {
                             it.studentId
                         }
                     ))

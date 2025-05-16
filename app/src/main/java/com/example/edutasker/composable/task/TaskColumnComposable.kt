@@ -21,13 +21,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.edutasker.composable.professor.Task
+import com.example.edutasker.model.TaskModel
 
 @Composable
 fun TaskColumnComposable(
     title: String,
-    tasks: List<Task>,
+    tasks: List<TaskModel>,
     backgroundColor: Color,
     modifier: Modifier = Modifier,
+    selectedStudentImage: String,
 ) {
     Card(
         modifier = modifier
@@ -46,13 +48,14 @@ fun TaskColumnComposable(
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .wrapContentWidth(Alignment.CenterHorizontally))
+                    .wrapContentWidth(Alignment.CenterHorizontally)
+            )
             Divider(modifier = Modifier.padding(vertical = 4.dp))
             LazyColumn(
                 modifier = Modifier.fillMaxSize()
             ) {
                 items(tasks) { task ->
-                    TaskCardComposable(task)
+                    TaskCardComposable(task, selectedStudentImage)
                 }
             }
         }

@@ -13,20 +13,87 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.edutasker.R
 import com.example.edutasker.composable.professor.Task
+import com.example.edutasker.model.TaskModel
 import com.example.edutasker.model.TaskStatus
 import com.example.edutasker.ui.theme.Green
 import com.example.edutasker.ui.theme.LightOcean
 import com.example.edutasker.ui.theme.Yellow
 
 @Composable
-fun MainCardTasksContentComposable(modifier: Modifier = Modifier) {
+fun MainCardTasksContentComposable(modifier: Modifier = Modifier, selectedStudentImage: String) {
     val sampleTasks = listOf(
-        Task(1, "Essay on Ethics", "Student A", "12/05/2025", TaskStatus.TODO),
-        Task(2, "Research Report", "Student B", "15/05/2025", TaskStatus.IN_PROGRESS),
-        Task(3, "Final Project", "Student C", "20/05/2025", TaskStatus.DONE),
-        Task(4, "Midterm Review", "Student D", "17/05/2025", TaskStatus.TODO),
-        Task(5, "Presentation", "Student E", "18/05/2025", TaskStatus.IN_PROGRESS),
-        Task(6, "Essay Review", "Student F", "19/05/2025", TaskStatus.DONE)
+        TaskModel(
+            taskId = "suscipit",
+            taskTitle = "graeci",
+            subjectName = "Constance Rivas",
+            description = "facilisi",
+            assignTo = listOf(),
+            assignByProfessor = "atomorum",
+            deadlineDate = "pretium",
+            creationDate = "purus",
+            progress = TaskStatus.IN_PROGRESS
+
+        ),
+        TaskModel(
+            taskId = "8",
+            taskTitle = "graeci",
+            subjectName = "Constance Rivas",
+            description = "facilisi",
+            assignTo = listOf(),
+            assignByProfessor = "atomorum",
+            deadlineDate = "pretium",
+            creationDate = "purus",
+            progress = TaskStatus.DONE
+
+        ),
+        TaskModel(
+            taskId = "spit",
+            taskTitle = "graeci",
+            subjectName = "Constance Rivas",
+            description = "facilisi",
+            assignTo = listOf(),
+            assignByProfessor = "atomorum",
+            deadlineDate = "pretium",
+            creationDate = "purus",
+            progress = TaskStatus.TODO
+
+        ),
+        TaskModel(
+            taskId = "1",
+            taskTitle = "graeci",
+            subjectName = "Constance Rivas",
+            description = "facilisi",
+            assignTo = listOf(),
+            assignByProfessor = "atomorum",
+            deadlineDate = "pretium",
+            creationDate = "purus",
+            progress = TaskStatus.IN_PROGRESS
+
+        ),
+        TaskModel(
+            taskId = "2",
+            taskTitle = "graeci",
+            subjectName = "Constance Rivas",
+            description = "facilisi",
+            assignTo = listOf(),
+            assignByProfessor = "atomorum",
+            deadlineDate = "pretium",
+            creationDate = "purus",
+            progress = TaskStatus.CLOSED
+
+        ),
+        TaskModel(
+            taskId = "3",
+            taskTitle = "graeci",
+            subjectName = "Constance Rivas",
+            description = "facilisi",
+            assignTo = listOf(),
+            assignByProfessor = "atomorum",
+            deadlineDate = "pretium",
+            creationDate = "purus",
+            progress = TaskStatus.TODO
+
+        ),
     )
 
     Row(
@@ -42,27 +109,30 @@ fun MainCardTasksContentComposable(modifier: Modifier = Modifier) {
 
         TaskColumnComposable(
             title = stringResource(R.string.to_do),
-            tasks = sampleTasks.filter { it.status == TaskStatus.TODO },
+            tasks = sampleTasks.filter { it.progress == TaskStatus.TODO },
             backgroundColor = LightOcean,
             modifier = Modifier
                 .width(columnWidth)
-                .fillMaxHeight()
+                .fillMaxHeight(),
+            selectedStudentImage = selectedStudentImage
         )
         TaskColumnComposable(
             title = stringResource(R.string.in_progress),
-            tasks = sampleTasks.filter { it.status == TaskStatus.IN_PROGRESS },
+            tasks = sampleTasks.filter { it.progress == TaskStatus.IN_PROGRESS },
             backgroundColor = Yellow,
             modifier = Modifier
                 .width(columnWidth)
-                .fillMaxHeight()
+                .fillMaxHeight(),
+            selectedStudentImage = selectedStudentImage
         )
         TaskColumnComposable(
             title = stringResource(R.string.done),
-            tasks = sampleTasks.filter { it.status == TaskStatus.DONE },
+            tasks = sampleTasks.filter { it.progress == TaskStatus.DONE },
             backgroundColor = Green,
             modifier = Modifier
                 .width(columnWidth)
-                .fillMaxHeight()
+                .fillMaxHeight(),
+            selectedStudentImage = selectedStudentImage
         )
     }
 }

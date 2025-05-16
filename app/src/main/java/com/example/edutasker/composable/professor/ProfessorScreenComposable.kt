@@ -150,28 +150,32 @@ fun ProfessorScreenComposable(
             Column(modifier = Modifier.fillMaxSize()) {
                 StudentSearchBarComposable(
                     keyword = state.keyword,
-                    selectedStudentIdFromSearch = state.selectedStudentIdFromSearch,
+                    selectedStudentIdFromSearch = state.selectedStudentFromSearch.studentId,
                     onQueryChange = { keyword ->
                         onEvent(ProfessorEvents.SearchStudents(keyword))
                     }
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 ResultsOfSearchedStudentsComposable(
-                    state.searchedStudents
-                ) { studentId ->
-                    onEvent(ProfessorEvents.SelectStudentToSeeBacklog(studentId))
+                    state.searchedStudents,
+                    keyword = state.keyword,
+                ) { student  ->
+                    onEvent(ProfessorEvents.SelectStudentToSeeBacklog(student))
                 }
                 StudentAvatarRowComposable(
                     modifier = Modifier
                         .padding(8.dp),
                     students = state.studentsToAppearOnCentralRow,
-                    selectedStudentIdFromSearch = state.selectedStudentIdFromSearch
-                )
+                    selectedStudentIdFromSearch = state.selectedStudentFromSearch.studentId
+                ){ student  ->
+                    onEvent(ProfessorEvents.SelectStudentToSeeBacklog(student))
+                }
                 Spacer(modifier = Modifier.height(8.dp))
                 MainCardTasksContentComposable(
                     Modifier
                         .background(LightGray)
-                        .padding(padding)
+                        .padding(padding),
+                    state.selectedStudentFromSearch.image
                 )
             }
         }

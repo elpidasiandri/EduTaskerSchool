@@ -3,6 +3,7 @@ package com.example.edutasker.composable.professor.searchBar
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -24,12 +25,14 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import com.example.edutasker.R
 
 @Composable
 fun ResultsOfSearchedStudentsComposable(
     searchedStudents: List<StudentPreviewAsListModel>,
-    selectStudent: (String) -> Unit,
+    keyword: String,
+    selectStudent: (StudentPreviewAsListModel) -> Unit,
 ) {
     if (searchedStudents.isNotEmpty()) {
         LazyColumn(
@@ -43,7 +46,7 @@ fun ResultsOfSearchedStudentsComposable(
                     modifier = Modifier
                         .fillMaxWidth()
                         .clickable {
-                            selectStudent(student.studentId)
+                            selectStudent(student)
                         }
                         .padding(8.dp),
                     verticalAlignment = Alignment.CenterVertically
@@ -66,5 +69,19 @@ fun ResultsOfSearchedStudentsComposable(
             }
         }
         Spacer(modifier = Modifier.height(12.dp))
+    } else if (keyword.isNotBlank()) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                text = stringResource(R.string.no_results) + "$keyword\".",
+                style = MaterialTheme.typography.bodyMedium,
+                color = Color.Gray
+            )
+        }
+
     }
 }

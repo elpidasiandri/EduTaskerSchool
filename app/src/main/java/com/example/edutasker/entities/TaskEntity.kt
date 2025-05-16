@@ -6,6 +6,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "tasks")
 data class TaskEntity(
     @PrimaryKey val taskId: String,
+    val taskTitle: String,
     val subjectName: String,
     val description: String,
     val assignBy: String,
@@ -13,5 +14,5 @@ data class TaskEntity(
     val creationDate: String,
     val assignTo: List<String>,
     val progress: String,
-    val fileUri: String? = null
+    val fileUri: String? = null,
 )

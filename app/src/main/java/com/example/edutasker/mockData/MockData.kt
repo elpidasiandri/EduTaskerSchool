@@ -34,7 +34,7 @@ object MockData {
                 "anna@mail.com",
                 "1234",
                 "https://cdn.eduadvisor.my/articles/2022/04/how-to-be-teacher-malaysia-feature.png",
-                listOf("Maths", "Biology","Thesis")
+                listOf("Maths", "Biology", "Thesis")
             )
             val prof3 = ProfessorEntity(
                 "p3", "Mike", "Brown", "mikeBrown@mail.com", "1234", "",
@@ -81,7 +81,7 @@ object MockData {
                     "",
                     "lis@mail.com",
                     "1234",
-                    listOf("History", "Maths","Thesis")
+                    listOf("History", "Maths", "Thesis")
                 ),
                 StudentEntity(
                     "s5",
@@ -117,7 +117,7 @@ object MockData {
                     "",
                     "maria@mail.com",
                     "1234",
-                    listOf("Thesis", "History","Chemistry")
+                    listOf("Thesis", "History", "Chemistry")
                 ),
             )
 
@@ -127,8 +127,9 @@ object MockData {
             val tasks = listOf(
                 TaskEntity(
                     "t1",
-                    "Maths",
                     "Solve integrals",
+                    "Maths",
+                    "Calculate the following definite and indefinite integrals using standard techniques. Justify each step.",
                     "p1",
                     "26/06/2025",
                     creationDate = "11/05/2025",
@@ -137,8 +138,9 @@ object MockData {
                 ),
                 TaskEntity(
                     "t2",
-                    "Physics",
                     "Newton’s laws",
+                    "Physics",
+                    "Explain each of Newton’s three laws of motion with real-world examples. Then, solve the attached problems applying each law.",
                     "p1",
                     "28/06/2025",
                     creationDate = "22/05/2025",
@@ -147,8 +149,9 @@ object MockData {
                 ),
                 TaskEntity(
                     "t3",
-                    "Maths",
                     "Linear equations",
+                    "Maths",
+                    "Solve the system of linear equations provided in the worksheet. Show all steps of your work clearly.",
                     "p1",
                     "28/06/2025",
                     creationDate = "22/05/2025",
@@ -156,49 +159,84 @@ object MockData {
                     progress = "TODO"
                 ),
                 TaskEntity(
-                    "t4", "Biology", "Cell structure", "p2", "28/06/2025",
-                    creationDate = "22/05/2025",
-                    assignTo = listOf("s2", "s3"),
-                    progress = "TODO"
-                ),
-                TaskEntity(
-                    "t5", "History", "WWII timeline", "p2", "28/06/2025",
-                    creationDate = "22/05/2025",
-                    assignTo = listOf("s2", "s3"),
-                    progress = "TODO"
-                ),
-                TaskEntity(
-                    "t6", "Maths", "Matrix multiplication", "p2",
+                    "t4",
+                    "Cell structure",
+                    "Biology",
+                    "Describe the structure and function of major cell organelles. Create a labeled diagram of a eukaryotic cell.",
+                    "p2",
                     "28/06/2025",
                     creationDate = "22/05/2025",
                     assignTo = listOf("s2", "s3"),
                     progress = "TODO"
                 ),
                 TaskEntity(
-                    "t7", "Chemistry", "Periodic table", "p3", "28/06/2025",
+                    "t5",
+                    "WWII timeline",
+                    "History",
+                    "Create a detailed timeline of the major events of World War II from 1939 to 1945. Include dates and brief descriptions.",
+                    "p2",
+                    "28/06/2025",
+                    creationDate = "22/05/2025",
+                    assignTo = listOf("s2", "s3"),
+                    progress = "TODO"
+                ),
+                TaskEntity(
+                    "t6",
+                    "Matrix multiplication",
+                    "Maths",
+                    "Perform the multiplication of the given matrices. Provide the final result and intermediate steps where necessary.",
+                    "p2",
+                    "28/06/2025",
+                    creationDate = "22/05/2025",
+                    assignTo = listOf("s2", "s3"),
+                    progress = "TODO"
+                ),
+                TaskEntity(
+                    "t7",
+                    "Periodic table",
+                    "Chemistry",
+                    "Identify 10 elements from the periodic table and describe their group, period, and key properties in one sentence each.",
+                    "p3",
+                    "28/06/2025",
                     creationDate = "22/05/2025",
                     assignTo = listOf("s1", "s4"),
                     progress = "TODO"
                 ),
                 TaskEntity(
-                    "t8", "Maths", "Derivatives", "p3", "28/06/2025",
+                    "t8",
+                    "Derivatives",
+                    "Maths",
+                    "Differentiate the following functions with respect to x. Justify each step using rules of differentiation.",
+                    "p3",
+                    "28/06/2025",
                     creationDate = "22/05/2025",
                     assignTo = listOf("s4", "s3"),
                     progress = "TODO"
                 ),
                 TaskEntity(
-                    "t9", "Physics", "Electricity", "p3", "28/06/2025",
+                    "t9",
+                    "Electricity",
+                    "Physics",
+                    "Define current, voltage, and resistance. Solve the circuit problems based on Ohm’s Law.",
+                    "p3",
+                    "28/06/2025",
                     creationDate = "22/05/2025",
                     assignTo = listOf("s5"),
                     progress = "TODO"
                 ),
                 TaskEntity(
-                    "t10", "History", "Ancient Greece", "p3", "28/06/2025",
+                    "t10",
+                    "Ancient Greece",
+                    "History",
+                    "Write a short essay on the political system of Athens in Ancient Greece and compare it to modern democracy.",
+                    "p3",
+                    "28/06/2025",
                     creationDate = "22/05/2025",
                     assignTo = listOf("s2", "s5"),
                     progress = "TODO"
                 ),
             )
+
 
             tasks.forEach { taskUseCases.insertTask(it) }
 

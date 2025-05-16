@@ -2,6 +2,7 @@ package com.example.edutasker.composable.professor.arrowWithStudents
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -41,7 +42,8 @@ import kotlinx.coroutines.launch
 fun StudentAvatarRowComposable(
     students: List<StudentPreviewAsListModel>,
     modifier: Modifier = Modifier,
-    selectedStudentIdFromSearch :String
+    selectedStudentIdFromSearch: String,
+    selectStudent: (StudentPreviewAsListModel) -> Unit,
 ) {
     val listState = rememberLazyListState()
     val coroutineScope = rememberCoroutineScope()
@@ -55,7 +57,17 @@ fun StudentAvatarRowComposable(
             horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             items(students) { (id, username, imageUrl) ->
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier.clickable {
+                        selectStudent(
+                            StudentPreviewAsListModel(
+                                studentId = id,
+                                username = username,
+                                image = imageUrl
+                            )
+                        )
+                    }) {
                     val imageModel = imageUrl.ifBlank { R.raw.studentavatar }
 
                     AsyncImage(
@@ -93,7 +105,11 @@ fun StudentAvatarRowComposable(
         IconButton(
             onClick = {
                 coroutineScope.launch {
-                    listState.animateScrollToItem((listState.firstVisibleItemIndex - 1).coerceAtLeast(0))
+                    listState.animateScrollToItem(
+                        (listState.firstVisibleItemIndex - 1).coerceAtLeast(
+                            0
+                        )
+                    )
                 }
             },
             modifier = Modifier
@@ -107,7 +123,11 @@ fun StudentAvatarRowComposable(
         IconButton(
             onClick = {
                 coroutineScope.launch {
-                    listState.animateScrollToItem((listState.firstVisibleItemIndex + 1).coerceAtMost(students.size - 1))
+                    listState.animateScrollToItem(
+                        (listState.firstVisibleItemIndex + 1).coerceAtMost(
+                            students.size - 1
+                        )
+                    )
                 }
             },
             modifier = Modifier

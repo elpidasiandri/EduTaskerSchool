@@ -21,6 +21,7 @@
     <string name="deadline">Deadline</string>
     <string name="new_task">New Task</string>
     <string name="description">Description</string>
+    <string name="title">Title</string>
     <string name="attach_file">Attach a file</string>
     <string name="attached_file">Attached file</string>
     <string name="assign_to">Assign To</string>
@@ -30,4 +31,5 @@
     <string name="notifications">Notifications</string>
     <string name="assignments">Assignments</string>
     <string name="dashboard">Dashboard</string>
+    <string name="no_results">No results found for</string>
 </resources>

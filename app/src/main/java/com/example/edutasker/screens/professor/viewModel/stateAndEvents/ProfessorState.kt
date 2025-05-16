@@ -1,6 +1,7 @@
 package com.example.edutasker.screens.professor.viewModel.stateAndEvents
 
 import com.example.edutasker.model.StudentPreviewAsListModel
+import com.example.edutasker.model.TaskModel
 
 data class ProfessorState(
     val events: ProfessorEvents = ProfessorEvents.None,
@@ -12,6 +13,11 @@ data class ProfessorState(
     val studentsToAppearOnCentralRow: List<StudentPreviewAsListModel> = listOf(),
     val messageErrorId: Int = -1,
     val searchedStudents: List<StudentPreviewAsListModel> = listOf(),
-    val selectedStudentIdFromSearch: String = "",
-    val keyword :String = ""
+    val selectedStudentFromSearch: StudentPreviewAsListModel = StudentPreviewAsListModel(
+        "",
+        "",
+        ""
+    ),
+    val keyword: String = "",
+    val tasks: List<TaskModel> = listOf(),
 )

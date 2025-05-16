@@ -13,6 +13,7 @@ fun TaskModel.taskDomainToTaskEntity(): TaskEntity {
         deadlineDate = this.deadlineDate,
         creationDate = this.creationDate,
         assignTo = this.assignTo,
-        progress = this.progress.name
+        progress = this.progress.name,
+        taskTitle = this.taskTitle
     )
 }

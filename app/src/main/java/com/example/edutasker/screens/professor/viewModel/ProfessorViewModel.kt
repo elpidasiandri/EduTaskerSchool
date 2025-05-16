@@ -1,6 +1,5 @@
 package com.example.edutasker.screens.professor.viewModel
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.edutasker.R
@@ -41,6 +40,7 @@ class ProfessorViewModel(
     val state: StateFlow<ProfessorState> = _state
 
     private var job: Job? = null
+    private var searchJob: Job? = null
 
     init {
         onEvent(ProfessorEvents.LoadStudentsForArrow)
@@ -70,6 +70,7 @@ class ProfessorViewModel(
 
             is ProfessorEvents.AddTask -> {
                 setAssignments(
+                    event.title,
                     event.description,
                     event.deadline,
                     event.selectedUsers,
@@ -81,7 +82,7 @@ class ProfessorViewModel(
                 _state.update {
                     it.copy(
                         searchedStudents = listOf(),
-                        selectedStudentIdFromSearch = event.studentId,
+                        selectedStudentFromSearch = event.student,
                         keyword = ""
                     )
                 }
@@ -112,7 +113,8 @@ class ProfessorViewModel(
     }
 
     private fun searchStudents(keyword: String) {
-        viewModelScope.launch {
+        searchJob?.cancel()
+        searchJob = viewModelScope.launch {
             flow { emit(searchStudentsUseCase(keyword)) }.catchAndHandleError { _, errorCode ->
                 _state.update {
                     it.copy(
@@ -220,6 +222,7 @@ class ProfessorViewModel(
     }
 
     private fun setAssignments(
+        taskTitle: String,
         description: String,
         deadline: String,
         selectedUsers: List<String>,
@@ -235,7 +238,8 @@ class ProfessorViewModel(
                     assignByProfessor = CurrentUser.userId ?: "",
                     deadlineDate = deadline,
                     creationDate = DateHelper.getCurrentDate(),
-                    progress = TaskStatus.TODO
+                    progress = TaskStatus.TODO,
+                    taskTitle = taskTitle
 
                 )
                 emit(taskUseCases.insertTask(task.taskDomainToTaskEntity()))
