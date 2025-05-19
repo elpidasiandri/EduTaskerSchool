@@ -32,8 +32,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.edutasker.R
-import com.example.edutasker.composable.task.MainCardTasksContentComposable
-import com.example.edutasker.model.TaskStatus
+import com.example.edutasker.composable.task.taskprofile.MainCardTasksContentComposable
 import com.example.edutasker.ui.theme.Blue
 import com.example.edutasker.ui.theme.LightGray
 import kotlinx.coroutines.launch
@@ -44,14 +43,6 @@ import com.example.edutasker.composable.professor.searchBar.ResultsOfSearchedStu
 import com.example.edutasker.composable.professor.searchBar.StudentSearchBarComposable
 import com.example.edutasker.screens.professor.viewModel.stateAndEvents.ProfessorEvents
 import com.example.edutasker.screens.professor.viewModel.stateAndEvents.ProfessorState
-
-data class Task(
-    val id: Int,
-    val title: String,
-    val student: String,
-    val dueDate: String,
-    val status: TaskStatus,
-)
 
 @SuppressLint("ResourceType")
 @Composable

@@ -60,13 +60,23 @@ fun StudentAvatarRowComposable(
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     modifier = Modifier.clickable {
-                        selectStudent(
-                            StudentPreviewAsListModel(
-                                studentId = id,
-                                username = username,
-                                image = imageUrl
+                        if (id == selectedStudentIdFromSearch) {
+                            selectStudent(
+                                StudentPreviewAsListModel(
+                                    studentId = "",
+                                    username = "",
+                                    image = ""
+                                )
                             )
-                        )
+                        } else {
+                            selectStudent(
+                                StudentPreviewAsListModel(
+                                    studentId = id,
+                                    username = username,
+                                    image = imageUrl
+                                )
+                            )
+                        }
                     }) {
                     val imageModel = imageUrl.ifBlank { R.raw.studentavatar }
 

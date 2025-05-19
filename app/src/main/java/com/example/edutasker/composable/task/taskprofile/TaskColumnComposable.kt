@@ -1,4 +1,4 @@
-package com.example.edutasker.composable.task
+package com.example.edutasker.composable.task.taskprofile
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -20,8 +20,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.example.edutasker.composable.professor.Task
-import com.example.edutasker.model.TaskModel
 import com.example.edutasker.model.TasksWithStudentImageModel
 
 @Composable

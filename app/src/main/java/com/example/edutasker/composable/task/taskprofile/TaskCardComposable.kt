@@ -1,4 +1,4 @@
-package com.example.edutasker.composable.task
+package com.example.edutasker.composable.task.taskprofile
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
