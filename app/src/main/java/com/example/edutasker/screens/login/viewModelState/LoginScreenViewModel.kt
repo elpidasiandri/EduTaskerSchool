@@ -12,6 +12,7 @@ import com.example.edutasker.useCases.student.GetStudentByEmailUseCase
 import com.example.edutasker.useCases.student.LoginStudentUseCase
 import com.example.edutasker.mockData.CurrentUser
 import com.example.edutasker.utils.catchAndHandleError
+import com.example.edutasker.utils.orEmptyIfNull
 import com.example.edutasker.utils.showErrorBasedErrorCode
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -135,12 +136,14 @@ class LoginScreenViewModel(
     private suspend fun getStudentAccount(email: String) {
         flow { emit(getStudentByEmail(email)) }.catch { }
             .collect { account ->
-                CurrentUser.userId = account?.studentId ?: ""
-                CurrentUser.username = account?.username ?: ""
-                CurrentUser.name = account?.name ?: ""
-                CurrentUser.email = account?.email ?: ""
-                CurrentUser.image = account?.image ?: ""
-                CurrentUser.isStudent = true
+                CurrentUser.setCurrentUser(
+                    userId =  account?.studentId.orEmptyIfNull(),
+                    isStudent = true,
+                    name = account?.name.orEmptyIfNull(),
+                    email = account?.email.orEmptyIfNull(),
+                    image = account?.image.orEmptyIfNull(),
+                    username = account?.username.orEmptyIfNull()
+                )
             }
 
     }
@@ -148,12 +151,14 @@ class LoginScreenViewModel(
     private suspend fun getProfessorAccount(email: String) {
         flow { emit(getProfessorByEmail(email)) }.catch { }
             .collect { account ->
-                CurrentUser.userId = account?.profId ?: ""
-                CurrentUser.username = account?.username ?: ""
-                CurrentUser.name = account?.name ?: ""
-                CurrentUser.email = account?.email ?: ""
-                CurrentUser.image = account?.image ?: ""
-                CurrentUser.isStudent = false
+                CurrentUser.setCurrentUser(
+                    userId =  account?.profId.orEmptyIfNull(),
+                    isStudent = false,
+                    name = account?.name.orEmptyIfNull(),
+                    email = account?.email.orEmptyIfNull(),
+                    image = account?.image.orEmptyIfNull(),
+                    username = account?.username.orEmptyIfNull()
+                )
             }
     }
 }

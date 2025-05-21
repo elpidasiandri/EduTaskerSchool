@@ -13,7 +13,7 @@ class SearchProfessorStudentsHavingSpecificSubjectUseCase(
     ): List<StudentPreviewAsListModel> {
         return databaseRepository.searchAllStudentsOfProfessorSubjects(
             keyword = keyword,
-            idProfessor = CurrentUser.userId ?: "",
+            idProfessor = CurrentUser.getCurrentUserId(),
             specificSubject = specificSubject
         )
     }

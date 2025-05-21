@@ -45,3 +45,5 @@ fun <T> Flow<T>.catchAndHandleError(
          else -> R.string.something_went_wrong
      }
 }
+
+fun String?.orEmptyIfNull(): String = this ?: ""

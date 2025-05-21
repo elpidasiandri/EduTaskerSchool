@@ -158,13 +158,13 @@ class DatabaseRepositoryImpl(
     }
 
     override suspend fun getAllTasksOfProfessorStudent(): List<TasksWithStudentImageModel> {
-        return taskDao.getTasksByAssignerWithStudentImages(CurrentUser.userId ?: "")
+        return taskDao.getTasksByAssignerWithStudentImages(CurrentUser.getCurrentUserId())
             .map { it.taskDomainToTasksWithStudentImageModel() }
     }
 
     override suspend fun getAllTasksBySpecificProfessorOfStudent(studentId: String): List<TasksWithStudentImageModel> {
         return taskDao.getTasksByAssignerAndStudent(
-            assignerId = CurrentUser.userId ?: "",
+            assignerId = CurrentUser.getCurrentUserId(),
             studentId = studentId
         ).map { it.taskDomainToTasksWithStudentImageModel() }
     }

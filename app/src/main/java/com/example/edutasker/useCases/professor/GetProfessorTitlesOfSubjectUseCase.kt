@@ -5,6 +5,6 @@ import com.example.edutasker.repo.IDatabaseRepository
 
 class GetProfessorTitlesOfSubjectUseCase(private val databaseRepository: IDatabaseRepository) {
     suspend operator fun invoke(): List<String> {
-        return databaseRepository.getProfessorSubjects(CurrentUser.userId ?: "")
+        return databaseRepository.getProfessorSubjects(CurrentUser.getCurrentUserId())
     }
 }

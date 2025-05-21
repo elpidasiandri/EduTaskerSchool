@@ -9,7 +9,7 @@ class GetAllStudentsOfSpecificProfessorUseCase(
 ) {
     suspend operator fun invoke(specificSubject: String? = null): List<StudentPreviewAsListModel> {
         return databaseRepository.getAllStudentsOfProfessorSubjects(
-            CurrentUser.userId ?: "",
+            CurrentUser.getCurrentUserId(),
             specificSubject = specificSubject
         )
     }

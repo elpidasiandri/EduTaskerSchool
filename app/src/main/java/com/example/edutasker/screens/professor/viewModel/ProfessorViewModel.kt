@@ -107,6 +107,7 @@ class ProfessorViewModel(
             }
 
             ProfessorEvents.Logout -> {
+                CurrentUser.setCurrentUserNull()
                 _state.update {
                     it.copy(
                         uiEvents = ProfessorUiEvents.GoToLogout
@@ -334,7 +335,7 @@ class ProfessorViewModel(
                         subjectName = subjectName,
                         description = description,
                         assignTo = student,
-                        assignByProfessor = CurrentUser.userId ?: "",
+                        assignByProfessor = CurrentUser.getCurrentUserId(),
                         deadlineDate = deadline,
                         creationDate = DateHelper.getCurrentDate(),
                         progress = TaskStatus.TODO,
