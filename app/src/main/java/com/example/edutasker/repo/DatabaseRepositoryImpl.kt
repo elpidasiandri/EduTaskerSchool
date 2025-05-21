@@ -6,19 +6,22 @@ import com.example.edutasker.dao.TaskDao
 import com.example.edutasker.entities.ProfessorEntity
 import com.example.edutasker.entities.StudentEntity
 import com.example.edutasker.entities.TaskEntity
-import com.example.edutasker.entities.relations.TaskStudentCrossRef
-import com.example.edutasker.entities.relations.TaskWithStudents
 import com.example.edutasker.mockData.CurrentUser
 import com.example.edutasker.model.StudentBasicInfoForPreviewIntoList
 import com.example.edutasker.model.StudentPreviewAsListModel
 import com.example.edutasker.model.SubjectTaskCount
 import com.example.edutasker.model.TasksWithStudentImageModel
-import com.example.edutasker.screens.professor.mapper.taskDomainToTasksWithStudentImageModel
+import com.example.edutasker.mapper.taskDomainToTasksWithStudentImageModel
+import com.example.edutasker.mapper.toOpenedTask
+import com.example.edutasker.model.OpenedTask
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.withContext
 
 class DatabaseRepositoryImpl(
     private val professorDao: ProfessorDao,
     private val studentDao: StudentDao,
     private val taskDao: TaskDao,
+    private val dispatcher: CoroutineDispatcher
 ) : IDatabaseRepository {
     override suspend fun insertProfessor(professor: ProfessorEntity) {
         if (professorDao.isEmailExists(professor.email) == 0) {
@@ -48,23 +51,16 @@ class DatabaseRepositoryImpl(
         }
     }
 
-    override suspend fun assignTaskToStudents(taskId: String, studentIds: List<String>) {
-        studentIds.forEach { studentId ->
-            if (taskDao.isTaskStudentCrossRefExists(taskId, studentId) == 0) {
-                val crossRef = TaskStudentCrossRef(taskId = taskId, studentId = studentId)
-                taskDao.insertTaskStudentCrossRef(crossRef)
-            }
-        }
-    }
-
     override suspend fun insertTask(task: TaskEntity) {
-        if (taskDao.isTaskIdExists(task.taskId) == 0) {
-            if (task.taskId.isEmpty()) {
-                task.assignTo.map {
-                    taskDao.insertTask(task.copy(taskId = getNewTaskId(getLastTaskId())))
-                }
-            } else {
-                taskDao.insertTask(task.copy(taskId = task.taskId))
+        val finalTask = if (task.taskId.isEmpty())
+            task.copy(taskId = getNewTaskId(getLastTaskId()))
+        else
+            task
+        val studentExists = studentDao.isStudentIdExists(finalTask.assignTo)
+
+       if (studentExists != 0) {
+            if (taskDao.isTaskIdExists(finalTask.taskId) == 0) {
+                taskDao.insertTask(finalTask)
             }
         }
     }
@@ -85,10 +81,6 @@ class DatabaseRepositoryImpl(
 
     override suspend fun getTasksByProfessor(professorId: String): List<TaskEntity> {
         return professorDao.getTasksByProfessor(professorId)
-    }
-
-    override suspend fun getTasksForStudent(studentId: String): List<TaskWithStudents> {
-        return studentDao.getTasksForStudent(studentId)
     }
 
     override suspend fun getTasksForSubject(subjectName: String): List<TaskEntity> {
@@ -181,4 +173,19 @@ class DatabaseRepositoryImpl(
         return taskDao.getLastTaskId() ?: ""
     }
 
+    override suspend fun getAllInfoAboutTaskAndBasicOfStudent(taskId: String): OpenedTask {
+        return taskDao.getTaskWithBasicStudentInfo(taskId).toOpenedTask()
+    }
+
+    override suspend fun insertMockData(
+        professors: List<ProfessorEntity>,
+        students: List<StudentEntity>,
+        tasks: List<TaskEntity>,
+    ) {
+        withContext(dispatcher) {
+            professors.forEach { insertProfessor(it) }
+            students.forEach { insertStudent(it) }
+            tasks.forEach { insertTask(it) }
+        }
+    }
 }

@@ -1,9 +1,21 @@
 package com.example.edutasker.entities
 
 import androidx.room.Entity
+import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "tasks")
+@Entity(
+    tableName = "tasks",
+    foreignKeys = [
+        ForeignKey(
+            entity = StudentEntity::class,
+            parentColumns = ["studentId"],
+            childColumns = ["assignTo"],
+            onDelete = ForeignKey.CASCADE
+        )
+    ]
+)
+
 data class TaskEntity(
     @PrimaryKey val taskId: String,
     val taskTitle: String,
@@ -12,7 +24,7 @@ data class TaskEntity(
     val assignBy: String,
     val deadlineDate: String,
     val creationDate: String,
-    val assignTo: List<String>,
+    val assignTo: String,
     val progress: String,
     val fileUri: String? = null,
 )

@@ -41,6 +41,7 @@ import com.example.edutasker.composable.professor.arrowWithStudents.StudentAvata
 import com.example.edutasker.composable.professor.assignTask.AddTaskDialogComposable
 import com.example.edutasker.composable.professor.searchBar.ResultsOfSearchedStudentsComposable
 import com.example.edutasker.composable.professor.searchBar.StudentSearchBarComposable
+import com.example.edutasker.composable.task.overview.TaskDetailsDialog
 import com.example.edutasker.screens.professor.viewModel.stateAndEvents.ProfessorEvents
 import com.example.edutasker.screens.professor.viewModel.stateAndEvents.ProfessorState
 
@@ -50,6 +51,11 @@ fun ProfessorScreenComposable(
     onEvent: (ProfessorEvents) -> Unit,
     state: ProfessorState,
 ) {
+    if (state.isTaskOpened) {
+        TaskDetailsDialog(taskInfo = state.openedTask, onDismiss = {
+            onEvent(ProfessorEvents.DismissAddTaskScreen)
+        })
+    }
     if (state.isAddDialogVisible) {
         if (state.professorSubjects.isEmpty()) {
             onEvent(ProfessorEvents.GetSubjectsOfProfessor)
@@ -167,7 +173,8 @@ fun ProfessorScreenComposable(
                         .background(LightGray)
                         .padding(padding),
                     state.selectedStudentFromSearch.image,
-                    allTasksByEveryoneWithImage = state.allTasksByProfessorStudent.ifEmpty { state.allTasksByEveryone }
+                    allTasksByEveryoneWithImage = state.allTasksByProfessorStudent.ifEmpty { state.allTasksByEveryone },
+                    onTaskClick = {}
                 )
             }
         }

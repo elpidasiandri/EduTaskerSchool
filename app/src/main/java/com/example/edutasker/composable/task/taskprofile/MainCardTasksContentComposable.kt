@@ -1,5 +1,6 @@
 package com.example.edutasker.composable.task.taskprofile
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -7,6 +8,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
@@ -23,7 +28,9 @@ fun MainCardTasksContentComposable(
     modifier: Modifier = Modifier,
     selectedStudentImage: String,
     allTasksByEveryoneWithImage: List<TasksWithStudentImageModel>,
+    onTaskClick: (TasksWithStudentImageModel) -> Unit,
 ) {
+    var selectedTask by remember { mutableStateOf<TasksWithStudentImageModel?>(null) }
     Row(
         modifier = modifier
             .fillMaxSize()
@@ -34,7 +41,6 @@ fun MainCardTasksContentComposable(
         val spacing = 8.dp * 2
         val columnWidth = (screenWidth - spacing) / 3
 
-
         TaskColumnComposable(
             title = stringResource(R.string.to_do),
             tasks = allTasksByEveryoneWithImage.filter { it.task.progress == TaskStatus.TODO },
@@ -42,7 +48,8 @@ fun MainCardTasksContentComposable(
             modifier = Modifier
                 .width(columnWidth)
                 .fillMaxHeight(),
-            selectedStudentImage = selectedStudentImage
+            selectedStudentImage = selectedStudentImage,
+            onTaskClick = { taskClicked -> onTaskClick(taskClicked) }
         )
         TaskColumnComposable(
             title = stringResource(R.string.in_progress),
@@ -51,7 +58,8 @@ fun MainCardTasksContentComposable(
             modifier = Modifier
                 .width(columnWidth)
                 .fillMaxHeight(),
-            selectedStudentImage = selectedStudentImage
+            selectedStudentImage = selectedStudentImage,
+            onTaskClick = { taskClicked -> onTaskClick(taskClicked) }
         )
         TaskColumnComposable(
             title = stringResource(R.string.done),
@@ -60,7 +68,8 @@ fun MainCardTasksContentComposable(
             modifier = Modifier
                 .width(columnWidth)
                 .fillMaxHeight(),
-            selectedStudentImage = selectedStudentImage
+            selectedStudentImage = selectedStudentImage,
+            onTaskClick = { taskClicked -> onTaskClick(taskClicked) }
         )
     }
 }

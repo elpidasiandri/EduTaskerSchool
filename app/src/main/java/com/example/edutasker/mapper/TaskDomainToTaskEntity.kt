@@ -1,4 +1,4 @@
-package com.example.edutasker.screens.professor.mapper
+package com.example.edutasker.mapper
 
 import com.example.edutasker.entities.TaskEntity
 import com.example.edutasker.model.TaskModel

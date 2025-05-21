@@ -4,10 +4,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.edutasker.R
 import com.example.edutasker.mockData.CurrentUser
+import com.example.edutasker.model.OpenedTask
 import com.example.edutasker.model.StudentPreviewAsListModel
 import com.example.edutasker.model.TaskModel
 import com.example.edutasker.model.TaskStatus
-import com.example.edutasker.screens.professor.mapper.taskDomainToTaskEntity
+import com.example.edutasker.mapper.taskDomainToTaskEntity
 import com.example.edutasker.screens.professor.viewModel.stateAndEvents.ProfessorEvents
 import com.example.edutasker.screens.professor.viewModel.stateAndEvents.ProfessorState
 import com.example.edutasker.screens.professor.viewModel.stateAndEvents.ProfessorUiEvents
@@ -16,6 +17,7 @@ import com.example.edutasker.useCases.student.GetAllStudentsOfSpecificProfessorU
 import com.example.edutasker.useCases.professor.GetProfessorTitlesOfSubjectUseCase
 import com.example.edutasker.useCases.student.GetNameIdsAndImageOfStudentUseCase
 import com.example.edutasker.useCases.student.SearchStudentsUseCase
+import com.example.edutasker.useCases.task.GetAllInfoOfTaskAndBasicOfStudentsUseCase
 import com.example.edutasker.utils.DateHelper
 import com.example.edutasker.utils.catchAndHandleError
 import com.example.edutasker.utils.showErrorBasedErrorCode
@@ -35,6 +37,7 @@ class ProfessorViewModel(
     private val getProfessorTitlesOfSubjectUseCase: GetProfessorTitlesOfSubjectUseCase,
     private val getNameIdsAndImageOfStudentUseCase: GetNameIdsAndImageOfStudentUseCase,
     private val searchStudentsUseCase: SearchStudentsUseCase,
+    private val getAllInfoOfTaskAndBasicOfStudentsUseCase: GetAllInfoOfTaskAndBasicOfStudentsUseCase,
 ) : ViewModel() {
     private val _state = MutableStateFlow(ProfessorState())
     val state: StateFlow<ProfessorState> = _state
@@ -48,6 +51,19 @@ class ProfessorViewModel(
 
     fun onEvent(event: ProfessorEvents) {
         when (event) {
+            ProfessorEvents.CloseTaskDialog -> {
+                _state.update {
+                    it.copy(
+                        isTaskOpened = false,
+                        openedTask = OpenedTask(TaskModel(), StudentPreviewAsListModel())
+                    )
+                }
+            }
+
+            is ProfessorEvents.OpenTaskDialog -> {
+                getInfoAboutOpenedTask(event.taskId)
+            }
+
             is ProfessorEvents.WillingToAddTask -> {
                 setAddDialogVisibleFlag(true)
             }
@@ -111,6 +127,49 @@ class ProfessorViewModel(
         }
     }
 
+    private fun getInfoAboutOpenedTask(taskId: String) {
+        viewModelScope.launch {
+            flow { emit(getAllInfoOfTaskAndBasicOfStudentsUseCase(taskId)) }.catchAndHandleError { _, errorCode ->
+                _state.update {
+                    it.copy(
+                        isTaskOpened = false,
+                        openedTask = OpenedTask(TaskModel(), StudentPreviewAsListModel()),
+                        messageErrorId = errorCode.showErrorBasedErrorCode(),
+                        uiEvents = ProfessorUiEvents.Error
+                    )
+                }
+            }.collect { taskAndStudentInfo ->
+                val taskInfo = taskAndStudentInfo.taskInfo
+                val studentInfo = taskAndStudentInfo.studentBasic
+
+                _state.update {
+                    it.copy(
+                        isTaskOpened = true,
+                        openedTask = OpenedTask(
+                            TaskModel(
+                                taskId = taskInfo.taskId,
+                                taskTitle = taskInfo.taskTitle,
+                                subjectName = taskInfo.subjectName,
+                                description = taskInfo.description,
+                                assignTo = taskInfo.assignTo,
+                                assignByProfessor = taskInfo.assignByProfessor,
+                                deadlineDate = taskInfo.deadlineDate,
+                                creationDate = taskInfo.creationDate,
+                                progress = taskInfo.progress
+
+                            ),
+                            StudentPreviewAsListModel(
+                                studentId = studentInfo.studentId,
+                                username = studentInfo.username,
+                                image = studentInfo.image
+                            )
+                        )
+                    )
+                }
+            }
+        }
+    }
+
     private fun getAllTasksBySpecificProfessorOfStudent(student: StudentPreviewAsListModel) {
         viewModelScope.launch {
             flow { emit(taskUseCases.getAllTasksBySpecificProfessorOfStudent(student.studentId)) }.catchAndHandleError { _, errorCode ->
@@ -134,7 +193,7 @@ class ProfessorViewModel(
                 emit(
                     taskUseCases.getAllTasksOfAllStudents()
                 )
-            }.catchAndHandleError { _, errorCode ->
+            }.catchAndHandleError { errorMessage, errorCode ->
                 handlingError(errorCode)
             }
                 .collect { res ->
@@ -265,29 +324,37 @@ class ProfessorViewModel(
         subjectName: String,
     ) {
         viewModelScope.launch(Dispatchers.IO) {
-            flow {
-                val task = TaskModel(
-                    taskId = "",
-                    subjectName = subjectName,
-                    description = description,
-                    assignTo = selectedUsers,
-                    assignByProfessor = CurrentUser.userId ?: "",
-                    deadlineDate = deadline,
-                    creationDate = DateHelper.getCurrentDate(),
-                    progress = TaskStatus.TODO,
-                    taskTitle = taskTitle
+            val sizeOfStudents = selectedUsers.size
+            var count: Int = 0
 
-                )
-                emit(taskUseCases.insertTask(task.taskDomainToTaskEntity()))
-            }.catchAndHandleError { _, errorCode ->
-                handlingError(errorCode)
-            }.collect {
-                _state.update {
-                    it.copy(
-                        uiEvents = ProfessorUiEvents.Success,
-                        messageErrorId = R.string.success_new_task,
-                        isAddDialogVisible = false
+            selectedUsers.map { student ->
+                flow {
+                    val task = TaskModel(
+                        taskId = "",
+                        subjectName = subjectName,
+                        description = description,
+                        assignTo = student,
+                        assignByProfessor = CurrentUser.userId ?: "",
+                        deadlineDate = deadline,
+                        creationDate = DateHelper.getCurrentDate(),
+                        progress = TaskStatus.TODO,
+                        taskTitle = taskTitle
+
                     )
+                    emit(taskUseCases.insertTask(task.taskDomainToTaskEntity()))
+                }.catchAndHandleError { _, errorCode ->
+                    handlingError(errorCode)
+                }.collect {
+                    count++
+                    if (sizeOfStudents == count) {
+                        _state.update {
+                            it.copy(
+                                uiEvents = ProfessorUiEvents.Success,
+                                messageErrorId = R.string.success_new_task,
+                                isAddDialogVisible = false
+                            )
+                        }
+                    }
                 }
             }
         }

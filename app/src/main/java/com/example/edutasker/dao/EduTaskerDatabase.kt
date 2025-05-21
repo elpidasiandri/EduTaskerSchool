@@ -6,13 +6,11 @@ import androidx.room.TypeConverters
 import com.example.edutasker.entities.ProfessorEntity
 import com.example.edutasker.entities.StudentEntity
 import com.example.edutasker.entities.TaskEntity
-import com.example.edutasker.entities.relations.TaskStudentCrossRef
 
 @Database(
     entities = [TaskEntity::class,
         StudentEntity::class,
-        ProfessorEntity::class,
-        TaskStudentCrossRef::class],
+        ProfessorEntity::class],
     version = 1
 )
 @TypeConverters(Converters::class)

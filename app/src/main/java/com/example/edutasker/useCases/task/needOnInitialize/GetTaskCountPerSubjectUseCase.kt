@@ -1,4 +1,4 @@
-package com.example.edutasker.useCases.task
+package com.example.edutasker.useCases.task.needOnInitialize
 
 import com.example.edutasker.model.SubjectTaskCount
 import com.example.edutasker.repo.IDatabaseRepository

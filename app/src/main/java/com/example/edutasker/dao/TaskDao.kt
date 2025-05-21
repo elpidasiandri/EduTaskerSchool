@@ -1,16 +1,11 @@
 package com.example.edutasker.dao
 
 import androidx.room.Dao
-import androidx.room.Embedded
 import androidx.room.Insert
-import androidx.room.Junction
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import androidx.room.Relation
 import androidx.room.Transaction
-import com.example.edutasker.entities.StudentEntity
 import com.example.edutasker.entities.TaskEntity
-import com.example.edutasker.entities.relations.TaskStudentCrossRef
 import com.example.edutasker.entities.relations.TaskWithStudents
 import com.example.edutasker.model.SubjectTaskCount
 
@@ -19,15 +14,13 @@ interface TaskDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertTask(task: TaskEntity)
 
-    @Insert
-    suspend fun insertTaskStudentCrossRef(crossRef: TaskStudentCrossRef)
+    @Query("SELECT * FROM tasks WHERE taskId = :taskId")
+    suspend fun getTaskById(taskId: String): TaskEntity?
 
-    @Query("SELECT COUNT(*) FROM TaskStudentCrossRef WHERE taskId = :taskId AND studentId = :studentId")
-    suspend fun isTaskStudentCrossRefExists(taskId: String, studentId: String): Int
 
     @Transaction
     @Query("SELECT * FROM tasks WHERE taskId = :taskId")
-    suspend fun getTaskWithStudents(taskId: String): TaskWithStudents
+    suspend fun getTaskWithStudent(taskId: String): TaskWithStudents
 
     @Query(
         """
@@ -43,9 +36,6 @@ interface TaskDao {
 
     @Query("SELECT COUNT(*) FROM tasks WHERE assignBy = :profId")
     suspend fun getTaskCountForProfessor(profId: String): Int
-
-    @Query("SELECT * FROM tasks")
-    suspend fun getAllTasks(): List<TaskEntity>
 
     @Query("SELECT COUNT(*) FROM tasks WHERE taskId = :taskId")
     suspend fun isTaskIdExists(taskId: String): Int
@@ -75,14 +65,17 @@ interface TaskDao {
 
     @Transaction
     @Query("""
-        SELECT * FROM tasks 
-        WHERE assignBy = :assignerId 
-        AND taskId IN (
-            SELECT taskId FROM TaskStudentCrossRef WHERE studentId = :studentId
-        )
-    """)
+    SELECT * FROM tasks
+    WHERE assignBy = :assignerId
+    AND assignTo = :studentId
+""")
     suspend fun getTasksByAssignerAndStudent(
         assignerId: String,
         studentId: String
     ): List<TaskWithStudents>
+
+    @Transaction
+    @Query("SELECT * FROM tasks WHERE taskId = :taskId")
+    suspend fun getTaskWithBasicStudentInfo(taskId: String): TaskWithStudents
+
 }

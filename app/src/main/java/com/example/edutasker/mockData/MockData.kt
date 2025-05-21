@@ -4,17 +4,13 @@ import com.example.edutasker.entities.ProfessorEntity
 import com.example.edutasker.entities.StudentEntity
 import com.example.edutasker.entities.TaskEntity
 import com.example.edutasker.useCases.task.TaskUseCases
-import com.example.edutasker.useCases.professor.InsertProfessorUseCase
-import com.example.edutasker.useCases.student.InsertStudentUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 object MockData {
     fun insertMockData(
-        taskUseCases: TaskUseCases,
-        insertProfessor: InsertProfessorUseCase,
-        insertStudent: InsertStudentUseCase,
+        taskUseCases: TaskUseCases
     ) {
         CoroutineScope(Dispatchers.IO).launch {
             // Professors
@@ -40,10 +36,6 @@ object MockData {
                 "p3", "Mike", "Brown", "mikeBrown@mail.com", "1234", "",
                 listOf("History")
             )
-
-            insertProfessor(prof1)
-            insertProfessor(prof2)
-            insertProfessor(prof3)
 
             // Students
             val students = listOf(
@@ -115,13 +107,11 @@ object MockData {
                     "papa",
                     "Maria",
                     "",
-                    "maria@mail.com",
+                    "ma0@mail.com",
                     "1234",
                     listOf("Thesis", "History", "Chemistry")
                 ),
             )
-
-            students.forEach { insertStudent(it) }
 
             // Tasks
             val tasks = listOf(
@@ -133,129 +123,204 @@ object MockData {
                     "p1",
                     "26/06/2025",
                     creationDate = "11/05/2025",
-                    assignTo = listOf("s1", "s2"),
+                    assignTo = "s1",
                     progress = "TODO"
                 ),
                 TaskEntity(
                     "t2",
+                    "Solve integrals",
+                    "Maths",
+                    "Calculate the following definite and indefinite integrals using standard techniques. Justify each step.",
+                    "p1",
+                    "26/06/2025",
+                    creationDate = "11/05/2025",
+                    assignTo = "s2",
+                    progress = "TODO"
+                ),
+                TaskEntity(
+                    "t3",
                     "Newton’s laws",
                     "Physics",
                     "Explain each of Newton’s three laws of motion with real-world examples. Then, solve the attached problems applying each law.",
                     "p1",
                     "28/06/2025",
                     creationDate = "22/05/2025",
-                    assignTo = listOf("s1", "s2"),
+                    assignTo = "s1",
                     progress = "TODO"
                 ),
                 TaskEntity(
-                    "t3",
+                    "t4",
+                    "Newton’s laws",
+                    "Physics",
+                    "Explain each of Newton’s three laws of motion with real-world examples. Then, solve the attached problems applying each law.",
+                    "p1",
+                    "28/06/2025",
+                    creationDate = "22/05/2025",
+                    assignTo = "s2",
+                    progress = "TODO"
+                ),
+                TaskEntity(
+                    "t5",
                     "Linear equations",
                     "Maths",
                     "Solve the system of linear equations provided in the worksheet. Show all steps of your work clearly.",
                     "p1",
                     "28/06/2025",
                     creationDate = "22/05/2025",
-                    assignTo = listOf("s2", "s3"),
+                    assignTo = "s2",
                     progress = "TODO"
                 ),
                 TaskEntity(
-                    "t4",
+                    "t6",
+                    "Linear equations",
+                    "Maths",
+                    "Solve the system of linear equations provided in the worksheet. Show all steps of your work clearly.",
+                    "p1",
+                    "28/06/2025",
+                    creationDate = "22/05/2025",
+                    assignTo = "s3",
+                    progress = "TODO"
+                ),
+                TaskEntity(
+                    "t7",
                     "Cell structure",
                     "Biology",
                     "Describe the structure and function of major cell organelles. Create a labeled diagram of a eukaryotic cell.",
                     "p2",
                     "28/06/2025",
                     creationDate = "22/05/2025",
-                    assignTo = listOf("s2", "s3"),
+                    assignTo = "s2",
                     progress = "TODO"
                 ),
                 TaskEntity(
-                    "t5",
+                    "t8",
+                    "Cell structure",
+                    "Biology",
+                    "Describe the structure and function of major cell organelles. Create a labeled diagram of a eukaryotic cell.",
+                    "p2",
+                    "28/06/2025",
+                    creationDate = "22/05/2025",
+                    assignTo = "s3",
+                    progress = "TODO"
+                ),
+                TaskEntity(
+                    "t9",
                     "WWII timeline",
                     "History",
                     "Create a detailed timeline of the major events of World War II from 1939 to 1945. Include dates and brief descriptions.",
                     "p2",
                     "28/06/2025",
                     creationDate = "22/05/2025",
-                    assignTo = listOf("s2", "s3"),
+                    assignTo = "s2",
                     progress = "TODO"
                 ),
                 TaskEntity(
-                    "t6",
+                    "t10",
+                    "WWII timeline",
+                    "History",
+                    "Create a detailed timeline of the major events of World War II from 1939 to 1945. Include dates and brief descriptions.",
+                    "p2",
+                    "28/06/2025",
+                    creationDate = "22/05/2025",
+                    assignTo = "s3",
+                    progress = "TODO"
+                ),
+                TaskEntity(
+                    "t11",
                     "Matrix multiplication",
                     "Maths",
                     "Perform the multiplication of the given matrices. Provide the final result and intermediate steps where necessary.",
                     "p2",
                     "28/06/2025",
                     creationDate = "22/05/2025",
-                    assignTo = listOf("s2", "s3"),
+                    assignTo = "s4",
                     progress = "TODO"
                 ),
                 TaskEntity(
-                    "t7",
+                    "t12",
+                    "Matrix multiplication",
+                    "Maths",
+                    "Perform the multiplication of the given matrices. Provide the final result and intermediate steps where necessary.",
+                    "p2",
+                    "28/06/2025",
+                    creationDate = "22/05/2025",
+                    assignTo = "s5",
+                    progress = "TODO"
+                ),
+                TaskEntity(
+                    "t13",
                     "Periodic table",
                     "Chemistry",
                     "Identify 10 elements from the periodic table and describe their group, period, and key properties in one sentence each.",
                     "p3",
                     "28/06/2025",
                     creationDate = "22/05/2025",
-                    assignTo = listOf("s1", "s4"),
+                    assignTo = "s6",
                     progress = "TODO"
                 ),
                 TaskEntity(
-                    "t8",
+                    "t14",
+                    "Periodic table",
+                    "Chemistry",
+                    "Identify 10 elements from the periodic table and describe their group, period, and key properties in one sentence each.",
+                    "p3",
+                    "28/06/2025",
+                    creationDate = "22/05/2025",
+                    assignTo = "s7",
+                    progress = "TODO"
+                ),
+                TaskEntity(
+                    "t15",
                     "Derivatives",
                     "Maths",
                     "Differentiate the following functions with respect to x. Justify each step using rules of differentiation.",
                     "p3",
                     "28/06/2025",
                     creationDate = "22/05/2025",
-                    assignTo = listOf("s4", "s3"),
+                    assignTo = "s8",
                     progress = "TODO"
                 ),
                 TaskEntity(
-                    "t9",
+                    "t16",
                     "Electricity",
                     "Physics",
                     "Define current, voltage, and resistance. Solve the circuit problems based on Ohm’s Law.",
                     "p3",
                     "28/06/2025",
                     creationDate = "22/05/2025",
-                    assignTo = listOf("s5"),
+                    assignTo = "s5",
                     progress = "TODO"
                 ),
                 TaskEntity(
-                    "t10",
+                    "t17",
                     "Ancient Greece",
                     "History",
                     "Write a short essay on the political system of Athens in Ancient Greece and compare it to modern democracy.",
                     "p3",
                     "28/06/2025",
                     creationDate = "22/05/2025",
-                    assignTo = listOf("s2", "s5"),
+                    assignTo = "s2",
                     progress = "TODO"
                 ),
+                TaskEntity(
+                    "t18",
+                    "Ancient Greece",
+                    "History",
+                    "Write a short essay on the political system of Athens in Ancient Greece and compare it to modern democracy.",
+                    "p3",
+                    "28/06/2025",
+                    creationDate = "22/05/2025",
+                    assignTo = "s5",
+                    progress = "TODO"
+                )
             )
 
+            taskUseCases.insertMockData(
+                professors = listOf(prof1, prof2, prof3),
+                students = students,
+                tasks = tasks
 
-            tasks.forEach { taskUseCases.insertTask(it) }
-
-            val taskStudentMap = mapOf(
-                "t1" to listOf("s1", "s2", "s4"),
-                "t2" to listOf("s1", "s5"),
-                "t3" to listOf("s1", "s6"),
-                "t4" to listOf("s2"),
-                "t5" to listOf("s4", "s6"),
-                "t6" to listOf("s1", "s2"),
-                "t7" to listOf("s3"),
-                "t8" to listOf("s1", "s6"),
-                "t9" to listOf("s1", "s5"),
-                "t10" to listOf("s4", "s6"),
             )
-
-            taskStudentMap.forEach { (taskId, studentIds) ->
-                taskUseCases.assignTaskToStudents(taskId, studentIds)
-            }
         }
     }
 }

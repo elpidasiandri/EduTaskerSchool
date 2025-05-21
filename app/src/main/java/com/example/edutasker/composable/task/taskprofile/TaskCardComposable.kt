@@ -1,6 +1,7 @@
 package com.example.edutasker.composable.task.taskprofile
 
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -31,11 +32,17 @@ import com.example.edutasker.R
 import com.example.edutasker.model.TasksWithStudentImageModel
 
 @Composable
-fun TaskCardComposable(taskWithStudentImage: TasksWithStudentImageModel, studentImage: String) {
+fun TaskCardComposable(
+    taskWithStudentImage: TasksWithStudentImageModel, studentImage: String,
+    onTaskClick: (TasksWithStudentImageModel) -> Unit,
+) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 4.dp),
+            .padding(vertical = 4.dp)
+            .clickable {
+                onTaskClick(taskWithStudentImage)
+            },
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         shape = RoundedCornerShape(12.dp)
     ) {

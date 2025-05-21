@@ -1,10 +1,9 @@
-package com.example.edutasker.screens.professor.mapper
+package com.example.edutasker.mapper
 
 import com.example.edutasker.entities.relations.TaskWithStudents
 import com.example.edutasker.model.TaskModel
 import com.example.edutasker.model.TaskStatus
 import com.example.edutasker.model.TasksWithStudentImageModel
-
 
 fun TaskWithStudents.taskDomainToTasksWithStudentImageModel(): TasksWithStudentImageModel {
     val taskModel = TaskModel(
@@ -18,7 +17,7 @@ fun TaskWithStudents.taskDomainToTasksWithStudentImageModel(): TasksWithStudentI
         creationDate = task.creationDate,
         progress = TaskStatus.valueOf(task.progress)
     )
-    val studentImage = students.firstOrNull()?.image.orEmpty()
+    val studentImage = student.image
     return TasksWithStudentImageModel(
         task = taskModel,
         studentImage = studentImage

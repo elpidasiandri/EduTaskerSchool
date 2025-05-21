@@ -4,10 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import androidx.room.Transaction
 import com.example.edutasker.entities.StudentEntity
-import com.example.edutasker.entities.relations.TaskStudentCrossRef
-import com.example.edutasker.entities.relations.TaskWithStudents
 import com.example.edutasker.model.StudentBasicInfoForPreviewIntoList
 import com.example.edutasker.model.StudentPreviewAsListModel
 
@@ -15,20 +12,6 @@ import com.example.edutasker.model.StudentPreviewAsListModel
 interface StudentDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertStudent(student: StudentEntity)
-
-    @Insert
-    suspend fun insertTaskStudentCrossRef(crossRef: TaskStudentCrossRef)
-
-    @Transaction
-    @Query(
-        """
-    SELECT * FROM tasks 
-    INNER JOIN TaskStudentCrossRef ON tasks.taskId = TaskStudentCrossRef.taskId
-    WHERE TaskStudentCrossRef.studentId = :studentId
-"""
-    )
-
-    suspend fun getTasksForStudent(studentId: String): List<TaskWithStudents>
 
     @Query("SELECT * FROM StudentEntity WHERE email = :email AND password = :password")
     suspend fun loginStudent(email: String, password: String): StudentEntity?
@@ -61,4 +44,6 @@ WHERE name LIKE '%' || :keyword || '%'
 """)
     suspend fun searchStudents(keyword: String): List<StudentPreviewAsListModel>
 
+    @Query("SELECT COUNT(*) FROM StudentEntity WHERE studentId = :studentId")
+    suspend fun isStudentIdExists(studentId: String): Int
 }
