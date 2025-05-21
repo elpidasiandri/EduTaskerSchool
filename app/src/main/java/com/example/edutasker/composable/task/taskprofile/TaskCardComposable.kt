@@ -34,14 +34,14 @@ import com.example.edutasker.model.TasksWithStudentImageModel
 @Composable
 fun TaskCardComposable(
     taskWithStudentImage: TasksWithStudentImageModel, studentImage: String,
-    onTaskClick: (TasksWithStudentImageModel) -> Unit,
+    onTaskClick: (String) -> Unit,
 ) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 4.dp)
             .clickable {
-                onTaskClick(taskWithStudentImage)
+                onTaskClick(taskWithStudentImage.task.taskId)
             },
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         shape = RoundedCornerShape(12.dp)

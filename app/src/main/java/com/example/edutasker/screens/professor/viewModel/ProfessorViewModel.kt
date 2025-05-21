@@ -4,11 +4,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.edutasker.R
 import com.example.edutasker.mockData.CurrentUser
-import com.example.edutasker.model.OpenedTask
+import com.example.edutasker.model.OpenedTaskModel
 import com.example.edutasker.model.StudentPreviewAsListModel
 import com.example.edutasker.model.TaskModel
 import com.example.edutasker.model.TaskStatus
 import com.example.edutasker.mapper.taskDomainToTaskEntity
+import com.example.edutasker.model.ProfessorBasicModel
 import com.example.edutasker.screens.professor.viewModel.stateAndEvents.ProfessorEvents
 import com.example.edutasker.screens.professor.viewModel.stateAndEvents.ProfessorState
 import com.example.edutasker.screens.professor.viewModel.stateAndEvents.ProfessorUiEvents
@@ -17,7 +18,7 @@ import com.example.edutasker.useCases.student.GetAllStudentsOfSpecificProfessorU
 import com.example.edutasker.useCases.professor.GetProfessorTitlesOfSubjectUseCase
 import com.example.edutasker.useCases.student.GetNameIdsAndImageOfStudentUseCase
 import com.example.edutasker.useCases.student.SearchStudentsUseCase
-import com.example.edutasker.useCases.task.GetAllInfoOfTaskAndBasicOfStudentsUseCase
+import com.example.edutasker.useCases.task.GetAllInfoOfTaskAndBasicOfStudentAndProfessorUseCase
 import com.example.edutasker.utils.DateHelper
 import com.example.edutasker.utils.catchAndHandleError
 import com.example.edutasker.utils.showErrorBasedErrorCode
@@ -37,7 +38,7 @@ class ProfessorViewModel(
     private val getProfessorTitlesOfSubjectUseCase: GetProfessorTitlesOfSubjectUseCase,
     private val getNameIdsAndImageOfStudentUseCase: GetNameIdsAndImageOfStudentUseCase,
     private val searchStudentsUseCase: SearchStudentsUseCase,
-    private val getAllInfoOfTaskAndBasicOfStudentsUseCase: GetAllInfoOfTaskAndBasicOfStudentsUseCase,
+    private val getAllInfoOfTaskAndBasicOfStudentAndProfessorUseCase: GetAllInfoOfTaskAndBasicOfStudentAndProfessorUseCase,
 ) : ViewModel() {
     private val _state = MutableStateFlow(ProfessorState())
     val state: StateFlow<ProfessorState> = _state
@@ -55,7 +56,11 @@ class ProfessorViewModel(
                 _state.update {
                     it.copy(
                         isTaskOpened = false,
-                        openedTask = OpenedTask(TaskModel(), StudentPreviewAsListModel())
+                        openedTask = OpenedTaskModel(
+                            TaskModel(),
+                            StudentPreviewAsListModel(),
+                            ProfessorBasicModel()
+                        )
                     )
                 }
             }
@@ -130,11 +135,15 @@ class ProfessorViewModel(
 
     private fun getInfoAboutOpenedTask(taskId: String) {
         viewModelScope.launch {
-            flow { emit(getAllInfoOfTaskAndBasicOfStudentsUseCase(taskId)) }.catchAndHandleError { _, errorCode ->
+            flow { emit(getAllInfoOfTaskAndBasicOfStudentAndProfessorUseCase(taskId)) }.catchAndHandleError { _, errorCode ->
                 _state.update {
                     it.copy(
                         isTaskOpened = false,
-                        openedTask = OpenedTask(TaskModel(), StudentPreviewAsListModel()),
+                        openedTask = OpenedTaskModel(
+                            TaskModel(),
+                            StudentPreviewAsListModel(),
+                            ProfessorBasicModel()
+                        ),
                         messageErrorId = errorCode.showErrorBasedErrorCode(),
                         uiEvents = ProfessorUiEvents.Error
                     )
@@ -142,11 +151,12 @@ class ProfessorViewModel(
             }.collect { taskAndStudentInfo ->
                 val taskInfo = taskAndStudentInfo.taskInfo
                 val studentInfo = taskAndStudentInfo.studentBasic
+                val professorInfo = taskAndStudentInfo.professorBasic
 
                 _state.update {
                     it.copy(
                         isTaskOpened = true,
-                        openedTask = OpenedTask(
+                        openedTask = OpenedTaskModel(
                             TaskModel(
                                 taskId = taskInfo.taskId,
                                 taskTitle = taskInfo.taskTitle,
@@ -163,6 +173,11 @@ class ProfessorViewModel(
                                 studentId = studentInfo.studentId,
                                 username = studentInfo.username,
                                 image = studentInfo.image
+                            ),
+                            ProfessorBasicModel(
+                                id = professorInfo.id,
+                                username = professorInfo.username,
+                                image = professorInfo.image
                             )
                         )
                     )

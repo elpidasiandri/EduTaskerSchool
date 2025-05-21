@@ -47,3 +47,5 @@ fun <T> Flow<T>.catchAndHandleError(
 }
 
 fun String?.orEmptyIfNull(): String = this ?: ""
+
+fun Boolean?.orEmptyIfNull(): Boolean = this ?: false

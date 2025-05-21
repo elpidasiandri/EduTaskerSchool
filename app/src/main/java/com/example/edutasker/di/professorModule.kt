@@ -6,7 +6,7 @@ import com.example.edutasker.useCases.professor.GetProfessorTitlesOfSubjectUseCa
 import com.example.edutasker.useCases.student.GetNameIdsAndImageOfStudentUseCase
 import com.example.edutasker.useCases.student.SearchProfessorStudentsHavingSpecificSubjectUseCase
 import com.example.edutasker.useCases.student.SearchStudentsUseCase
-import com.example.edutasker.useCases.task.GetAllInfoOfTaskAndBasicOfStudentsUseCase
+import com.example.edutasker.useCases.task.GetAllInfoOfTaskAndBasicOfStudentAndProfessorUseCase
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -30,6 +30,6 @@ val professorModule = module {
         SearchStudentsUseCase(get())
     }
     single {
-        GetAllInfoOfTaskAndBasicOfStudentsUseCase(get())
+        GetAllInfoOfTaskAndBasicOfStudentAndProfessorUseCase(get())
     }
 }

@@ -15,6 +15,7 @@
     <string name="in_progress">In progress</string>
     <string name="done">Done</string>
     <string name="save">Save</string>
+    <string name="created">Created</string>
     <string name="search_student">Search student</string>
     <string name="cancel">Cancel</string>
     <string name="subject">Subject</string>
@@ -32,4 +33,6 @@
     <string name="assignments">Assignments</string>
     <string name="dashboard">Dashboard</string>
     <string name="no_results">No results found for</string>
+    <string name="assigned_by">Assigned by</string>
+    <string name="status">Status:</string>
 </resources>

@@ -52,9 +52,12 @@ fun ProfessorScreenComposable(
     state: ProfessorState,
 ) {
     if (state.isTaskOpened) {
-        TaskDetailsDialog(taskInfo = state.openedTask, onDismiss = {
-            onEvent(ProfessorEvents.DismissAddTaskScreen)
-        })
+        TaskDetailsDialog(
+            taskInfo = state.openedTask, onDismiss = {
+                onEvent(ProfessorEvents.DismissAddTaskScreen)
+            },
+            onStatusChange = {},
+            onSaveStatusChange = {})
     }
     if (state.isAddDialogVisible) {
         if (state.professorSubjects.isEmpty()) {
@@ -174,7 +177,7 @@ fun ProfessorScreenComposable(
                         .padding(padding),
                     state.selectedStudentFromSearch.image,
                     allTasksByEveryoneWithImage = state.allTasksByProfessorStudent.ifEmpty { state.allTasksByEveryone },
-                    onTaskClick = {}
+                    onTaskClick = { taskId -> onEvent(ProfessorEvents.OpenTaskDialog(taskId)) }
                 )
             }
         }

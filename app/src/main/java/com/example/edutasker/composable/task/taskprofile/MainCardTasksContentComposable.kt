@@ -28,7 +28,7 @@ fun MainCardTasksContentComposable(
     modifier: Modifier = Modifier,
     selectedStudentImage: String,
     allTasksByEveryoneWithImage: List<TasksWithStudentImageModel>,
-    onTaskClick: (TasksWithStudentImageModel) -> Unit,
+    onTaskClick: (String) -> Unit,
 ) {
     var selectedTask by remember { mutableStateOf<TasksWithStudentImageModel?>(null) }
     Row(
@@ -49,7 +49,7 @@ fun MainCardTasksContentComposable(
                 .width(columnWidth)
                 .fillMaxHeight(),
             selectedStudentImage = selectedStudentImage,
-            onTaskClick = { taskClicked -> onTaskClick(taskClicked) }
+            onTaskClick = { taskId -> onTaskClick(taskId) }
         )
         TaskColumnComposable(
             title = stringResource(R.string.in_progress),
@@ -59,7 +59,7 @@ fun MainCardTasksContentComposable(
                 .width(columnWidth)
                 .fillMaxHeight(),
             selectedStudentImage = selectedStudentImage,
-            onTaskClick = { taskClicked -> onTaskClick(taskClicked) }
+            onTaskClick = { taskId -> onTaskClick(taskId) }
         )
         TaskColumnComposable(
             title = stringResource(R.string.done),
@@ -69,7 +69,7 @@ fun MainCardTasksContentComposable(
                 .width(columnWidth)
                 .fillMaxHeight(),
             selectedStudentImage = selectedStudentImage,
-            onTaskClick = { taskClicked -> onTaskClick(taskClicked) }
+            onTaskClick = { taskId -> onTaskClick(taskId) }
         )
     }
 }

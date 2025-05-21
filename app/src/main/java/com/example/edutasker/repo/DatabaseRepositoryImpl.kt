@@ -13,7 +13,7 @@ import com.example.edutasker.model.SubjectTaskCount
 import com.example.edutasker.model.TasksWithStudentImageModel
 import com.example.edutasker.mapper.taskDomainToTasksWithStudentImageModel
 import com.example.edutasker.mapper.toOpenedTask
-import com.example.edutasker.model.OpenedTask
+import com.example.edutasker.model.OpenedTaskModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 
@@ -173,8 +173,8 @@ class DatabaseRepositoryImpl(
         return taskDao.getLastTaskId() ?: ""
     }
 
-    override suspend fun getAllInfoAboutTaskAndBasicOfStudent(taskId: String): OpenedTask {
-        return taskDao.getTaskWithBasicStudentInfo(taskId).toOpenedTask()
+    override suspend fun getAllInfoAboutTaskAndBasicOfStudentAndProfessor(taskId: String): OpenedTaskModel {
+        return taskDao.getTaskWithStudentAndProfessor(taskId).toOpenedTask()
     }
 
     override suspend fun insertMockData(

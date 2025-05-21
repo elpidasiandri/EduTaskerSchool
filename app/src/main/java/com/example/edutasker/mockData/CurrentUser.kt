@@ -36,4 +36,6 @@ object CurrentUser {
     }
 
     fun getCurrentUserId(): String = userId.orEmptyIfNull()
+
+    fun getCurrentUserIfIsStudent(): Boolean = isStudent.orEmptyIfNull()
 }

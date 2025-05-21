@@ -7,6 +7,7 @@ import androidx.room.Query
 import androidx.room.Transaction
 import com.example.edutasker.entities.TaskEntity
 import com.example.edutasker.entities.relations.TaskWithStudent
+import com.example.edutasker.entities.relations.TaskWithStudentAndProfessor
 import com.example.edutasker.model.SubjectTaskCount
 
 @Dao
@@ -69,5 +70,9 @@ interface TaskDao {
     @Transaction
     @Query("SELECT * FROM tasks WHERE taskId = :taskId")
     suspend fun getTaskWithBasicStudentInfo(taskId: String): TaskWithStudent
+
+    @Transaction
+    @Query("SELECT * FROM tasks WHERE taskId = :taskId")
+    suspend fun getTaskWithStudentAndProfessor(taskId: String): TaskWithStudentAndProfessor
 
 }

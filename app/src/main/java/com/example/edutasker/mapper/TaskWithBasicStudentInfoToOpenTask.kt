@@ -1,13 +1,14 @@
 package com.example.edutasker.mapper
 
-import com.example.edutasker.entities.relations.TaskWithStudent
-import com.example.edutasker.model.OpenedTask
+import com.example.edutasker.entities.relations.TaskWithStudentAndProfessor
+import com.example.edutasker.model.OpenedTaskModel
+import com.example.edutasker.model.ProfessorBasicModel
 import com.example.edutasker.model.StudentPreviewAsListModel
 import com.example.edutasker.model.TaskModel
 import com.example.edutasker.model.TaskStatus
 
-fun TaskWithStudent.toOpenedTask(): OpenedTask {
-    return OpenedTask(
+fun TaskWithStudentAndProfessor.toOpenedTask(): OpenedTaskModel {
+    return OpenedTaskModel(
         taskInfo = TaskModel(
             taskId = task.taskId,
             taskTitle = task.taskTitle,
@@ -21,8 +22,13 @@ fun TaskWithStudent.toOpenedTask(): OpenedTask {
         ),
         studentBasic = StudentPreviewAsListModel(
             studentId = student.studentId,
-            username = student.username,
+            username = "${student.username} ${student.name}",
             image = student.image
+        ),
+        professorBasic = ProfessorBasicModel(
+            id = professor.profId,
+            username = "${professor.username} ${professor.name}",
+            image = professor.image,
         )
     )
 }

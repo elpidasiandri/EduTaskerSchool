@@ -3,7 +3,7 @@ package com.example.edutasker.repo
 import com.example.edutasker.entities.ProfessorEntity
 import com.example.edutasker.entities.StudentEntity
 import com.example.edutasker.entities.TaskEntity
-import com.example.edutasker.model.OpenedTask
+import com.example.edutasker.model.OpenedTaskModel
 import com.example.edutasker.model.StudentPreviewAsListModel
 import com.example.edutasker.model.SubjectTaskCount
 import com.example.edutasker.model.TasksWithStudentImageModel
@@ -37,7 +37,7 @@ interface IDatabaseRepository {
     suspend fun getAllTasksOfAllStudents(): List<TasksWithStudentImageModel>
     suspend fun getAllTasksOfProfessorStudent(): List<TasksWithStudentImageModel>
     suspend fun getAllTasksBySpecificProfessorOfStudent(studentId: String): List<TasksWithStudentImageModel>
-    suspend fun getAllInfoAboutTaskAndBasicOfStudent(taskId: String): OpenedTask
+    suspend fun getAllInfoAboutTaskAndBasicOfStudentAndProfessor(taskId: String): OpenedTaskModel
     suspend fun insertMockData(
         professors: List<ProfessorEntity>,
         students: List<StudentEntity>,

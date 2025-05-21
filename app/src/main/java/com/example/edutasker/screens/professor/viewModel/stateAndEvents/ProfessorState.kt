@@ -1,6 +1,7 @@
 package com.example.edutasker.screens.professor.viewModel.stateAndEvents
 
-import com.example.edutasker.model.OpenedTask
+import com.example.edutasker.model.OpenedTaskModel
+import com.example.edutasker.model.ProfessorBasicModel
 import com.example.edutasker.model.StudentPreviewAsListModel
 import com.example.edutasker.model.TaskModel
 import com.example.edutasker.model.TasksWithStudentImageModel
@@ -24,7 +25,10 @@ data class ProfessorState(
     val tasks: List<TaskModel> = listOf(),
     val allTasksByEveryone: List<TasksWithStudentImageModel> = listOf(),
     val allTasksByProfessorStudent: List<TasksWithStudentImageModel> = listOf(),
-    val openedTask: OpenedTask = OpenedTask(TaskModel(), StudentPreviewAsListModel()),
+    val openedTask: OpenedTaskModel = OpenedTaskModel(
+        TaskModel(), StudentPreviewAsListModel(),
+        ProfessorBasicModel()
+    ),
     val isTaskOpened: Boolean = false,
 )
 
