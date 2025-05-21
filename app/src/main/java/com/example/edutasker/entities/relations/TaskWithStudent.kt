@@ -5,7 +5,7 @@ import androidx.room.Relation
 import com.example.edutasker.entities.StudentEntity
 import com.example.edutasker.entities.TaskEntity
 
-data class TaskWithStudents(
+data class TaskWithStudent(
     @Embedded val task: TaskEntity,
     @Relation(
         parentColumn = "assignTo",

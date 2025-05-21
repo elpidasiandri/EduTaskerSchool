@@ -1,12 +1,12 @@
 package com.example.edutasker.mapper
 
-import com.example.edutasker.entities.relations.TaskWithStudents
+import com.example.edutasker.entities.relations.TaskWithStudent
 import com.example.edutasker.model.OpenedTask
 import com.example.edutasker.model.StudentPreviewAsListModel
 import com.example.edutasker.model.TaskModel
 import com.example.edutasker.model.TaskStatus
 
-fun TaskWithStudents.toOpenedTask(): OpenedTask {
+fun TaskWithStudent.toOpenedTask(): OpenedTask {
     return OpenedTask(
         taskInfo = TaskModel(
             taskId = task.taskId,

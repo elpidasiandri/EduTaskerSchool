@@ -6,21 +6,13 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
 import com.example.edutasker.entities.TaskEntity
-import com.example.edutasker.entities.relations.TaskWithStudents
+import com.example.edutasker.entities.relations.TaskWithStudent
 import com.example.edutasker.model.SubjectTaskCount
 
 @Dao
 interface TaskDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertTask(task: TaskEntity)
-
-    @Query("SELECT * FROM tasks WHERE taskId = :taskId")
-    suspend fun getTaskById(taskId: String): TaskEntity?
-
-
-    @Transaction
-    @Query("SELECT * FROM tasks WHERE taskId = :taskId")
-    suspend fun getTaskWithStudent(taskId: String): TaskWithStudents
 
     @Query(
         """
@@ -54,14 +46,14 @@ interface TaskDao {
     @Query("""
         SELECT * FROM tasks
     """)
-    suspend fun getAllTasksWithStudentImages(): List<TaskWithStudents>
+    suspend fun getAllTasksWithStudentImages(): List<TaskWithStudent>
 
     @Transaction
     @Query("""
         SELECT * FROM tasks
         WHERE assignBy = :assignerId
     """)
-    suspend fun getTasksByAssignerWithStudentImages(assignerId: String): List<TaskWithStudents>
+    suspend fun getTasksByAssignerWithStudentImages(assignerId: String): List<TaskWithStudent>
 
     @Transaction
     @Query("""
@@ -72,10 +64,10 @@ interface TaskDao {
     suspend fun getTasksByAssignerAndStudent(
         assignerId: String,
         studentId: String
-    ): List<TaskWithStudents>
+    ): List<TaskWithStudent>
 
     @Transaction
     @Query("SELECT * FROM tasks WHERE taskId = :taskId")
-    suspend fun getTaskWithBasicStudentInfo(taskId: String): TaskWithStudents
+    suspend fun getTaskWithBasicStudentInfo(taskId: String): TaskWithStudent
 
 }
