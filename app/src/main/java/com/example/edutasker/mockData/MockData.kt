@@ -33,7 +33,12 @@ object MockData {
                 listOf("Maths", "Biology", "Thesis")
             )
             val prof3 = ProfessorEntity(
-                "p3", "Mike", "Brown", "mikeBrown@mail.com", "1234", "",
+                "p3",
+                "Mike",
+                "Brown",
+                "mikeBrown@mail.com",
+                "1234",
+                "",
                 listOf("History")
             )
 
