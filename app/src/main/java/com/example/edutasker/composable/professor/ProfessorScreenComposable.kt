@@ -54,7 +54,7 @@ fun ProfessorScreenComposable(
     if (state.isTaskOpened) {
         TaskDetailsDialog(
             taskInfo = state.openedTask, onDismiss = {
-                onEvent(ProfessorEvents.DismissAddTaskScreen)
+                onEvent(ProfessorEvents.CloseTaskDialog)
             },
             onStatusChange = {},
             onSaveStatusChange = {})

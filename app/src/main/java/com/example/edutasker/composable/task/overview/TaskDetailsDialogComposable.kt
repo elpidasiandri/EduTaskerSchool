@@ -21,6 +21,7 @@ import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -94,7 +95,9 @@ fun TaskDetailsDialog(
                         text = taskInfo.taskInfo.taskTitle,
                         fontWeight = FontWeight.Bold,
                         fontSize = 22.sp,
-                        modifier = Modifier.padding(vertical = 8.dp).padding(top = 8.dp)
+                        modifier = Modifier
+                            .padding(vertical = 8.dp)
+                            .padding(top = 8.dp)
                     )
 
                     Text(
@@ -153,6 +156,12 @@ fun TaskDetailsDialog(
                     ) {
                         Text(stringResource(R.string.save))
                     }
+                }
+                TextButton(
+                    onClick = onDismiss,
+                    modifier = Modifier.align(Alignment.Start)
+                ) {
+                    Text(text = stringResource(R.string.cancel))
                 }
             }
         }

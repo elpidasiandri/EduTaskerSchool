@@ -24,6 +24,7 @@ navigationFragmentKtx = "2.8.9"
 navigationUiKtx = "2.8.9"
 gson = "2.10.1"
 foundation = "1.4.3"
+timber = "5.0.1"
 
 [libraries]
 google-ksp-api = { group = "com.google.devtools.ksp", name = "symbol-processing-api", version.ref = "ksp" }
@@ -77,6 +78,7 @@ androidx-navigation-ui-ktx = { group = "androidx.navigation", name = "navigation
 
 #gson
 gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
+timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
