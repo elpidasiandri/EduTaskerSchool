@@ -9,6 +9,7 @@ import com.example.edutasker.entities.TaskEntity
 import com.example.edutasker.entities.relations.TaskWithStudent
 import com.example.edutasker.entities.relations.TaskWithStudentAndProfessor
 import com.example.edutasker.model.SubjectTaskCount
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface TaskDao {
@@ -44,28 +45,34 @@ interface TaskDao {
     suspend fun getLastTaskId(): String?
 
     @Transaction
-    @Query("""
+    @Query(
+        """
         SELECT * FROM tasks
-    """)
-    suspend fun getAllTasksWithStudentImages(): List<TaskWithStudent>
+    """
+    )
+    fun getAllTasksWithStudentImages(): Flow<List<TaskWithStudent>>
 
     @Transaction
-    @Query("""
+    @Query(
+        """
         SELECT * FROM tasks
         WHERE assignBy = :assignerId
-    """)
+    """
+    )
     suspend fun getTasksByAssignerWithStudentImages(assignerId: String): List<TaskWithStudent>
 
     @Transaction
-    @Query("""
+    @Query(
+        """
     SELECT * FROM tasks
     WHERE assignBy = :assignerId
     AND assignTo = :studentId
-""")
-    suspend fun getTasksByAssignerAndStudent(
+"""
+    )
+    fun getTasksByAssignerAndStudent(
         assignerId: String,
-        studentId: String
-    ): List<TaskWithStudent>
+        studentId: String,
+    ): Flow<List<TaskWithStudent>>
 
     @Transaction
     @Query("SELECT * FROM tasks WHERE taskId = :taskId")
@@ -75,14 +82,16 @@ interface TaskDao {
     @Query("SELECT * FROM tasks WHERE taskId = :taskId")
     suspend fun getTaskWithStudentAndProfessor(taskId: String): TaskWithStudentAndProfessor
 
-    @Query("""
+    @Query(
+        """
         UPDATE tasks 
         SET taskTitle = :taskTitle, 
             description = :description, 
             deadlineDate = :deadlineDate ,
             progress = :progress
         WHERE taskId = :taskId
-    """)
+    """
+    )
     suspend fun updateTaskDetails(
         taskId: String,
         taskTitle: String,

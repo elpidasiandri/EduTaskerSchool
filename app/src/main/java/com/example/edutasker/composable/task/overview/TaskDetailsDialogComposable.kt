@@ -175,12 +175,14 @@ fun TaskDetailsDialog(
                     ProfileRow(
                         stringResource(R.string.assigned_by),
                         taskInfo.professorBasic.username,
-                        taskInfo.professorBasic.image
+                        taskInfo.professorBasic.image,
+                        isStudent = false
                     )
                     ProfileRow(
                         stringResource(R.string.assigned_to),
                         taskInfo.studentBasic.username,
-                        taskInfo.studentBasic.image
+                        taskInfo.studentBasic.image,
+                        isStudent = true
                     )
                     TaskDetailRow(stringResource(R.string.subject), taskInfo.taskInfo.subjectName)
                     TaskDetailRow(stringResource(R.string.created), taskInfo.taskInfo.creationDate)

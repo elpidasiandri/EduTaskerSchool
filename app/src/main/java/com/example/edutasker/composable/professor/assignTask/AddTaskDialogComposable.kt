@@ -53,7 +53,6 @@ fun AddTaskDialogComposable(
     var descriptionOfTask by remember { mutableStateOf("") }
     var titleOfTask by remember { mutableStateOf("") }
     var selectedSubjectOfTask by remember { mutableStateOf("") }
-
     var assignToSearch by remember { mutableStateOf("") }
     var selectedStudentsOfTask by remember { mutableStateOf(listOf<StudentPreviewAsListModel>()) }
     val filteredStudents = searchedStudents.filter { student ->
@@ -142,7 +141,7 @@ fun AddTaskDialogComposable(
                     value = assignToSearch,
                     onValueChange = {
                         assignToSearch = it
-                        onEvent(ProfessorEvents.SearchProfessorStudents)
+                        onEvent(ProfessorEvents.SearchProfessorStudents(selectedSubjectOfTask))
                     },
                     label = {
                         Row(
@@ -200,7 +199,6 @@ fun AddTaskDialogComposable(
                         }
                     }
                 }
-
 
                 Spacer(modifier = Modifier.height(8.dp))
 

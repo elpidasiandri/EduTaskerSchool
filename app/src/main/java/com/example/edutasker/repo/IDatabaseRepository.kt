@@ -3,11 +3,13 @@ package com.example.edutasker.repo
 import com.example.edutasker.entities.ProfessorEntity
 import com.example.edutasker.entities.StudentEntity
 import com.example.edutasker.entities.TaskEntity
+import com.example.edutasker.entities.relations.TaskWithStudent
 import com.example.edutasker.model.OpenedTaskModel
 import com.example.edutasker.model.StudentPreviewAsListModel
 import com.example.edutasker.model.SubjectTaskCount
 import com.example.edutasker.model.TasksWithStudentImageModel
 import com.example.edutasker.model.UpdateTaskByProfessorModel
+import kotlinx.coroutines.flow.Flow
 
 interface IDatabaseRepository {
     suspend fun insertProfessor(professor: ProfessorEntity)
@@ -35,14 +37,15 @@ interface IDatabaseRepository {
     suspend fun getProfessorSubjects(idProfessor: String): List<String>
     suspend fun getNameIdAndImageOfStudents(): List<StudentPreviewAsListModel>
     suspend fun searchStudents(keyword: String): List<StudentPreviewAsListModel>
-    suspend fun getAllTasksOfAllStudents(): List<TasksWithStudentImageModel>
+    suspend fun getAllTasksOfAllStudents(): Flow<List<TaskWithStudent>>
     suspend fun getAllTasksOfProfessorStudent(): List<TasksWithStudentImageModel>
-    suspend fun getAllTasksBySpecificProfessorOfStudent(studentId: String): List<TasksWithStudentImageModel>
+    suspend fun getAllTasksBySpecificProfessorOfStudent(studentId: String): Flow<List<TaskWithStudent>>
     suspend fun getAllInfoAboutTaskAndBasicOfStudentAndProfessor(taskId: String): OpenedTaskModel
     suspend fun insertMockData(
         professors: List<ProfessorEntity>,
         students: List<StudentEntity>,
-        tasks: List<TaskEntity>
+        tasks: List<TaskEntity>,
     )
+
     suspend fun updateTaskByProfessor(taskInfo: UpdateTaskByProfessorModel)
 }

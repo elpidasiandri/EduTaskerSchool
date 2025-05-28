@@ -9,6 +9,7 @@ import com.example.edutasker.model.StudentPreviewAsListModel
 import com.example.edutasker.model.TaskModel
 import com.example.edutasker.model.TaskStatus
 import com.example.edutasker.mapper.taskDomainToTaskEntity
+import com.example.edutasker.mapper.taskDomainToTasksWithStudentImageModel
 import com.example.edutasker.model.ProfessorBasicModel
 import com.example.edutasker.screens.professor.viewModel.stateAndEvents.ProfessorEvents
 import com.example.edutasker.screens.professor.viewModel.stateAndEvents.ProfessorState
@@ -23,6 +24,7 @@ import com.example.edutasker.useCases.task.updateByProfessor.UpdateTaskByProfess
 import com.example.edutasker.utils.DateHelper
 import com.example.edutasker.utils.catchAndHandleError
 import com.example.edutasker.utils.showErrorBasedErrorCode
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -41,6 +43,7 @@ class ProfessorViewModel(
     private val searchStudentsUseCase: SearchStudentsUseCase,
     private val getAllInfoOfTaskAndBasicOfStudentAndProfessorUseCase: GetAllInfoOfTaskAndBasicOfStudentAndProfessorUseCase,
     private val updateTaskByProfessorUseCase: UpdateTaskByProfessorUseCase,
+    private val ioDispatcher: CoroutineDispatcher,
 ) : ViewModel() {
     private val _state = MutableStateFlow(ProfessorState())
     val state: StateFlow<ProfessorState> = _state
@@ -49,6 +52,7 @@ class ProfessorViewModel(
     private var searchJob: Job? = null
 
     init {
+        listenToLocalItems()
         onEvent(ProfessorEvents.Initialize)
     }
 
@@ -88,8 +92,8 @@ class ProfessorViewModel(
                 getSubjectsOfProfessor()
             }
 
-            ProfessorEvents.SearchProfessorStudents -> {
-                getStudentsByProfessorSubject()
+            is ProfessorEvents.SearchProfessorStudents -> {
+                getStudentsByProfessorSubject(event.selectedSubjectOfTask)
             }
 
             is ProfessorEvents.AddTask -> {
@@ -104,6 +108,13 @@ class ProfessorViewModel(
 
             is ProfessorEvents.SelectStudentToSeeBacklog -> {
                 getAllTasksBySpecificProfessorOfStudent(event.student)
+                _state.update {
+                    it.copy(
+                        searchedStudents = listOf(),
+                        selectedStudentFromSearch = event.student,
+                        keyword = "",
+                    )
+                }
             }
 
             ProfessorEvents.OpenDialogToAddNewTask -> {
@@ -129,10 +140,41 @@ class ProfessorViewModel(
 
             ProfessorEvents.Initialize -> {
                 getInfoOfStudentsToSetRowImages()
-                getAllTasksByEveryone()
             }
 
             else -> {}
+        }
+    }
+
+    private fun listenToLocalItems() {
+        viewModelScope.launch {
+            withContext(ioDispatcher) {
+                if (state.value.selectedStudentFromSearch.studentId.isBlank()) {
+                    taskUseCases.getAllTasksOfAllStudents().catchAndHandleError { _, errorCode ->
+                        handlingError(errorCode)
+                    }.collect() { res ->
+                        _state.update { updateState ->
+                            updateState.copy(
+                                allTasksByEveryone = res.map { it.taskDomainToTasksWithStudentImageModel() },
+                            )
+                        }
+                    }
+
+                } else {
+                    taskUseCases.getAllTasksBySpecificProfessorOfStudent(state.value.selectedStudentFromSearch.studentId)
+                        .catchAndHandleError { _, errorCode ->
+                            handlingError(errorCode)
+                        }.collect() { res ->
+                            _state.update { updateState ->
+                                updateState.copy(
+                                    allTasksByProfessorStudent = res.map {
+                                        it.taskDomainToTasksWithStudentImageModel()
+                                    }
+                                )
+                            }
+                        }
+                }
+            }
         }
     }
 
@@ -191,38 +233,19 @@ class ProfessorViewModel(
 
     private fun getAllTasksBySpecificProfessorOfStudent(student: StudentPreviewAsListModel) {
         viewModelScope.launch {
-            flow { emit(taskUseCases.getAllTasksBySpecificProfessorOfStudent(student.studentId)) }.catchAndHandleError { _, errorCode ->
-                handlingError(errorCode)
-            }.collect() { res ->
-                _state.update {
-                    it.copy(
-                        searchedStudents = listOf(),
-                        selectedStudentFromSearch = student,
-                        keyword = "",
-                        allTasksByProfessorStudent = res
-                    )
-                }
-            }
-        }
-    }
-
-    private fun getAllTasksByEveryone() {
-        viewModelScope.launch {
-            flow {
-                emit(
-                    taskUseCases.getAllTasksOfAllStudents()
-                )
-            }.catchAndHandleError { errorMessage, errorCode ->
-                handlingError(errorCode)
-            }
-                .collect { res ->
+            taskUseCases.getAllTasksBySpecificProfessorOfStudent(student.studentId)
+                .catchAndHandleError { _, errorCode ->
+                    handlingError(errorCode)
+                }.collect() { res ->
                     _state.update {
                         it.copy(
-                            allTasksByEveryone = res
+                            searchedStudents = listOf(),
+                            selectedStudentFromSearch = student,
+                            keyword = "",
+                            allTasksByProfessorStudent = res.map { it.taskDomainToTasksWithStudentImageModel() }
                         )
                     }
                 }
-
         }
     }
 
@@ -275,12 +298,12 @@ class ProfessorViewModel(
 
     }
 
-    private fun getStudentsByProfessorSubject() {
+    private fun getStudentsByProfessorSubject(selectedSubjectOfTask: String) {
         job?.cancel()
         job = viewModelScope.launch {
             delay(400)
             withContext(Dispatchers.IO) {
-                flow { emit(getAllStudentsOfSpecificProfessorUseCase(specificSubject = null)) }.catchAndHandleError { errorMessage, errorCode ->
+                flow { emit(getAllStudentsOfSpecificProfessorUseCase(specificSubject = selectedSubjectOfTask)) }.catchAndHandleError { errorMessage, errorCode ->
                     _state.update {
                         it.copy(
                             searchedStudentsForAssignment = listOf(),

@@ -6,6 +6,7 @@ import com.example.edutasker.dao.TaskDao
 import com.example.edutasker.entities.ProfessorEntity
 import com.example.edutasker.entities.StudentEntity
 import com.example.edutasker.entities.TaskEntity
+import com.example.edutasker.entities.relations.TaskWithStudent
 import com.example.edutasker.mockData.CurrentUser
 import com.example.edutasker.model.StudentBasicInfoForPreviewIntoList
 import com.example.edutasker.model.StudentPreviewAsListModel
@@ -16,6 +17,7 @@ import com.example.edutasker.mapper.toOpenedTask
 import com.example.edutasker.model.OpenedTaskModel
 import com.example.edutasker.model.UpdateTaskByProfessorModel
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 
 class DatabaseRepositoryImpl(
@@ -128,9 +130,10 @@ class DatabaseRepositoryImpl(
                 specificSubject
             )
         val filteredStudents = allStudents.filter { student ->
-            student.subjects.any { it in professorSubjects }
+            student.subjects.any {
+                it in professorSubjects
+            }
         }.distinctBy { it.studentId }
-
         return filteredStudents.map {
             StudentPreviewAsListModel(
                 studentId = it.studentId,
@@ -152,10 +155,9 @@ class DatabaseRepositoryImpl(
         return studentDao.searchStudents(keyword)
     }
 
-    override suspend fun getAllTasksOfAllStudents(): List<TasksWithStudentImageModel> {
-        return taskDao.getAllTasksWithStudentImages().map {
-            it.taskDomainToTasksWithStudentImageModel()
-        }
+    override suspend fun getAllTasksOfAllStudents(): Flow<List<TaskWithStudent>> {
+        return taskDao.getAllTasksWithStudentImages()
+
     }
 
     override suspend fun getAllTasksOfProfessorStudent(): List<TasksWithStudentImageModel> {
@@ -163,11 +165,12 @@ class DatabaseRepositoryImpl(
             .map { it.taskDomainToTasksWithStudentImageModel() }
     }
 
-    override suspend fun getAllTasksBySpecificProfessorOfStudent(studentId: String): List<TasksWithStudentImageModel> {
+    override suspend fun getAllTasksBySpecificProfessorOfStudent(studentId: String): Flow<List<TaskWithStudent>> {
         return taskDao.getTasksByAssignerAndStudent(
             assignerId = CurrentUser.getCurrentUserId(),
             studentId = studentId
-        ).map { it.taskDomainToTasksWithStudentImageModel() }
+        )
+
     }
 
     private suspend fun getLastTaskId(): String {
