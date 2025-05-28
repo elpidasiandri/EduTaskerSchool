@@ -75,4 +75,19 @@ interface TaskDao {
     @Query("SELECT * FROM tasks WHERE taskId = :taskId")
     suspend fun getTaskWithStudentAndProfessor(taskId: String): TaskWithStudentAndProfessor
 
+    @Query("""
+        UPDATE tasks 
+        SET taskTitle = :taskTitle, 
+            description = :description, 
+            deadlineDate = :deadlineDate ,
+            progress = :progress
+        WHERE taskId = :taskId
+    """)
+    suspend fun updateTaskDetails(
+        taskId: String,
+        taskTitle: String,
+        description: String,
+        deadlineDate: String,
+        progress: String,
+    )
 }

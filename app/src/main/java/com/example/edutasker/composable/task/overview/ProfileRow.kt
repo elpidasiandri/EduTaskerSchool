@@ -14,6 +14,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.text.font.FontWeight
@@ -29,6 +30,7 @@ fun ProfileRow(label: String, name: String, imageUrl: String) {
             model = imageUrl.ifBlank { if (CurrentUser.getCurrentUserIfIsStudent()) R.raw.studentavatar else R.raw.professoravatar },
             contentDescription = null,
             modifier = Modifier
+                .padding(top = 16.dp)
                 .size(32.dp)
                 .clip(CircleShape)
         )

@@ -14,6 +14,7 @@ import com.example.edutasker.model.TasksWithStudentImageModel
 import com.example.edutasker.mapper.taskDomainToTasksWithStudentImageModel
 import com.example.edutasker.mapper.toOpenedTask
 import com.example.edutasker.model.OpenedTaskModel
+import com.example.edutasker.model.UpdateTaskByProfessorModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 
@@ -21,7 +22,7 @@ class DatabaseRepositoryImpl(
     private val professorDao: ProfessorDao,
     private val studentDao: StudentDao,
     private val taskDao: TaskDao,
-    private val dispatcher: CoroutineDispatcher
+    private val dispatcher: CoroutineDispatcher,
 ) : IDatabaseRepository {
     override suspend fun insertProfessor(professor: ProfessorEntity) {
         if (professorDao.isEmailExists(professor.email) == 0) {
@@ -58,7 +59,7 @@ class DatabaseRepositoryImpl(
             task
         val studentExists = studentDao.isStudentIdExists(finalTask.assignTo)
 
-       if (studentExists != 0) {
+        if (studentExists != 0) {
             if (taskDao.isTaskIdExists(finalTask.taskId) == 0) {
                 taskDao.insertTask(finalTask)
             }
@@ -187,5 +188,15 @@ class DatabaseRepositoryImpl(
             students.forEach { insertStudent(it) }
             tasks.forEach { insertTask(it) }
         }
+    }
+
+    override suspend fun updateTaskByProfessor(taskInfo: UpdateTaskByProfessorModel) {
+        taskDao.updateTaskDetails(
+            taskId = taskInfo.taskId,
+            taskTitle = taskInfo.taskTitle,
+            description = taskInfo.taskDescription,
+            deadlineDate = taskInfo.taskDeadline,
+            progress = taskInfo.progress
+        )
     }
 }

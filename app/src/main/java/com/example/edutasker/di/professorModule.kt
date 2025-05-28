@@ -7,12 +7,13 @@ import com.example.edutasker.useCases.student.GetNameIdsAndImageOfStudentUseCase
 import com.example.edutasker.useCases.student.SearchProfessorStudentsHavingSpecificSubjectUseCase
 import com.example.edutasker.useCases.student.SearchStudentsUseCase
 import com.example.edutasker.useCases.task.GetAllInfoOfTaskAndBasicOfStudentAndProfessorUseCase
+import com.example.edutasker.useCases.task.updateByProfessor.UpdateTaskByProfessorUseCase
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val professorModule = module {
     viewModel {
-        ProfessorViewModel(get(), get(), get(), get(), get(), get())
+        ProfessorViewModel(get(), get(), get(), get(), get(), get(), get())
     }
     single {
         GetAllStudentsOfSpecificProfessorUseCase(get())
@@ -31,5 +32,8 @@ val professorModule = module {
     }
     single {
         GetAllInfoOfTaskAndBasicOfStudentAndProfessorUseCase(get())
+    }
+    single {
+        UpdateTaskByProfessorUseCase(get())
     }
 }

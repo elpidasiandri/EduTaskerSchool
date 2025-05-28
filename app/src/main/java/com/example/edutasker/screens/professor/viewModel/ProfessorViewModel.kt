@@ -19,6 +19,7 @@ import com.example.edutasker.useCases.professor.GetProfessorTitlesOfSubjectUseCa
 import com.example.edutasker.useCases.student.GetNameIdsAndImageOfStudentUseCase
 import com.example.edutasker.useCases.student.SearchStudentsUseCase
 import com.example.edutasker.useCases.task.GetAllInfoOfTaskAndBasicOfStudentAndProfessorUseCase
+import com.example.edutasker.useCases.task.updateByProfessor.UpdateTaskByProfessorUseCase
 import com.example.edutasker.utils.DateHelper
 import com.example.edutasker.utils.catchAndHandleError
 import com.example.edutasker.utils.showErrorBasedErrorCode
@@ -39,6 +40,7 @@ class ProfessorViewModel(
     private val getNameIdsAndImageOfStudentUseCase: GetNameIdsAndImageOfStudentUseCase,
     private val searchStudentsUseCase: SearchStudentsUseCase,
     private val getAllInfoOfTaskAndBasicOfStudentAndProfessorUseCase: GetAllInfoOfTaskAndBasicOfStudentAndProfessorUseCase,
+    private val updateTaskByProfessorUseCase: UpdateTaskByProfessorUseCase,
 ) : ViewModel() {
     private val _state = MutableStateFlow(ProfessorState())
     val state: StateFlow<ProfessorState> = _state
@@ -52,17 +54,18 @@ class ProfessorViewModel(
 
     fun onEvent(event: ProfessorEvents) {
         when (event) {
-            ProfessorEvents.CloseTaskDialog -> {
-                _state.update {
-                    it.copy(
-                        isTaskOpened = false,
-                        openedTask = OpenedTaskModel(
-                            TaskModel(),
-                            StudentPreviewAsListModel(),
-                            ProfessorBasicModel()
-                        )
-                    )
+            is ProfessorEvents.UpdateTask -> {
+                viewModelScope.launch {
+                    flow { emit(updateTaskByProfessorUseCase(event.taskInfo)) }.catchAndHandleError { _, errorCode ->
+                        handlingError(errorCode)
+                    }.collect() {
+                        closeTaskDialogAndCleaningData()
+                    }
                 }
+            }
+
+            ProfessorEvents.CloseTaskDialog -> {
+                closeTaskDialogAndCleaningData()
             }
 
             is ProfessorEvents.OpenTaskDialog -> {
@@ -328,6 +331,19 @@ class ProfessorViewModel(
         _state.update {
             it.copy(
                 uiEvents = ProfessorUiEvents.None
+            )
+        }
+    }
+
+    private fun closeTaskDialogAndCleaningData() {
+        _state.update {
+            it.copy(
+                isTaskOpened = false,
+                openedTask = OpenedTaskModel(
+                    TaskModel(),
+                    StudentPreviewAsListModel(),
+                    ProfessorBasicModel()
+                )
             )
         }
     }

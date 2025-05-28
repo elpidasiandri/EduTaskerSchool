@@ -305,7 +305,7 @@ object MockData {
                     "28/06/2025",
                     creationDate = "22/05/2025",
                     assignTo = "s2",
-                    progress = "TODO"
+                    progress = "DONE"
                 ),
                 TaskEntity(
                     "t18",
@@ -316,7 +316,7 @@ object MockData {
                     "28/06/2025",
                     creationDate = "22/05/2025",
                     assignTo = "s5",
-                    progress = "TODO"
+                    progress = "DONE"
                 )
             )
 

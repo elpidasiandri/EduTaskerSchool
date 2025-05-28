@@ -7,6 +7,7 @@ import com.example.edutasker.model.OpenedTaskModel
 import com.example.edutasker.model.StudentPreviewAsListModel
 import com.example.edutasker.model.SubjectTaskCount
 import com.example.edutasker.model.TasksWithStudentImageModel
+import com.example.edutasker.model.UpdateTaskByProfessorModel
 
 interface IDatabaseRepository {
     suspend fun insertProfessor(professor: ProfessorEntity)
@@ -43,4 +44,5 @@ interface IDatabaseRepository {
         students: List<StudentEntity>,
         tasks: List<TaskEntity>
     )
+    suspend fun updateTaskByProfessor(taskInfo: UpdateTaskByProfessorModel)
 }
