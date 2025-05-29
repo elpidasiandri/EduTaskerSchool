@@ -16,7 +16,7 @@ import com.example.edutasker.screens.professor.viewModel.stateAndEvents.Professo
 import com.example.edutasker.screens.professor.viewModel.stateAndEvents.ProfessorUiEvents
 import com.example.edutasker.useCases.task.TaskUseCases
 import com.example.edutasker.useCases.student.GetAllStudentsOfSpecificProfessorUseCase
-import com.example.edutasker.useCases.professor.GetProfessorTitlesOfSubjectUseCase
+import com.example.edutasker.useCases.professor.GetProfessorTitlesOfSubjectWhichAreSuitableIfExistSelectedStudentUseCase
 import com.example.edutasker.useCases.student.GetNameIdsAndImageOfStudentUseCase
 import com.example.edutasker.useCases.student.SearchStudentsUseCase
 import com.example.edutasker.useCases.task.GetAllInfoOfTaskAndBasicOfStudentAndProfessorUseCase
@@ -38,7 +38,7 @@ import kotlinx.coroutines.withContext
 class ProfessorViewModel(
     private val taskUseCases: TaskUseCases,
     private val getAllStudentsOfSpecificProfessorUseCase: GetAllStudentsOfSpecificProfessorUseCase,
-    private val getProfessorTitlesOfSubjectUseCase: GetProfessorTitlesOfSubjectUseCase,
+    private val getProfessorTitlesOfSubjectWhichAreSuitableIfExistSelectedStudentUseCase: GetProfessorTitlesOfSubjectWhichAreSuitableIfExistSelectedStudentUseCase,
     private val getNameIdsAndImageOfStudentUseCase: GetNameIdsAndImageOfStudentUseCase,
     private val searchStudentsUseCase: SearchStudentsUseCase,
     private val getAllInfoOfTaskAndBasicOfStudentAndProfessorUseCase: GetAllInfoOfTaskAndBasicOfStudentAndProfessorUseCase,
@@ -58,6 +58,14 @@ class ProfessorViewModel(
 
     fun onEvent(event: ProfessorEvents) {
         when (event) {
+            is ProfessorEvents.SelectedUnselectedStudentForAddingAssignment -> {
+                _state.update {
+                    it.copy(
+                        selectedStudentForAddingAssignment = event.student
+                    )
+                }
+            }
+
             is ProfessorEvents.UpdateTask -> {
                 viewModelScope.launch {
                     flow { emit(updateTaskByProfessorUseCase(event.taskInfo)) }.catchAndHandleError { _, errorCode ->
@@ -303,7 +311,7 @@ class ProfessorViewModel(
         job = viewModelScope.launch {
             delay(400)
             withContext(Dispatchers.IO) {
-                flow { emit(getAllStudentsOfSpecificProfessorUseCase(specificSubject = selectedSubjectOfTask)) }.catchAndHandleError { errorMessage, errorCode ->
+                flow { emit(getAllStudentsOfSpecificProfessorUseCase(specificSubject = selectedSubjectOfTask)) }.catchAndHandleError { _, errorCode ->
                     _state.update {
                         it.copy(
                             searchedStudentsForAssignment = listOf(),
@@ -324,7 +332,13 @@ class ProfessorViewModel(
 
     private fun getSubjectsOfProfessor() {
         viewModelScope.launch(Dispatchers.IO) {
-            flow { emit(getProfessorTitlesOfSubjectUseCase()) }.catchAndHandleError { _, errorCode ->
+            flow {
+                emit(
+                    getProfessorTitlesOfSubjectWhichAreSuitableIfExistSelectedStudentUseCase(
+                        state.value.selectedStudentForAddingAssignment
+                    )
+                )
+            }.catchAndHandleError { _, errorCode ->
                 _state.update {
                     it.copy(
                         professorSubjects = listOf(),

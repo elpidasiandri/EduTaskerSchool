@@ -20,8 +20,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.AlertDialog
@@ -48,28 +46,29 @@ fun AddTaskDialogComposable(
     subjects: List<String>,
     searchedStudents: List<StudentPreviewAsListModel>,
 ) {
-    var fileUriInfo by remember { mutableStateOf("") }
     var deadlineDateOfTask by remember { mutableStateOf("") }
     var descriptionOfTask by remember { mutableStateOf("") }
     var titleOfTask by remember { mutableStateOf("") }
     var selectedSubjectOfTask by remember { mutableStateOf("") }
     var assignToSearch by remember { mutableStateOf("") }
-    var selectedStudentsOfTask by remember { mutableStateOf(listOf<StudentPreviewAsListModel>()) }
+    var selectedStudentOfTask by remember { mutableStateOf<StudentPreviewAsListModel?>(null) }
+
     val filteredStudents = searchedStudents.filter { student ->
         student.username.contains(assignToSearch, ignoreCase = true) &&
-                student !in selectedStudentsOfTask
+                student != selectedStudentOfTask
     }
+
     val isFormValid by remember(
         selectedSubjectOfTask,
         descriptionOfTask,
-        selectedStudentsOfTask,
+        selectedStudentOfTask,
         deadlineDateOfTask,
         titleOfTask
     ) {
         derivedStateOf {
             selectedSubjectOfTask.isNotBlank() &&
                     descriptionOfTask.isNotBlank() &&
-                    selectedStudentsOfTask.isNotEmpty() &&
+                    selectedStudentOfTask != null &&
                     titleOfTask.isNotEmpty() &&
                     deadlineDateOfTask.isNotBlank()
         }
@@ -81,16 +80,12 @@ fun AddTaskDialogComposable(
         },
         backgroundColor = LightBlue,
         title = {
-            Text(
-                stringResource(R.string.new_task), color = Color.White,
-                fontSize = 22.sp
-            )
+            Text(stringResource(R.string.new_task), color = Color.White, fontSize = 22.sp)
         },
         text = {
-            Column() {
-                WriteTaskTitleComposable({ title ->
-                    titleOfTask = title
-                })
+            Column {
+                WriteTaskTitleComposable { title -> titleOfTask = title }
+
                 SubjectDropdownComposable(
                     selectedSubject = selectedSubjectOfTask,
                     onSubjectSelected = { selectedSubjectOfTask = it },
@@ -100,87 +95,91 @@ fun AddTaskDialogComposable(
                 Spacer(modifier = Modifier.height(8.dp))
 
                 WriteDescriptionOfTaskAndAttachFileComposable(
-                    { des -> descriptionOfTask = des },
-                    { info -> fileUriInfo = info })
-
-                LazyRow(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(bottom = 8.dp, top = 8.dp)
-                ) {
-                    items(selectedStudentsOfTask) { student ->
-                        Row(
-                            modifier = Modifier
-                                .padding(end = 8.dp)
-                                .background(Color.DarkGray, shape = RoundedCornerShape(16.dp))
-                                .clickable {
-                                    selectedStudentsOfTask = selectedStudentsOfTask - student
-                                }
-                                .padding(horizontal = 8.dp, vertical = 4.dp),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            AsyncImage(
-                                model = student.image,
-                                contentDescription = null,
-                                modifier = Modifier
-                                    .size(24.dp)
-                                    .clip(CircleShape)
-                            )
-                            Spacer(modifier = Modifier.width(6.dp))
-                            Text(
-                                text = student.username,
-                                color = Color.White,
-                                fontSize = 14.sp,
-                                textDecoration = TextDecoration.Underline
-                            )
-                        }
-                    }
-                }
-                OutlinedTextField(
-                    modifier = Modifier.fillMaxWidth(),
-                    value = assignToSearch,
-                    onValueChange = {
-                        assignToSearch = it
-                        onEvent(ProfessorEvents.SearchProfessorStudents(selectedSubjectOfTask))
-                    },
-                    label = {
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Icon(
-                                imageVector = Icons.Default.Search,
-                                contentDescription = "Search",
-                                tint = Color.White,
-                                modifier = Modifier.size(18.dp)
-                            )
-                            Spacer(modifier = Modifier.width(6.dp))
-                            Text(
-                                text = if (selectedStudentsOfTask.isEmpty()) {
-                                    stringResource(R.string.assign_to)
-                                } else {
-                                    "${stringResource(R.string.assigned_to)}: ${
-                                        selectedStudentsOfTask.joinToString { it.username }
-                                    }"
-                                },
-                                color = Color.White,
-                                fontSize = 16.sp
-                            )
-                        }
-                    },
-                    textStyle = TextStyle(
-                        color = Color.White,
-                        fontSize = 16.sp
-                    )
+                    isDescriptionEmpty = { descriptionOfTask = it },
                 )
 
-                if (assignToSearch.isNotEmpty()) {
+                selectedStudentOfTask?.let { student ->
+                    Row(
+                        modifier = Modifier
+                            .padding(top = 8.dp)
+                            .background(Color.DarkGray, shape = RoundedCornerShape(16.dp))
+                            .clickable {
+                                onEvent(
+                                    ProfessorEvents.SelectedUnselectedStudentForAddingAssignment(
+                                        null
+                                    )
+                                )
+                                selectedStudentOfTask = null
+                            }
+                            .padding(horizontal = 8.dp, vertical = 6.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        AsyncImage(
+                            model = student.image.ifEmpty { R.raw.studentavatar },
+                            contentDescription = null,
+                            modifier = Modifier
+                                .size(24.dp)
+                                .clip(CircleShape)
+                        )
+                        Spacer(modifier = Modifier.width(6.dp))
+                        Text(
+                            text = student.username,
+                            color = Color.White,
+                            fontSize = 14.sp,
+                            textDecoration = TextDecoration.Underline
+                        )
+                        Spacer(modifier = Modifier.width(6.dp))
+                        Text(
+                            text = stringResource(R.string.tap_to_remove),
+                            color = Color.LightGray,
+                            fontSize = 12.sp
+                        )
+                    }
+                }
+
+                if (selectedStudentOfTask == null) {
+                    OutlinedTextField(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 8.dp),
+                        value = assignToSearch,
+                        onValueChange = {
+                            assignToSearch = it
+                            onEvent(ProfessorEvents.SearchProfessorStudents(selectedSubjectOfTask))
+                        },
+                        label = {
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Icon(
+                                    imageVector = Icons.Default.Search,
+                                    contentDescription = "Search",
+                                    tint = Color.White,
+                                    modifier = Modifier.size(18.dp)
+                                )
+                                Spacer(modifier = Modifier.width(6.dp))
+                                Text(
+                                    text = stringResource(R.string.assign_to),
+                                    color = Color.White,
+                                    fontSize = 16.sp
+                                )
+                            }
+                        },
+                        textStyle = TextStyle(color = Color.White, fontSize = 16.sp)
+                    )
+                }
+
+                if (assignToSearch.isNotEmpty() && selectedStudentOfTask == null) {
                     Column(modifier = Modifier.padding(top = 12.dp)) {
                         filteredStudents.forEach { student ->
                             Row(
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .clickable {
-                                        selectedStudentsOfTask = selectedStudentsOfTask + student
+                                        selectedStudentOfTask = student
+                                        onEvent(
+                                            ProfessorEvents.SelectedUnselectedStudentForAddingAssignment(
+                                                student
+                                            )
+                                        )
                                         assignToSearch = ""
                                     }
                                     .padding(8.dp),
@@ -202,26 +201,24 @@ fun AddTaskDialogComposable(
 
                 Spacer(modifier = Modifier.height(8.dp))
 
-                AssignDeadlineComposable(
-                    deadline = { date ->
-                        deadlineDateOfTask = date
-                    }
-                )
+                AssignDeadlineComposable { date -> deadlineDateOfTask = date }
             }
         },
         confirmButton = {
-            TextButton(onClick = {
-                onEvent(
-                    ProfessorEvents.AddTask(
-                        title = titleOfTask,
-                        subjectName = selectedSubjectOfTask,
-                        description = descriptionOfTask,
-                        deadline = deadlineDateOfTask,
-                        selectedUsers = selectedStudentsOfTask.map {
-                            it.studentId
-                        }
-                    ))
-            }, enabled = isFormValid) {
+            TextButton(
+                onClick = {
+                    onEvent(
+                        ProfessorEvents.AddTask(
+                            title = titleOfTask,
+                            subjectName = selectedSubjectOfTask,
+                            description = descriptionOfTask,
+                            deadline = deadlineDateOfTask,
+                            selectedUsers = listOfNotNull(selectedStudentOfTask?.studentId)
+                        )
+                    )
+                },
+                enabled = isFormValid
+            ) {
                 Text(
                     stringResource(R.string.save),
                     color = if (isFormValid) Color.White else Color.DarkGray,

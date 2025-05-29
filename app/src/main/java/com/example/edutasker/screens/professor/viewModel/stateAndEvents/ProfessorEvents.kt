@@ -19,6 +19,9 @@ sealed class ProfessorEvents {
     data object DismissAddTaskScreen : ProfessorEvents()
     data object GetSubjectsOfProfessor : ProfessorEvents()
     data class SearchProfessorStudents(val selectedSubjectOfTask: String) : ProfessorEvents()
+    data class SelectedUnselectedStudentForAddingAssignment(val student: StudentPreviewAsListModel?) :
+        ProfessorEvents()
+
     data object Initialize : ProfessorEvents()
     data object CloseTaskDialog : ProfessorEvents()
     data class OpenTaskDialog(val taskId: String) : ProfessorEvents()

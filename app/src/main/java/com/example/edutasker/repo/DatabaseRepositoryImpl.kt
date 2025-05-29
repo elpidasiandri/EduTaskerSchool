@@ -1,5 +1,6 @@
 package com.example.edutasker.repo
 
+import android.util.Log
 import com.example.edutasker.dao.ProfessorDao
 import com.example.edutasker.dao.StudentDao
 import com.example.edutasker.dao.TaskDao
@@ -19,6 +20,7 @@ import com.example.edutasker.model.UpdateTaskByProfessorModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
+import timber.log.Timber
 
 class DatabaseRepositoryImpl(
     private val professorDao: ProfessorDao,
@@ -107,19 +109,6 @@ class DatabaseRepositoryImpl(
 
     }
 
-    override suspend fun searchAllStudentsOfProfessorSubjects(
-        keyword: String,
-        idProfessor: String,
-        specificSubject: String?,
-    ): List<StudentPreviewAsListModel> {
-        val allStudents = studentDao.searchStudentsByName(keyword)
-        return getStudentsAfterFilter(
-            allStudents = allStudents,
-            specificSubject = specificSubject,
-            idProfessor = idProfessor
-        )
-    }
-
     private suspend fun getStudentsAfterFilter(
         allStudents: List<StudentBasicInfoForPreviewIntoList>,
         specificSubject: String?,
@@ -143,8 +132,30 @@ class DatabaseRepositoryImpl(
         }
     }
 
-    override suspend fun getProfessorSubjects(idProfessor: String): List<String> {
-        return professorDao.getProfessorById(idProfessor)?.subjects ?: emptyList()
+    override suspend fun getProfessorSubjects(
+        idProfessor: String,
+        selectedStudent: StudentPreviewAsListModel?,
+    ): List<String> {
+        //TODO
+        val professorSubjects = professorDao.getProfessorById(idProfessor)?.subjects ?: emptyList()
+        Timber.d("Q12345 professorSubjects $professorSubjects")
+        Timber.tag("Q12345 professorSubjects ").d("$professorSubjects")
+        return if (selectedStudent == null) {
+            professorSubjects
+
+        } else {
+            val subjectsOfStudent = studentDao.getStudentSubjectsById(selectedStudent.studentId)
+            Timber.tag("Q12345 subjectsOfStudent ").d("$subjectsOfStudent")
+
+            Timber.d("Q12345 subjectsOfStudent $subjectsOfStudent")
+            val commonSubjects =
+                professorSubjects.intersect(subjectsOfStudent.toSet()).toList().sorted()
+            Timber.tag("Q12345 commonSubjects ").d("$commonSubjects")
+
+            Timber.d("Q12345 commonSubjects $commonSubjects")
+
+            commonSubjects
+        }
     }
 
     override suspend fun getNameIdAndImageOfStudents(): List<StudentPreviewAsListModel> {

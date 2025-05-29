@@ -46,4 +46,8 @@ WHERE name LIKE '%' || :keyword || '%'
 
     @Query("SELECT COUNT(*) FROM StudentEntity WHERE studentId = :studentId")
     suspend fun isStudentIdExists(studentId: String): Int
+
+    @Query("SELECT subjects FROM StudentEntity WHERE studentId = :studentId")
+    suspend fun getStudentSubjectsById(studentId: String): List<String>
+
 }

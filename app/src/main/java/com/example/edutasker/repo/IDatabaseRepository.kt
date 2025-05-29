@@ -28,13 +28,11 @@ interface IDatabaseRepository {
         specificSubject: String? = null,
     ): List<StudentPreviewAsListModel>
 
-    suspend fun searchAllStudentsOfProfessorSubjects(
-        keyword: String,
+    suspend fun getProfessorSubjects(
         idProfessor: String,
-        specificSubject: String? = null,
-    ): List<StudentPreviewAsListModel>
+        selectedStudent: StudentPreviewAsListModel? = null
+    ): List<String>
 
-    suspend fun getProfessorSubjects(idProfessor: String): List<String>
     suspend fun getNameIdAndImageOfStudents(): List<StudentPreviewAsListModel>
     suspend fun searchStudents(keyword: String): List<StudentPreviewAsListModel>
     suspend fun getAllTasksOfAllStudents(): Flow<List<TaskWithStudent>>

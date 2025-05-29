@@ -35,4 +35,5 @@
     <string name="no_results">No results found for</string>
     <string name="assigned_by">Assigned by</string>
     <string name="status">Status:</string>
+    <string name="tap_to_remove">(tap to remove)</string>
 </resources>

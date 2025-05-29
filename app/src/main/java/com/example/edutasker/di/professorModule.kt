@@ -2,9 +2,8 @@ package com.example.edutasker.di
 
 import com.example.edutasker.screens.professor.viewModel.ProfessorViewModel
 import com.example.edutasker.useCases.student.GetAllStudentsOfSpecificProfessorUseCase
-import com.example.edutasker.useCases.professor.GetProfessorTitlesOfSubjectUseCase
+import com.example.edutasker.useCases.professor.GetProfessorTitlesOfSubjectWhichAreSuitableIfExistSelectedStudentUseCase
 import com.example.edutasker.useCases.student.GetNameIdsAndImageOfStudentUseCase
-import com.example.edutasker.useCases.student.SearchProfessorStudentsHavingSpecificSubjectUseCase
 import com.example.edutasker.useCases.student.SearchStudentsUseCase
 import com.example.edutasker.useCases.task.GetAllInfoOfTaskAndBasicOfStudentAndProfessorUseCase
 import com.example.edutasker.useCases.task.updateByProfessor.UpdateTaskByProfessorUseCase
@@ -21,13 +20,10 @@ val professorModule = module {
         GetAllStudentsOfSpecificProfessorUseCase(get())
     }
     single {
-        SearchProfessorStudentsHavingSpecificSubjectUseCase(get())
-    }
-    single {
         GetNameIdsAndImageOfStudentUseCase(get())
     }
     single {
-        GetProfessorTitlesOfSubjectUseCase(get())
+        GetProfessorTitlesOfSubjectWhichAreSuitableIfExistSelectedStudentUseCase(get())
     }
     single {
         SearchStudentsUseCase(get())

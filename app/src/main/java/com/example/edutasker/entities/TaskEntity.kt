@@ -25,6 +25,5 @@ data class TaskEntity(
     val deadlineDate: String,
     val creationDate: String,
     val assignTo: String,
-    val progress: String,
-    val fileUri: String? = null,
+    val progress: String
 )
