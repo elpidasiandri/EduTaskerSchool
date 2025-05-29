@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 
 object MockData {
     fun insertMockData(
-        taskUseCases: TaskUseCases
+        taskUseCases: TaskUseCases,
     ) {
         CoroutineScope(Dispatchers.IO).launch {
             // Professors
@@ -21,7 +21,7 @@ object MockData {
                 "jo@mail.com",
                 "1234",
                 "https://i.guim.co.uk/img/media/59baecefbc73d3bcf4a47b017453a27f19b55175/331_488_2481_1489/master/2481.jpg?width=1200&height=900&quality=85&auto=format&fit=crop&s=285e4f639f1c71cbdf27c57315394bb1",
-                listOf("Biology", "Chemistry")
+                listOf("Biology", "Chemistry","Physics")
             )
             val prof2 = ProfessorEntity(
                 "p2",
@@ -69,7 +69,7 @@ object MockData {
                     "https://s39613.pcdn.co/wp-content/uploads/2018/01/student-backpack-id683911900-FF180119.jpg",
                     "pas@mail.com",
                     "1234",
-                    listOf("Chemistry")
+                    listOf("Chemistry", "History", "Biology")
                 ),
                 StudentEntity(
                     "s4",
@@ -78,7 +78,7 @@ object MockData {
                     "",
                     "lis@mail.com",
                     "1234",
-                    listOf("History", "Maths", "Thesis")
+                    listOf("Maths", "Thesis")
                 ),
                 StudentEntity(
                     "s5",
@@ -87,7 +87,7 @@ object MockData {
                     "https://img.freepik.com/free-photo/portrait-young-student-happy-be-back-university_23-2148586577.jpg?semt=ais_hybrid&w=740",
                     "maria@mail.com",
                     "1234",
-                    listOf("Physics")
+                    listOf("Maths")
                 ),
                 StudentEntity(
                     "s6",
@@ -102,7 +102,7 @@ object MockData {
                     "s7",
                     "Mitso",
                     "Mitso",
-                    "",
+                    "https://1f90aa49a6.cbaul-cdnwnd.com/3aa7324c017277129ad47ed56667ff02/200000027-d841bd841e/8a94663a80ff9f19873971cea2bce2f0.jpg?ph=1f90aa49a6",
                     "mitsos@mail.com",
                     "1234",
                     listOf("Thesis", "Physics")
@@ -111,7 +111,7 @@ object MockData {
                     "s8",
                     "papa",
                     "Maria",
-                    "",
+                    "https://1f90aa49a6.cbaul-cdnwnd.com/3aa7324c017277129ad47ed56667ff02/200000024-0f0480f04a/0d5f8a0a02b8891c6ea74c3ace6aadb8.jpg?ph=1f90aa49a6",
                     "ma0@mail.com",
                     "1234",
                     listOf("Thesis", "History", "Chemistry")
@@ -125,7 +125,7 @@ object MockData {
                     "Solve integrals",
                     "Maths",
                     "Calculate the following definite and indefinite integrals using standard techniques. Justify each step.",
-                    "p1",
+                    "p2",
                     "26/06/2025",
                     creationDate = "11/05/2025",
                     assignTo = "s1",
@@ -136,7 +136,7 @@ object MockData {
                     "Solve integrals",
                     "Maths",
                     "Calculate the following definite and indefinite integrals using standard techniques. Justify each step.",
-                    "p1",
+                    "p2",
                     "26/06/2025",
                     creationDate = "11/05/2025",
                     assignTo = "s2",
@@ -153,6 +153,7 @@ object MockData {
                     assignTo = "s1",
                     progress = "TODO"
                 ),
+
                 TaskEntity(
                     "t4",
                     "Newton’s laws",
@@ -161,7 +162,7 @@ object MockData {
                     "p1",
                     "28/06/2025",
                     creationDate = "22/05/2025",
-                    assignTo = "s2",
+                    assignTo = "s7",
                     progress = "TODO"
                 ),
                 TaskEntity(
@@ -169,7 +170,7 @@ object MockData {
                     "Linear equations",
                     "Maths",
                     "Solve the system of linear equations provided in the worksheet. Show all steps of your work clearly.",
-                    "p1",
+                    "p2",
                     "28/06/2025",
                     creationDate = "22/05/2025",
                     assignTo = "s2",
@@ -180,10 +181,10 @@ object MockData {
                     "Linear equations",
                     "Maths",
                     "Solve the system of linear equations provided in the worksheet. Show all steps of your work clearly.",
-                    "p1",
+                    "p2",
                     "28/06/2025",
                     creationDate = "22/05/2025",
-                    assignTo = "s3",
+                    assignTo = "s2",
                     progress = "TODO"
                 ),
                 TaskEntity(
@@ -191,7 +192,7 @@ object MockData {
                     "Cell structure",
                     "Biology",
                     "Describe the structure and function of major cell organelles. Create a labeled diagram of a eukaryotic cell.",
-                    "p2",
+                    "p1",
                     "28/06/2025",
                     creationDate = "22/05/2025",
                     assignTo = "s2",
@@ -213,10 +214,10 @@ object MockData {
                     "WWII timeline",
                     "History",
                     "Create a detailed timeline of the major events of World War II from 1939 to 1945. Include dates and brief descriptions.",
-                    "p2",
+                    "p3",
                     "28/06/2025",
                     creationDate = "22/05/2025",
-                    assignTo = "s2",
+                    assignTo = "s6",
                     progress = "TODO"
                 ),
                 TaskEntity(
@@ -224,7 +225,7 @@ object MockData {
                     "WWII timeline",
                     "History",
                     "Create a detailed timeline of the major events of World War II from 1939 to 1945. Include dates and brief descriptions.",
-                    "p2",
+                    "p3",
                     "28/06/2025",
                     creationDate = "22/05/2025",
                     assignTo = "s3",
@@ -257,10 +258,10 @@ object MockData {
                     "Periodic table",
                     "Chemistry",
                     "Identify 10 elements from the periodic table and describe their group, period, and key properties in one sentence each.",
-                    "p3",
+                    "p1",
                     "28/06/2025",
                     creationDate = "22/05/2025",
-                    assignTo = "s6",
+                    assignTo = "s8",
                     progress = "TODO"
                 ),
                 TaskEntity(
@@ -268,10 +269,10 @@ object MockData {
                     "Periodic table",
                     "Chemistry",
                     "Identify 10 elements from the periodic table and describe their group, period, and key properties in one sentence each.",
-                    "p3",
+                    "p1",
                     "28/06/2025",
                     creationDate = "22/05/2025",
-                    assignTo = "s7",
+                    assignTo = "s8",
                     progress = "TODO"
                 ),
                 TaskEntity(
@@ -293,7 +294,7 @@ object MockData {
                     "p3",
                     "28/06/2025",
                     creationDate = "22/05/2025",
-                    assignTo = "s5",
+                    assignTo = "s7",
                     progress = "TODO"
                 ),
                 TaskEntity(
@@ -304,7 +305,7 @@ object MockData {
                     "p3",
                     "28/06/2025",
                     creationDate = "22/05/2025",
-                    assignTo = "s2",
+                    assignTo = "s6",
                     progress = "DONE"
                 ),
                 TaskEntity(
@@ -315,7 +316,7 @@ object MockData {
                     "p3",
                     "28/06/2025",
                     creationDate = "22/05/2025",
-                    assignTo = "s5",
+                    assignTo = "s6",
                     progress = "DONE"
                 )
             )
