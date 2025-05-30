@@ -37,6 +37,9 @@ import com.example.edutasker.ui.theme.Blue
 import com.example.edutasker.ui.theme.LightGray
 import kotlinx.coroutines.launch
 import androidx.compose.material.BottomAppBar
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import com.example.edutasker.composable.professor.arrowWithStudents.StudentAvatarRowComposable
 import com.example.edutasker.composable.professor.assignTask.AddTaskDialogComposable
 import com.example.edutasker.composable.professor.searchBar.ResultsOfSearchedStudentsComposable
@@ -44,6 +47,7 @@ import com.example.edutasker.composable.professor.searchBar.StudentSearchBarComp
 import com.example.edutasker.composable.task.overview.TaskDetailsDialog
 import com.example.edutasker.screens.professor.viewModel.stateAndEvents.ProfessorEvents
 import com.example.edutasker.screens.professor.viewModel.stateAndEvents.ProfessorState
+import timber.log.Timber
 
 @SuppressLint("ResourceType")
 @Composable
@@ -51,6 +55,15 @@ fun ProfessorScreenComposable(
     onEvent: (ProfessorEvents) -> Unit,
     state: ProfessorState,
 ) {
+    var loadSuggestedSubjectsToAssignTask by remember(
+        state.professorSubjects,
+        state.selectedStudentForAddingAssignment
+    ) {
+        mutableStateOf(
+            true
+        )
+    }
+
     if (state.isTaskOpened) {
         TaskDetailsDialog(
             taskInfo = state.openedTask, onDismiss = {
@@ -62,8 +75,9 @@ fun ProfessorScreenComposable(
         )
     }
     if (state.isAddDialogVisible) {
-        if (state.professorSubjects.isEmpty()) {
+        if (loadSuggestedSubjectsToAssignTask) {
             onEvent(ProfessorEvents.GetSubjectsOfProfessor)
+            loadSuggestedSubjectsToAssignTask = false
         }
         AddTaskDialogComposable(
             onEvent = onEvent,

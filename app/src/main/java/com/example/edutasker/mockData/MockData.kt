@@ -3,6 +3,7 @@ package com.example.edutasker.mockData
 import com.example.edutasker.entities.ProfessorEntity
 import com.example.edutasker.entities.StudentEntity
 import com.example.edutasker.entities.TaskEntity
+import com.example.edutasker.model.TaskStatus
 import com.example.edutasker.useCases.task.TaskUseCases
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -21,7 +22,7 @@ object MockData {
                 "jo@mail.com",
                 "1234",
                 "https://i.guim.co.uk/img/media/59baecefbc73d3bcf4a47b017453a27f19b55175/331_488_2481_1489/master/2481.jpg?width=1200&height=900&quality=85&auto=format&fit=crop&s=285e4f639f1c71cbdf27c57315394bb1",
-                listOf("Biology", "Chemistry","Physics")
+                listOf("Biology", "Chemistry", "Physics")
             )
             val prof2 = ProfessorEntity(
                 "p2",
@@ -129,7 +130,7 @@ object MockData {
                     "26/06/2025",
                     creationDate = "11/05/2025",
                     assignTo = "s1",
-                    progress = "TODO"
+                    progress = TaskStatus.TODO.name
                 ),
                 TaskEntity(
                     "t2",
@@ -140,7 +141,7 @@ object MockData {
                     "26/06/2025",
                     creationDate = "11/05/2025",
                     assignTo = "s2",
-                    progress = "TODO"
+                    progress = TaskStatus.TODO.name
                 ),
                 TaskEntity(
                     "t3",
@@ -151,7 +152,7 @@ object MockData {
                     "28/06/2025",
                     creationDate = "22/05/2025",
                     assignTo = "s1",
-                    progress = "TODO"
+                    progress = TaskStatus.TODO.name
                 ),
 
                 TaskEntity(
@@ -163,7 +164,7 @@ object MockData {
                     "28/06/2025",
                     creationDate = "22/05/2025",
                     assignTo = "s7",
-                    progress = "TODO"
+                    progress = TaskStatus.TODO.name
                 ),
                 TaskEntity(
                     "t5",
@@ -174,7 +175,7 @@ object MockData {
                     "28/06/2025",
                     creationDate = "22/05/2025",
                     assignTo = "s2",
-                    progress = "TODO"
+                    progress = TaskStatus.TODO.name
                 ),
                 TaskEntity(
                     "t6",
@@ -185,7 +186,7 @@ object MockData {
                     "28/06/2025",
                     creationDate = "22/05/2025",
                     assignTo = "s2",
-                    progress = "TODO"
+                    progress = TaskStatus.TODO.name
                 ),
                 TaskEntity(
                     "t7",
@@ -196,7 +197,7 @@ object MockData {
                     "28/06/2025",
                     creationDate = "22/05/2025",
                     assignTo = "s2",
-                    progress = "TODO"
+                    progress = TaskStatus.TODO.name
                 ),
                 TaskEntity(
                     "t8",
@@ -207,7 +208,7 @@ object MockData {
                     "28/06/2025",
                     creationDate = "22/05/2025",
                     assignTo = "s3",
-                    progress = "TODO"
+                    progress = TaskStatus.TODO.name
                 ),
                 TaskEntity(
                     "t9",
@@ -218,7 +219,7 @@ object MockData {
                     "28/06/2025",
                     creationDate = "22/05/2025",
                     assignTo = "s6",
-                    progress = "TODO"
+                    progress = TaskStatus.TODO.name
                 ),
                 TaskEntity(
                     "t10",
@@ -229,7 +230,7 @@ object MockData {
                     "28/06/2025",
                     creationDate = "22/05/2025",
                     assignTo = "s3",
-                    progress = "TODO"
+                    progress = TaskStatus.TODO.name
                 ),
                 TaskEntity(
                     "t11",
@@ -240,7 +241,7 @@ object MockData {
                     "28/06/2025",
                     creationDate = "22/05/2025",
                     assignTo = "s4",
-                    progress = "TODO"
+                    progress = TaskStatus.TODO.name
                 ),
                 TaskEntity(
                     "t12",
@@ -251,7 +252,7 @@ object MockData {
                     "28/06/2025",
                     creationDate = "22/05/2025",
                     assignTo = "s5",
-                    progress = "TODO"
+                    progress = TaskStatus.TODO.name
                 ),
                 TaskEntity(
                     "t13",
@@ -262,7 +263,7 @@ object MockData {
                     "28/06/2025",
                     creationDate = "22/05/2025",
                     assignTo = "s8",
-                    progress = "TODO"
+                    progress = TaskStatus.TODO.name
                 ),
                 TaskEntity(
                     "t14",
@@ -273,7 +274,7 @@ object MockData {
                     "28/06/2025",
                     creationDate = "22/05/2025",
                     assignTo = "s8",
-                    progress = "TODO"
+                    progress = TaskStatus.TODO.name
                 ),
                 TaskEntity(
                     "t15",
@@ -284,7 +285,7 @@ object MockData {
                     "28/06/2025",
                     creationDate = "22/05/2025",
                     assignTo = "s8",
-                    progress = "TODO"
+                    progress = TaskStatus.IN_PROGRESS.name
                 ),
                 TaskEntity(
                     "t16",
@@ -295,7 +296,7 @@ object MockData {
                     "28/06/2025",
                     creationDate = "22/05/2025",
                     assignTo = "s7",
-                    progress = "TODO"
+                    progress = TaskStatus.IN_PROGRESS.name
                 ),
                 TaskEntity(
                     "t17",
@@ -306,7 +307,7 @@ object MockData {
                     "28/06/2025",
                     creationDate = "22/05/2025",
                     assignTo = "s6",
-                    progress = "DONE"
+                    progress = TaskStatus.DONE.name
                 ),
                 TaskEntity(
                     "t18",
@@ -317,7 +318,7 @@ object MockData {
                     "28/06/2025",
                     creationDate = "22/05/2025",
                     assignTo = "s6",
-                    progress = "DONE"
+                    progress = TaskStatus.DONE.name
                 )
             )
 

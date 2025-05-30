@@ -1,6 +1,5 @@
 package com.example.edutasker.repo
 
-import android.util.Log
 import com.example.edutasker.dao.ProfessorDao
 import com.example.edutasker.dao.StudentDao
 import com.example.edutasker.dao.TaskDao
@@ -136,24 +135,15 @@ class DatabaseRepositoryImpl(
         idProfessor: String,
         selectedStudent: StudentPreviewAsListModel?,
     ): List<String> {
-        //TODO
         val professorSubjects = professorDao.getProfessorById(idProfessor)?.subjects ?: emptyList()
-        Timber.d("Q12345 professorSubjects $professorSubjects")
-        Timber.tag("Q12345 professorSubjects ").d("$professorSubjects")
         return if (selectedStudent == null) {
             professorSubjects
 
         } else {
-            val subjectsOfStudent = studentDao.getStudentSubjectsById(selectedStudent.studentId)
-            Timber.tag("Q12345 subjectsOfStudent ").d("$subjectsOfStudent")
-
-            Timber.d("Q12345 subjectsOfStudent $subjectsOfStudent")
+            val studentSubjects =
+                studentDao.getStudentById(selectedStudent.studentId)?.subjects ?: emptyList()
             val commonSubjects =
-                professorSubjects.intersect(subjectsOfStudent.toSet()).toList().sorted()
-            Timber.tag("Q12345 commonSubjects ").d("$commonSubjects")
-
-            Timber.d("Q12345 commonSubjects $commonSubjects")
-
+                professorSubjects.intersect(studentSubjects.toSet()).toList().sorted()
             commonSubjects
         }
     }

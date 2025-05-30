@@ -13,7 +13,7 @@ data class ProfessorState(
     val professorSubjects: List<String> = listOf(),
     val searchedStudentsForAssignment: List<StudentPreviewAsListModel> = listOf(),
     val selectedSearchedStudents: List<StudentPreviewAsListModel> = listOf(),
-    val selectedStudentForAddingAssignment: StudentPreviewAsListModel? = StudentPreviewAsListModel(),
+    val selectedStudentForAddingAssignment: StudentPreviewAsListModel? = null,
     val studentsToAppearOnCentralRow: List<StudentPreviewAsListModel> = listOf(),
     val messageErrorId: Int = -1,
     val searchedStudents: List<StudentPreviewAsListModel> = listOf(),
