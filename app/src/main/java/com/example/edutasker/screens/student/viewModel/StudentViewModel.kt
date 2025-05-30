@@ -95,7 +95,7 @@ class StudentViewModel(
                 .collect { res ->
                     _state.update {
                         it.copy(
-                            allTasksByEveryone = res
+//                            allTasksByEveryone = res
                         )
                     }
                 }
