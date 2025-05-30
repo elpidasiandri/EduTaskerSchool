@@ -16,6 +16,7 @@ import com.example.edutasker.databinding.ActivityBaseBinding
 import com.example.edutasker.di.loginModule
 import com.example.edutasker.screens.login.viewModelState.stateAndEvents.LoginUiEvents
 import com.example.edutasker.screens.professor.ProfessorActivity
+import com.example.edutasker.screens.student.StudentActivity
 import kotlinx.coroutines.launch
 import org.koin.core.context.loadKoinModules
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -53,6 +54,11 @@ class LoginMainActivity() : BaseActivity<ActivityBaseBinding>() {
 
                         LoginUiEvents.GoToProfessorScreen -> {
                             ProfessorActivity.newInstance(context = this@LoginMainActivity)
+                            finish()
+                        }
+
+                        LoginUiEvents.GoToStudentScreen -> {
+                            StudentActivity.newInstance(context = this@LoginMainActivity)
                             finish()
                         }
 

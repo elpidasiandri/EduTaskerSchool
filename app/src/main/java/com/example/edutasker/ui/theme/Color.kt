@@ -16,4 +16,7 @@ val LightOcean = Color(0xFFE3F2FD)
 
 val LightGray = Color(0xFFF5F5F5)
 val Yellow = Color(0xFFFFF9C4)
+val Crem = Color(0x70FFFDD0)
+val Black = Color(0xFF000000)
 val Green = Color(0xFFC8E6C9)
+val Red = Color(0xFFFA0000)

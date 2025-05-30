@@ -137,7 +137,7 @@ class LoginScreenViewModel(
         flow { emit(getStudentByEmail(email)) }.catch { }
             .collect { account ->
                 CurrentUser.setCurrentUser(
-                    userId =  account?.studentId.orEmptyIfNull(),
+                    userId = account?.studentId.orEmptyIfNull(),
                     isStudent = true,
                     name = account?.name.orEmptyIfNull(),
                     email = account?.email.orEmptyIfNull(),
@@ -152,7 +152,7 @@ class LoginScreenViewModel(
         flow { emit(getProfessorByEmail(email)) }.catch { }
             .collect { account ->
                 CurrentUser.setCurrentUser(
-                    userId =  account?.profId.orEmptyIfNull(),
+                    userId = account?.profId.orEmptyIfNull(),
                     isStudent = false,
                     name = account?.name.orEmptyIfNull(),
                     email = account?.email.orEmptyIfNull(),

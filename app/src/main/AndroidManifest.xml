@@ -30,8 +30,10 @@
         <activity
             android:name=".screens.professor.ProfessorActivity"
             android:exported="true"
-            android:theme="@style/Theme.EduTaskerDark"/>
-
+            android:theme="@style/Theme.EduTaskerDark" />
+        <activity
+            android:name=".screens.student.StudentActivity"
+            android:exported="true"
+            android:theme="@style/Theme.EduTaskerDark" />
     </application>
-
 </manifest>
