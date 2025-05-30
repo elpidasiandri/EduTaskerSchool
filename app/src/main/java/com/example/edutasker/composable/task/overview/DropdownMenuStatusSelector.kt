@@ -15,28 +15,33 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import com.example.edutasker.model.TaskStatus
 
 @Composable
 fun DropdownMenuStatusSelector(
     currentStatus: String,
-    onStatusSelected: (String) -> Unit
+    onStatusSelected: (String) -> Unit,
+    allowedStatuses: List<String> = listOf(
+        TaskStatus.TODO.name, TaskStatus.IN_PROGRESS.name,
+        TaskStatus.DONE.name, TaskStatus.CLOSED.name
+    ),
 ) {
     var expanded by remember { mutableStateOf(false) }
 
-    Box {
-        TextButton(onClick = { expanded = true }) {
+    Box() {
+        TextButton(
+            onClick = { expanded = true }) {
             Text(
                 text = currentStatus,
                 fontWeight = FontWeight.Bold,
-                color = when (currentStatus) {
-                    "DONE" -> Color.Green
-                    else -> Color.Black
-                }
+                color = Color.Black
             )
             Icon(Icons.Default.ArrowDropDown, contentDescription = null)
         }
-        DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
-            listOf("TODO", "IN_PROGRESS", "DONE", "CLOSED").forEach { status ->
+        DropdownMenu(
+            expanded = expanded,
+            onDismissRequest = { expanded = false }) {
+            allowedStatuses.forEach { status ->
                 DropdownMenuItem(onClick = {
                     onStatusSelected(status)
                     expanded = false

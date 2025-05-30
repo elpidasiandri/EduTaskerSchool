@@ -29,31 +29,19 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.edutasker.R
+import com.example.edutasker.composable.task.overview.rememberDatePickerDialog
 import com.example.edutasker.ui.theme.LightBlue
 import com.example.edutasker.utils.noRippleClickable
-import java.util.Calendar
 
 @Composable
 fun AssignDeadlineComposable(deadline:(String)->Unit) {
     val interactionSource = remember { MutableInteractionSource() }
     val context = LocalContext.current
-    val calendar = Calendar.getInstance()
     var deadlineDate by remember { mutableStateOf("") }
-    val datePickerDialog = remember {
-        DatePickerDialog(
-            context,
-            { _: DatePicker, year: Int, month: Int, dayOfMonth: Int ->
-                deadlineDate = "$dayOfMonth/${month + 1}/$year"
-                deadline(deadlineDate)
-            },
-            calendar.get(Calendar.YEAR),
-            calendar.get(Calendar.MONTH),
-            calendar.get(Calendar.DAY_OF_MONTH)
-        ).apply {
-            datePicker.minDate = System.currentTimeMillis()
-        }
+    val datePickerDialog = rememberDatePickerDialog(context) { selectedDate ->
+        deadlineDate = selectedDate
+        deadline(deadlineDate)
     }
-
 
     Surface(
         modifier = Modifier

@@ -1,26 +1,29 @@
 package com.example.edutasker.composable.task.overview
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Divider
 import androidx.compose.material.IconButton
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -29,28 +32,49 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.example.edutasker.R
+import com.example.edutasker.composable.task.overview.professorActionsOnView.EditableDescriptionFieldComposable
+import com.example.edutasker.composable.task.overview.professorActionsOnView.EditableTitleFieldComposable
+import com.example.edutasker.composable.task.overview.professorActionsOnView.ProfessorTaskDetailsAboutProgressSectionComposable
+import com.example.edutasker.composable.task.overview.studentActionsOnView.ReadOnlyTitleRowComposable
+import com.example.edutasker.composable.task.overview.studentActionsOnView.StudentTaskDetailsAboutProgressSectionComposable
 import com.example.edutasker.mockData.CurrentUser
 import com.example.edutasker.model.OpenedTaskModel
 import com.example.edutasker.model.TaskStatus
+import com.example.edutasker.model.UpdateTaskByProfessorModel
 
 @Composable
 fun TaskDetailsDialog(
     taskInfo: OpenedTaskModel,
     onDismiss: () -> Unit,
-    onStatusChange: (String) -> Unit,
-    onSaveStatusChange: () -> Unit,
+    onSaveStatusChange: (UpdateTaskByProfessorModel) -> Unit,
 ) {
+    val isStudent = CurrentUser.getCurrentUserIfIsStudent()
     var selectedStatus by remember { mutableStateOf(TaskStatus.valueOf(taskInfo.taskInfo.progress.name)) }
-    val hasChanges = selectedStatus != taskInfo.taskInfo.progress
+    var editableDescription by remember { mutableStateOf(taskInfo.taskInfo.description) }
+
+    var isEditingTitle by remember { mutableStateOf(false) }
+    var isEditingDeadline by remember { mutableStateOf(false) }
+    var isEditingDescription by remember { mutableStateOf(false) }
+
+    var editableTitle by remember { mutableStateOf(taskInfo.taskInfo.taskTitle) }
+    var editableDeadline by remember { mutableStateOf(taskInfo.taskInfo.deadlineDate) }
+    val hasChanges =
+        selectedStatus != taskInfo.taskInfo.progress || taskInfo.taskInfo.taskTitle != editableTitle ||
+                taskInfo.taskInfo.description != editableDescription ||
+                taskInfo.taskInfo.deadlineDate != editableDeadline
+    val context = LocalContext.current
+    val datePickerDialog = rememberDatePickerDialog(context) { selectedDate ->
+        editableDeadline = selectedDate
+        isEditingDeadline = false
+    }
 
     Dialog(onDismissRequest = onDismiss) {
-
         Box(
             modifier = Modifier
                 .fillMaxWidth(0.95f)
@@ -69,87 +93,129 @@ fun TaskDetailsDialog(
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        if (CurrentUser.getCurrentUserIfIsStudent()) {
-                            DropdownMenuStatusSelector(
-                                currentStatus = selectedStatus.name,
-                                onStatusSelected = { statusStr ->
-                                    selectedStatus = TaskStatus.valueOf(statusStr)
-                                }
+                        if (isStudent) {
+                            StudentTaskDetailsAboutProgressSectionComposable(
+                                selectedStatus = selectedStatus,
+                                onStatusSelected = { selectedStatus = it },
+                                onDismiss = onDismiss
                             )
-
-                            IconButton(onClick = onDismiss) {
-                                Icon(Icons.Default.Close, contentDescription = "Close")
-                            }
                         } else {
-                            Text(
-                                text = stringResource(R.string.status) + selectedStatus.name,
-                                fontWeight = FontWeight.Bold,
-                                fontSize = 14.sp,
-                                modifier = Modifier.padding(vertical = 8.dp)
+                            ProfessorTaskDetailsAboutProgressSectionComposable(
+                                selectedStatus = selectedStatus,
+                                onStatusSelected = { selectedStatus = it }
                             )
                         }
                     }
 
-                    Text(
-                        text = taskInfo.taskInfo.taskTitle,
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 22.sp,
-                        modifier = Modifier.padding(vertical = 8.dp).padding(top = 8.dp)
-                    )
+                    if (isEditingTitle && !isStudent) {
+                        EditableTitleFieldComposable(
+                            title = editableTitle,
+                            onTitleChange = { editableTitle = it },
+                            onDoneEditing = { isEditingTitle = false },
+                            modifier = Modifier.fillMaxWidth()
+                        )
+                    } else {
+                        ReadOnlyTitleRowComposable(
+                            title = editableTitle,
+                            isStudent = isStudent,
+                            onEditClick = { isEditingTitle = true }
+                        )
+                    }
 
-                    Text(
-                        text = taskInfo.taskInfo.description,
-                        fontSize = 16.sp,
-                        modifier = Modifier.padding(bottom = 16.dp)
-                    )
-
-                    Divider()
+                    if (isEditingDescription && !isStudent) {
+                        EditableDescriptionFieldComposable(
+                            value = editableDescription,
+                            onValueChange = { editableDescription = it },
+                            onSaveClick = { isEditingDescription = false },
+                            modifier = Modifier.fillMaxWidth()
+                        )
+                    } else {
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clickable(enabled = !isStudent) { isEditingDescription = true }
+                                .padding(bottom = 16.dp)
+                        ) {
+                            Text(
+                                text = editableDescription,
+                                fontSize = 16.sp
+                            )
+                            if (!isStudent) {
+                                Icon(
+                                    imageVector = Icons.Default.Edit,
+                                    contentDescription = "Edit description",
+                                    modifier = Modifier
+                                        .padding(top = 4.dp)
+                                        .size(20.dp)
+                                )
+                            }
+                        }
+                    }
+                    Divider(modifier = Modifier.padding(vertical = 12.dp))
 
                     Row(
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = 16.dp),
-                        horizontalArrangement = Arrangement.SpaceBetween
+                            .fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Column(
-                            modifier = Modifier.weight(1f),
-                            verticalArrangement = Arrangement.spacedBy(8.dp)
-                        ) {
-                            ProfileRow(
-                                stringResource(R.string.assigned_by),
-                                taskInfo.professorBasic.username,
-                                taskInfo.professorBasic.image
-                            )
-                            ProfileRow(
-                                stringResource(R.string.assigned_to),
-                                taskInfo.studentBasic.username,
-                                taskInfo.studentBasic.image
-                            )
-                            TaskDetailRow(
-                                stringResource(R.string.subject),
-                                taskInfo.taskInfo.subjectName
-                            )
-                            TaskDetailRow(
-                                stringResource(R.string.deadline),
-                                taskInfo.taskInfo.deadlineDate
-                            )
-                            TaskDetailRow(
-                                stringResource(R.string.created),
-                                taskInfo.taskInfo.creationDate
-                            )
+                        Text(
+                            text = stringResource(R.string.deadline) + ": " + editableDeadline,
+                            fontSize = 16.sp,
+                            modifier = Modifier.weight(1f)
+                        )
+                        if (!isStudent) {
+                            IconButton(modifier = Modifier.padding(top = 8.dp), onClick = {
+                                isEditingDeadline = true
+                                datePickerDialog.show()
+                            }) {
+                                Icon(Icons.Default.Edit, contentDescription = "Edit deadline")
+                            }
                         }
-
                     }
+                    ProfileRow(
+                        stringResource(R.string.assigned_by),
+                        taskInfo.professorBasic.username,
+                        taskInfo.professorBasic.image,
+                        isStudent = false
+                    )
+                    ProfileRow(
+                        stringResource(R.string.assigned_to),
+                        taskInfo.studentBasic.username,
+                        taskInfo.studentBasic.image,
+                        isStudent = true
+                    )
+                    TaskDetailRow(stringResource(R.string.subject), taskInfo.taskInfo.subjectName)
+                    TaskDetailRow(stringResource(R.string.created), taskInfo.taskInfo.creationDate)
                 }
-
-                if (hasChanges && CurrentUser.getCurrentUserIfIsStudent()) {
-                    Spacer(modifier = Modifier.height(16.dp))
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 16.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    TextButton(
+                        onClick = onDismiss
+                    ) {
+                        Text(text = stringResource(R.string.cancel))
+                    }
                     Button(
+                        enabled = hasChanges,
                         onClick = {
-                            onStatusChange(selectedStatus.toString())
-                            onSaveStatusChange()
+                            onSaveStatusChange(
+                                UpdateTaskByProfessorModel(
+                                    taskId = taskInfo.taskInfo.taskId,
+                                    taskDescription = editableDescription,
+                                    taskTitle = editableTitle,
+                                    taskDeadline = editableDeadline,
+                                    progress = selectedStatus.name
+                                )
+                            )
                         },
-                        modifier = Modifier.align(Alignment.End)
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = if (hasChanges) MaterialTheme.colorScheme.primary else Color.Gray,
+                            contentColor = Color.White
+                        )
                     ) {
                         Text(stringResource(R.string.save))
                     }

@@ -1,6 +1,7 @@
 package com.example.edutasker.screens.professor.viewModel.stateAndEvents
 
 import com.example.edutasker.model.StudentPreviewAsListModel
+import com.example.edutasker.model.UpdateTaskByProfessorModel
 
 sealed class ProfessorEvents {
     data object WillingToAddTask : ProfessorEvents()
@@ -17,11 +18,15 @@ sealed class ProfessorEvents {
     data object OpenDialogToAddNewTask : ProfessorEvents()
     data object DismissAddTaskScreen : ProfessorEvents()
     data object GetSubjectsOfProfessor : ProfessorEvents()
-    data object SearchProfessorStudents : ProfessorEvents()
+    data class SearchProfessorStudents(val selectedSubjectOfTask: String) : ProfessorEvents()
+    data class SelectedUnselectedStudentForAddingAssignment(val student: StudentPreviewAsListModel?) :
+        ProfessorEvents()
+
     data object Initialize : ProfessorEvents()
     data object CloseTaskDialog : ProfessorEvents()
     data class OpenTaskDialog(val taskId: String) : ProfessorEvents()
     data class GetAllTasksByStudent(val studentId: String) : ProfessorEvents()
+    data class UpdateTask(val taskInfo: UpdateTaskByProfessorModel) : ProfessorEvents()
     data class SelectStudentToSeeBacklog(val student: StudentPreviewAsListModel) : ProfessorEvents()
     data object None : ProfessorEvents()
 }

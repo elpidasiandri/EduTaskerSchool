@@ -108,4 +108,5 @@ dependencies {
     //gson
     implementation(libs.gson)
 
+    implementation(libs.timber)
 }
