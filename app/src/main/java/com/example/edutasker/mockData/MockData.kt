@@ -1,5 +1,6 @@
 package com.example.edutasker.mockData
 
+import com.example.edutasker.entities.NotificationEntity
 import com.example.edutasker.entities.ProfessorEntity
 import com.example.edutasker.entities.StudentEntity
 import com.example.edutasker.entities.TaskEntity
@@ -14,6 +15,7 @@ object MockData {
         taskUseCases: TaskUseCases,
     ) {
         CoroutineScope(Dispatchers.IO).launch {
+
             // Professors
             val prof1 = ProfessorEntity(
                 "p1",
@@ -154,7 +156,6 @@ object MockData {
                     assignTo = "s1",
                     progress = TaskStatus.TODO.name
                 ),
-
                 TaskEntity(
                     "t4",
                     "Newton’s laws",
@@ -322,11 +323,159 @@ object MockData {
                 )
             )
 
+            //Notifications
+            val notification = listOf(
+                NotificationEntity(
+                    notificationId = "n1",
+                    taskId = "t1",
+                    studentId = "s1",
+                    professorId = "p2",
+                    readableByProfessor = false,
+                    readableByStudent = false
+                ),
+                NotificationEntity(
+                    notificationId = "n2",
+                    taskId = "t2",
+                    studentId = "s2",
+                    professorId = "p2",
+                    readableByProfessor = true,
+                    readableByStudent = true
+                ),
+                NotificationEntity(
+                    notificationId = "n3",
+                    taskId = "t3",
+                    studentId = "s1",
+                    professorId = "p1",
+                    readableByProfessor = true,
+                    readableByStudent = true
+                ),
+                NotificationEntity(
+                    notificationId = "n4",
+                    taskId = "t4",
+                    studentId = "s7",
+                    professorId = "p1",
+                    readableByProfessor = true,
+                    readableByStudent = false
+                ),
+                NotificationEntity(
+                    notificationId = "n5",
+                    taskId = "t5",
+                    studentId = "s2",
+                    professorId = "p2",
+                    readableByProfessor = true,
+                    readableByStudent = true
+                ),
+                NotificationEntity(
+                    notificationId = "n6",
+                    taskId = "t6",
+                    studentId = "s2",
+                    professorId = "p2",
+                    readableByProfessor = true,
+                    readableByStudent = true
+                ),
+                NotificationEntity(
+                    notificationId = "n7",
+                    taskId = "t7",
+                    studentId = "s2",
+                    professorId = "p1",
+                    readableByProfessor = true,
+                    readableByStudent = true
+                ),
+                NotificationEntity(
+                    notificationId = "n8",
+                    taskId = "t8",
+                    studentId = "s3",
+                    professorId = "p2",
+                    readableByProfessor = true,
+                    readableByStudent = false
+                ),
+                NotificationEntity(
+                    notificationId = "n9",
+                    taskId = "t9",
+                    studentId = "s6",
+                    professorId = "p3",
+                    readableByProfessor = false,
+                    readableByStudent = false
+                ),
+                NotificationEntity(
+                    notificationId = "n10",
+                    taskId = "t10",
+                    studentId = "s3",
+                    professorId = "p3",
+                    readableByProfessor = true,
+                    readableByStudent = false
+                ),
+                NotificationEntity(
+                    notificationId = "n11",
+                    taskId = "t11",
+                    studentId = "s4",
+                    professorId = "p2",
+                    readableByProfessor = false,
+                    readableByStudent = true
+                ),
+                NotificationEntity(
+                    notificationId = "n12",
+                    taskId = "t12",
+                    studentId = "s5",
+                    professorId = "p2",
+                    readableByProfessor = false,
+                    readableByStudent = false
+                ),
+                NotificationEntity(
+                    notificationId = "n13",
+                    taskId = "t13",
+                    studentId = "s8",
+                    professorId = "p1",
+                    readableByProfessor = false,
+                    readableByStudent = false
+                ),
+                NotificationEntity(
+                    notificationId = "n14",
+                    taskId = "t14",
+                    studentId = "s8",
+                    professorId = "p1",
+                    readableByProfessor = false,
+                    readableByStudent = false
+                ),
+                NotificationEntity(
+                    notificationId = "n15",
+                    taskId = "t15",
+                    studentId = "s8",
+                    professorId = "p3",
+                    readableByProfessor = false,
+                    readableByStudent = false
+                ),
+                NotificationEntity(
+                    notificationId = "n16",
+                    taskId = "t16",
+                    studentId = "s7",
+                    professorId = "p3",
+                    readableByProfessor = false,
+                    readableByStudent = false
+                ),
+                NotificationEntity(
+                    notificationId = "n17",
+                    taskId = "t17",
+                    studentId = "s6",
+                    professorId = "p3",
+                    readableByProfessor = true,
+                    readableByStudent = true
+                ),
+                NotificationEntity(
+                    notificationId = "n18",
+                    taskId = "t18",
+                    studentId = "s6",
+                    professorId = "p3",
+                    readableByProfessor = false,
+                    readableByStudent = false
+                )
+            )
+
             taskUseCases.insertMockData(
                 professors = listOf(prof1, prof2, prof3),
                 students = students,
-                tasks = tasks
-
+                tasks = tasks,
+                notifications = notification
             )
         }
     }

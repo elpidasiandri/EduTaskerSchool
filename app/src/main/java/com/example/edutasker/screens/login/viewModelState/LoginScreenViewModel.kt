@@ -26,7 +26,7 @@ class LoginScreenViewModel(
     private val loginProfessor: LoginProfessorUseCase,
     private val loginStudent: LoginStudentUseCase,
     private val getProfessorByEmail: GetProfessorByEmailUseCase,
-    private val getStudentByEmail: GetStudentByEmailUseCase,
+    private val getStudentByEmail: GetStudentByEmailUseCase
 ) : ViewModel() {
     private val _state = MutableStateFlow(LoginState())
     val state: StateFlow<LoginState> = _state

@@ -2,6 +2,8 @@ package com.example.edutasker.di
 
 import androidx.room.Room
 import com.example.edutasker.dao.EduTaskerDatabase
+import com.example.edutasker.repo.notificationDatabase.INotificationDatabaseRepo
+import com.example.edutasker.repo.notificationDatabase.NotificationDatabaseRepoImpl
 import com.example.edutasker.repo.relationsDatabase.DatabaseRepositoryImpl
 import com.example.edutasker.repo.relationsDatabase.IDatabaseRepository
 import com.example.edutasker.repo.professorDatabase.IProfessorDatabaseRepository
@@ -52,6 +54,9 @@ val databaseModule = module {
     single<IStudentDatabaseRepository> {
         StudentDatabaseRepositoryImpl(get())
     }
+    single<INotificationDatabaseRepo> {
+        NotificationDatabaseRepoImpl(get())
+    }
     single<IProfessorDatabaseRepository> {
         ProfessorDatabaseRepositoryImpl(get(), get())
     }
@@ -65,6 +70,9 @@ val databaseModule = module {
     }
     single {
         get<EduTaskerDatabase>().professorDao()
+    }
+    single {
+        get<EduTaskerDatabase>().notificationDao()
     }
     single {
         InsertStudentUseCase(get())
@@ -90,7 +98,7 @@ val databaseModule = module {
             getAllTasksBySpecificProfessorOfStudent = GetAllTasksBySpecificProfessorOfStudentUseCase(
                 get()
             ),
-            insertMockData = InsertMockDataUseCase(get(), get(), get(), get())
+            insertMockData = InsertMockDataUseCase(get(), get(), get(), get(), get())
         )
     }
 }

@@ -4,7 +4,7 @@ import com.example.edutasker.model.UpdateTaskByProfessorModel
 import com.example.edutasker.repo.taskDatabase.ITaskDatabaseRepository
 
 class UpdateTaskByProfessorUseCase (
-    private val repo: ITaskDatabaseRepository,
+    private val repo: ITaskDatabaseRepository
 ) {
     suspend operator fun invoke(taskInfo: UpdateTaskByProfessorModel) {
         return repo.updateTaskByProfessor(taskInfo)
