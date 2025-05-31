@@ -2,13 +2,13 @@ package com.example.edutasker.useCases.student
 
 import com.example.edutasker.mockData.CurrentUser
 import com.example.edutasker.model.StudentPreviewAsListModel
-import com.example.edutasker.repo.IDatabaseRepository
+import com.example.edutasker.repo.professorDatabase.IProfessorDatabaseRepository
 
 class GetAllStudentsOfSpecificProfessorUseCase(
-    private val databaseRepository: IDatabaseRepository,
+    private val repo: IProfessorDatabaseRepository,
 ) {
     suspend operator fun invoke(specificSubject: String? = null): List<StudentPreviewAsListModel> {
-        return databaseRepository.getAllStudentsOfProfessorSubjects(
+        return repo.getAllStudentsOfProfessorSubjects(
             CurrentUser.getCurrentUserId(),
             specificSubject = specificSubject
         )

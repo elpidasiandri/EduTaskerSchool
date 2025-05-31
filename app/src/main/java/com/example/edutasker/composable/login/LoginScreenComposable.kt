@@ -7,6 +7,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -39,6 +40,7 @@ import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
@@ -60,6 +62,7 @@ fun LoginScreenComposable(
     var password by remember { mutableStateOf("") }
     val buttonIsEnabled = email.isNotEmpty() && password.isNotEmpty()
     val loginBitmap = remember { loadImageFromRaw(R.raw.login) }
+    val keyboardController = LocalSoftwareKeyboardController.current
 
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -97,6 +100,14 @@ fun LoginScreenComposable(
                     modifier = Modifier
                         .fillMaxWidth(),
                     keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done),
+                    keyboardActions = KeyboardActions(
+                        onDone = {
+                            if (buttonIsEnabled) {
+                                onEvent(LoginEvents.TryToConnect(email, password))
+                            }
+                            keyboardController?.hide()
+                        }
+                    ),
                     colors = TextFieldDefaults.colors(
                         focusedContainerColor = Color.Transparent,
                         unfocusedContainerColor = Color.Transparent,
@@ -136,6 +147,14 @@ fun LoginScreenComposable(
                         keyboardType = KeyboardType.Password,
                         imeAction = ImeAction.Done
                     ),
+                    keyboardActions = KeyboardActions(
+                        onDone = {
+                            if (buttonIsEnabled) {
+                                onEvent(LoginEvents.TryToConnect(email, password))
+                            }
+                            keyboardController?.hide()
+                        }
+                    ),
                     modifier = Modifier
                         .fillMaxWidth(),
                     colors = TextFieldDefaults.colors(
@@ -161,7 +180,7 @@ fun LoginScreenComposable(
                     },
                     enabled = buttonIsEnabled,
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = if (buttonIsEnabled) Color.Blue else Color.White,
+                        containerColor = if (buttonIsEnabled) Color.Blue else White,
                         contentColor = if (buttonIsEnabled) Red else Color.DarkGray
                     )
                 ) {

@@ -1,12 +1,12 @@
 package com.example.edutasker.useCases.student
 
 import com.example.edutasker.entities.StudentEntity
-import com.example.edutasker.repo.IDatabaseRepository
+import com.example.edutasker.repo.studentDatabase.IStudentDatabaseRepository
 
 class GetStudentByEmailUseCase(
-    private val databaseRepository: IDatabaseRepository
+    private val repo: IStudentDatabaseRepository
 ) {
     suspend operator fun invoke(email: String): StudentEntity? {
-        return databaseRepository.getStudentByEmail(email)
+        return repo.getStudentByEmail(email)
     }
 }

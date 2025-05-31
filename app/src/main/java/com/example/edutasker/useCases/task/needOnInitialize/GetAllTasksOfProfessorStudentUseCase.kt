@@ -1,7 +1,7 @@
 package com.example.edutasker.useCases.task.needOnInitialize
 
 import com.example.edutasker.model.TasksWithStudentImageModel
-import com.example.edutasker.repo.IDatabaseRepository
+import com.example.edutasker.repo.relationsDatabase.IDatabaseRepository
 
 class GetAllTasksOfProfessorStudentUseCase(
     private val repo: IDatabaseRepository,

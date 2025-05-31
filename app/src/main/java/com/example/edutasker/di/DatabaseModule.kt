@@ -2,8 +2,14 @@ package com.example.edutasker.di
 
 import androidx.room.Room
 import com.example.edutasker.dao.EduTaskerDatabase
-import com.example.edutasker.repo.DatabaseRepositoryImpl
-import com.example.edutasker.repo.IDatabaseRepository
+import com.example.edutasker.repo.relationsDatabase.DatabaseRepositoryImpl
+import com.example.edutasker.repo.relationsDatabase.IDatabaseRepository
+import com.example.edutasker.repo.professorDatabase.IProfessorDatabaseRepository
+import com.example.edutasker.repo.professorDatabase.ProfessorDatabaseRepositoryImpl
+import com.example.edutasker.repo.studentDatabase.IStudentDatabaseRepository
+import com.example.edutasker.repo.studentDatabase.StudentDatabaseRepositoryImpl
+import com.example.edutasker.repo.taskDatabase.ITaskDatabaseRepository
+import com.example.edutasker.repo.taskDatabase.TaskDatabaseRepositoryImpl
 import com.example.edutasker.useCases.task.needOnInitialize.GetTaskCountByProfessorUseCase
 import com.example.edutasker.useCases.task.needOnInitialize.GetTaskCountPerSubjectUseCase
 import com.example.edutasker.useCases.task.needOnInitialize.GetTasksByProfessorUseCase
@@ -34,9 +40,20 @@ val databaseModule = module {
         DatabaseRepositoryImpl(
             get(),
             get(),
+        )
+    }
+    single<ITaskDatabaseRepository> {
+        TaskDatabaseRepositoryImpl(
+            get(),
             get(),
             get(),
         )
+    }
+    single<IStudentDatabaseRepository> {
+        StudentDatabaseRepositoryImpl(get())
+    }
+    single<IProfessorDatabaseRepository> {
+        ProfessorDatabaseRepositoryImpl(get(), get())
     }
     single<CoroutineDispatcher> { Dispatchers.IO }
 
@@ -70,8 +87,10 @@ val databaseModule = module {
             getTasksForSubject = GetTasksForSubjectUseCase(get()),
             getAllTasksOfAllStudents = GetAllTasksOfAllStudents(get()),
             getAllTasksOfProfessorStudent = GetAllTasksOfProfessorStudentUseCase(get()),
-            getAllTasksBySpecificProfessorOfStudent = GetAllTasksBySpecificProfessorOfStudentUseCase(get()),
-            insertMockData = InsertMockDataUseCase(get())
+            getAllTasksBySpecificProfessorOfStudent = GetAllTasksBySpecificProfessorOfStudentUseCase(
+                get()
+            ),
+            insertMockData = InsertMockDataUseCase(get(), get(), get(), get())
         )
     }
 }

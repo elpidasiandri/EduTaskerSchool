@@ -1,7 +1,7 @@
 package com.example.edutasker.useCases.task.needOnInitialize
 
 import com.example.edutasker.entities.relations.TaskWithStudent
-import com.example.edutasker.repo.IDatabaseRepository
+import com.example.edutasker.repo.relationsDatabase.IDatabaseRepository
 import kotlinx.coroutines.flow.Flow
 
 class GetAllTasksBySpecificProfessorOfStudentUseCase(

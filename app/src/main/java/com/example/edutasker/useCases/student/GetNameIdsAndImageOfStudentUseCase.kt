@@ -1,7 +1,7 @@
 package com.example.edutasker.useCases.student
 
 import com.example.edutasker.model.StudentPreviewAsListModel
-import com.example.edutasker.repo.IDatabaseRepository
+import com.example.edutasker.repo.relationsDatabase.IDatabaseRepository
 
 class GetNameIdsAndImageOfStudentUseCase(
     private val databaseRepository: IDatabaseRepository,

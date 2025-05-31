@@ -30,7 +30,6 @@ fun MenuProfessorComposable(onEvent: (ProfessorEvents) -> Unit, scaffoldState: S
                 }
             }
         ))
-        Text(stringResource(R.string.assignments), modifier = Modifier.padding(16.dp))
         Text(stringResource(R.string.add_new_task), modifier = Modifier.padding(16.dp).noRippleClickable(
             interactionSource = interactionSource,
             onClick = {

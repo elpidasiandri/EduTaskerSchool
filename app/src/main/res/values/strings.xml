@@ -30,7 +30,6 @@
     <string name="success_new_task">The addition was successful.</string>
     <string name="add_new_task">Add New Task</string>
     <string name="notifications">Notifications</string>
-    <string name="assignments">Assignments</string>
     <string name="dashboard">Dashboard</string>
     <string name="no_results">No results found for</string>
     <string name="assigned_by">Assigned by</string>
