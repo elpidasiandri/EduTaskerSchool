@@ -109,7 +109,6 @@ fun ProfessorScreenComposable(
                     Box(
                         modifier = Modifier
                             .fillMaxWidth(),
-                        contentAlignment = Alignment.Center
                     ) {
                         Text(
                             text = stringResource(R.string.edu_tasker_professor),
