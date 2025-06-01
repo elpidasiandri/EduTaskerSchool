@@ -12,6 +12,7 @@ import com.example.edutasker.BaseActivity
 import com.example.edutasker.R
 import com.example.edutasker.composable.errorOrSuccessToast.CustomToastComposable
 import com.example.edutasker.databinding.ActivityBaseBinding
+import com.example.edutasker.di.notificationModule
 import com.example.edutasker.di.studentModule
 import com.example.edutasker.screens.login.LoginMainActivity
 import com.example.edutasker.screens.student.viewModel.StudentViewModel
@@ -30,14 +31,14 @@ class StudentActivity() : BaseActivity<ActivityBaseBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        loadKoinModules(studentModule)
+        loadKoinModules(listOf(notificationModule, studentModule))
         setNavGraph()
         setUpViewModel()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        unloadKoinModules(studentModule)
+        unloadKoinModules(listOf(notificationModule, studentModule))
     }
 
     private fun setUpViewModel() {
@@ -49,21 +50,25 @@ class StudentActivity() : BaseActivity<ActivityBaseBinding>() {
                             LoginMainActivity.newInstance(context = this@StudentActivity)
                             finish()
                         }
-                        StudentUiEvents.Error->{
-                            showMessage(state.messageErrorId , isError = true)
+
+                        StudentUiEvents.Error -> {
+                            showMessage(state.messageErrorId, isError = true)
 
                         }
-                        StudentUiEvents.Success->{
-                            showMessage(state.messageErrorId , isError = false)
+
+                        StudentUiEvents.Success -> {
+                            showMessage(state.messageErrorId, isError = false)
                         }
+
                         else -> {}
                     }
                 }
             }
         }
     }
-    private fun showMessage(messageErrorId:Int, isError:Boolean){
-        showComposeToast(getString(messageErrorId),isError)
+
+    private fun showMessage(messageErrorId: Int, isError: Boolean) {
+        showComposeToast(getString(messageErrorId), isError)
         viewModel.setEventNone()
     }
 

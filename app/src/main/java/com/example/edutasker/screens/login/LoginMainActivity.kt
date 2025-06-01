@@ -20,6 +20,7 @@ import com.example.edutasker.screens.student.StudentActivity
 import kotlinx.coroutines.launch
 import org.koin.core.context.loadKoinModules
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.context.unloadKoinModules
 
 class LoginMainActivity() : BaseActivity<ActivityBaseBinding>() {
     private val loginViewModel: LoginScreenViewModel by viewModel()
@@ -31,6 +32,10 @@ class LoginMainActivity() : BaseActivity<ActivityBaseBinding>() {
         setNavGraph()
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        unloadKoinModules(loginModule)
+    }
     override fun inflateBinding(): ActivityBaseBinding {
         return ActivityBaseBinding.inflate(layoutInflater)
     }
