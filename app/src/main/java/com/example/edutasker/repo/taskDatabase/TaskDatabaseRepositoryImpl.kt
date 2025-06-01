@@ -54,6 +54,13 @@ class TaskDatabaseRepositoryImpl(
         )
     }
 
+    override suspend fun updateTaskByStudent(taskId: String,progress: String) {
+        taskDao.updateTaskProgress(
+            taskId = taskId,
+            progress = progress
+        )
+    }
+
     override suspend fun getAllTaskByStudentId(studentId: String): Flow<List<TaskEntity?>?> {
         return taskDao.getTasksByStudent(studentId)
     }

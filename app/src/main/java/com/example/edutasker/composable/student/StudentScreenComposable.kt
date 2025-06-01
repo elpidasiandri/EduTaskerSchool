@@ -32,6 +32,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.edutasker.R
 import com.example.edutasker.composable.student.menu.MenuStudentComposable
+import com.example.edutasker.composable.task.overview.TaskDetailsDialog
 import com.example.edutasker.composable.task.taskprofile.MainCardTasksContentComposable
 import com.example.edutasker.mockData.CurrentUser
 import com.example.edutasker.model.TasksWithStudentImageModel
@@ -57,7 +58,16 @@ fun StudentScreenComposable(
         BitmapFactory.decodeStream(context.resources.openRawResource(R.raw.exit_icon))
     }
     val tasksOfUser = remember(state.allTasks) { state.allTasks }
-
+    if (state.isTaskOpened) {
+        TaskDetailsDialog(
+            taskInfo = state.openedTask, onDismiss = {
+                onEvent(StudentEvents.CloseTaskDialog)
+            },
+            onSaveStatusChange = { taskInfo ->
+                onEvent(StudentEvents.UpdateTask(taskInfo))
+            }
+        )
+    }
     Scaffold(
         scaffoldState = scaffoldState,
         drawerContent = {

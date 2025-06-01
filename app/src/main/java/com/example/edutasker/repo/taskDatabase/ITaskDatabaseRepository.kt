@@ -12,5 +12,6 @@ interface ITaskDatabaseRepository {
     suspend fun getTasksByProfessor(professorId: String): List<TaskEntity>
     suspend fun getTasksForSubject(subjectName: String): List<TaskEntity>
     suspend fun updateTaskByProfessor(taskInfo: UpdateTaskByProfessorModel)
+    suspend fun updateTaskByStudent(taskId: String, progress: String)
     suspend fun getAllTaskByStudentId(studentId: String): Flow<List<TaskEntity?>?>
 }

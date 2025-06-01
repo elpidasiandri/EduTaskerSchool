@@ -99,6 +99,17 @@ interface TaskDao {
         deadlineDate: String,
         progress: String,
     )
+    @Query(
+        """
+        UPDATE tasks 
+        SET progress = :progress
+        WHERE taskId = :taskId
+    """
+    )
+    suspend fun updateTaskProgress(
+        taskId: String,
+        progress: String,
+    )
 
     @Query("SELECT * FROM tasks WHERE assignTo = :studentId")
     fun getTasksByStudent(studentId: String): Flow<List<TaskEntity>?>
