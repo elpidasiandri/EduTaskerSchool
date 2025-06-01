@@ -1,4 +1,4 @@
-package com.example.edutasker.composable.professor
+package com.example.edutasker.composable.professor.menu
 
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Column

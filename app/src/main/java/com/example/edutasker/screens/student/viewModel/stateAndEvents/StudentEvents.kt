@@ -3,7 +3,7 @@ package com.example.edutasker.screens.student.viewModel.stateAndEvents
 sealed class StudentEvents {
     data object None : StudentEvents()
     data object Logout : StudentEvents()
-    data object Initialize : StudentEvents()
+    data class OpenTaskDialog(val taskId: String) : StudentEvents()
 }
 
 sealed class StudentUiEvents {

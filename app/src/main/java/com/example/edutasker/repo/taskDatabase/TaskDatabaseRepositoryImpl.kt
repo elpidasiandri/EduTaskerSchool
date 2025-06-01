@@ -6,6 +6,7 @@ import com.example.edutasker.dao.TaskDao
 import com.example.edutasker.entities.TaskEntity
 import com.example.edutasker.model.SubjectTaskCount
 import com.example.edutasker.model.UpdateTaskByProfessorModel
+import kotlinx.coroutines.flow.Flow
 
 class TaskDatabaseRepositoryImpl(
     private val taskDao: TaskDao,
@@ -51,6 +52,10 @@ class TaskDatabaseRepositoryImpl(
             deadlineDate = taskInfo.taskDeadline,
             progress = taskInfo.progress
         )
+    }
+
+    override suspend fun getAllTaskByStudentId(studentId: String): Flow<List<TaskEntity?>?> {
+        return taskDao.getTasksByStudent(studentId)
     }
 
     private fun getNewTaskId(oldId: String): String {

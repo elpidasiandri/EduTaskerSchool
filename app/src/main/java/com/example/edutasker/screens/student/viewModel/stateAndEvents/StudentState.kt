@@ -1,13 +1,11 @@
 package com.example.edutasker.screens.student.viewModel.stateAndEvents
 
-import com.example.edutasker.model.StudentPreviewAsListModel
-import com.example.edutasker.model.TasksWithStudentImageModel
+import com.example.edutasker.model.TaskModel
 
 data class StudentState(
     val events: StudentEvents = StudentEvents.None,
     val uiEvents: StudentUiEvents = StudentUiEvents.None,
     val messageErrorId: Int = -1,
-    val studentsToAppearOnCentralRow: List<StudentPreviewAsListModel> = listOf(),
-    val allTasksByEveryone: List<TasksWithStudentImageModel> = listOf(),
+    val allTasks : List<TaskModel> = listOf(),
 )
 

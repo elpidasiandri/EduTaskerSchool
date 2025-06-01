@@ -24,7 +24,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
@@ -42,12 +41,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import com.example.edutasker.composable.professor.arrowWithStudents.StudentAvatarRowComposable
 import com.example.edutasker.composable.professor.assignTask.AddTaskDialogComposable
+import com.example.edutasker.composable.professor.menu.MenuProfessorComposable
 import com.example.edutasker.composable.professor.searchBar.ResultsOfSearchedStudentsComposable
 import com.example.edutasker.composable.professor.searchBar.StudentSearchBarComposable
 import com.example.edutasker.composable.task.overview.TaskDetailsDialog
 import com.example.edutasker.screens.professor.viewModel.stateAndEvents.ProfessorEvents
 import com.example.edutasker.screens.professor.viewModel.stateAndEvents.ProfessorState
-import timber.log.Timber
 
 @SuppressLint("ResourceType")
 @Composable
@@ -187,10 +186,10 @@ fun ProfessorScreenComposable(
                 }
                 Spacer(modifier = Modifier.height(8.dp))
                 MainCardTasksContentComposable(
-                    Modifier
+                    modifier = Modifier
                         .background(LightGray)
                         .padding(padding),
-                    state.selectedStudentFromSearch.image,
+                    selectedStudentImage = state.selectedStudentFromSearch.image,
                     allTasksByEveryoneWithImage = state.allTasksByProfessorStudent.ifEmpty { state.allTasksByEveryone },
                     onTaskClick = { taskId -> onEvent(ProfessorEvents.OpenTaskDialog(taskId)) }
                 )
