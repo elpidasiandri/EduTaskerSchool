@@ -5,8 +5,6 @@ import com.example.edutasker.dao.TaskDao
 import com.example.edutasker.entities.relations.TaskWithStudent
 import com.example.edutasker.mockData.CurrentUser
 import com.example.edutasker.model.StudentPreviewAsListModel
-import com.example.edutasker.model.TasksWithStudentImageModel
-import com.example.edutasker.mapper.taskDomainToTasksWithStudentImageModel
 import com.example.edutasker.mapper.toOpenedTask
 import com.example.edutasker.model.OpenedTaskModel
 import kotlinx.coroutines.flow.Flow
@@ -27,11 +25,6 @@ class DatabaseRepositoryImpl(
     override suspend fun getAllTasksOfAllStudents(): Flow<List<TaskWithStudent>> {
         return taskDao.getAllTasksWithStudentImages()
 
-    }
-
-    override suspend fun getAllTasksOfProfessorStudent(): List<TasksWithStudentImageModel> {
-        return taskDao.getTasksByAssignerWithStudentImages(CurrentUser.getCurrentUserId())
-            .map { it.taskDomainToTasksWithStudentImageModel() }
     }
 
     override suspend fun getAllTasksBySpecificProfessorOfStudent(studentId: String): Flow<List<TaskWithStudent>> {

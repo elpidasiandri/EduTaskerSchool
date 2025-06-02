@@ -1,19 +1,15 @@
 package com.example.edutasker.repo.taskDatabase
 
-import com.example.edutasker.dao.ProfessorDao
 import com.example.edutasker.dao.StudentDao
 import com.example.edutasker.dao.TaskDao
 import com.example.edutasker.entities.TaskEntity
-import com.example.edutasker.model.SubjectTaskCount
 import com.example.edutasker.model.UpdateTaskByProfessorModel
 import kotlinx.coroutines.flow.Flow
 
 class TaskDatabaseRepositoryImpl(
     private val taskDao: TaskDao,
     private val studentDao: StudentDao,
-    private val professorDao: ProfessorDao,
-
-    ) : ITaskDatabaseRepository {
+) : ITaskDatabaseRepository {
     override suspend fun insertTask(task: TaskEntity) {
         val finalTask = if (task.taskId.isEmpty())
             task.copy(taskId = getNewTaskId(getLastTaskId()))
@@ -28,22 +24,6 @@ class TaskDatabaseRepositoryImpl(
         }
     }
 
-    override suspend fun getTaskCountByProfessor(profId: String): Int {
-        return taskDao.getTaskCountForProfessor(profId)
-    }
-
-    override suspend fun getTaskCountPerSubject(): List<SubjectTaskCount> {
-        return taskDao.getTaskCountPerSubject()
-    }
-
-    override suspend fun getTasksByProfessor(professorId: String): List<TaskEntity> {
-        return professorDao.getTasksByProfessor(professorId)
-    }
-
-    override suspend fun getTasksForSubject(subjectName: String): List<TaskEntity> {
-        return taskDao.getTasksForSubject(subjectName)
-    }
-
     override suspend fun updateTaskByProfessor(taskInfo: UpdateTaskByProfessorModel) {
         taskDao.updateTaskDetails(
             taskId = taskInfo.taskId,
@@ -54,7 +34,7 @@ class TaskDatabaseRepositoryImpl(
         )
     }
 
-    override suspend fun updateTaskByStudent(taskId: String,progress: String) {
+    override suspend fun updateTaskByStudent(taskId: String, progress: String) {
         taskDao.updateTaskProgress(
             taskId = taskId,
             progress = progress

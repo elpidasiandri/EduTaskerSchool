@@ -12,10 +12,6 @@ import com.example.edutasker.repo.studentDatabase.IStudentDatabaseRepository
 import com.example.edutasker.repo.studentDatabase.StudentDatabaseRepositoryImpl
 import com.example.edutasker.repo.taskDatabase.ITaskDatabaseRepository
 import com.example.edutasker.repo.taskDatabase.TaskDatabaseRepositoryImpl
-import com.example.edutasker.useCases.task.needOnInitialize.GetTaskCountByProfessorUseCase
-import com.example.edutasker.useCases.task.needOnInitialize.GetTaskCountPerSubjectUseCase
-import com.example.edutasker.useCases.task.needOnInitialize.GetTasksByProfessorUseCase
-import com.example.edutasker.useCases.task.needOnInitialize.GetTasksForSubjectUseCase
 import com.example.edutasker.useCases.professor.InsertProfessorUseCase
 import com.example.edutasker.useCases.student.InsertStudentUseCase
 import com.example.edutasker.useCases.task.needOnInitialize.InsertTaskUseCase
@@ -24,7 +20,6 @@ import com.example.edutasker.useCases.professor.GetProfessorByEmailUseCase
 import com.example.edutasker.useCases.student.GetStudentByEmailUseCase
 import com.example.edutasker.useCases.task.needOnInitialize.GetAllTasksBySpecificProfessorOfStudentUseCase
 import com.example.edutasker.useCases.task.needOnInitialize.GetAllTasksOfAllStudents
-import com.example.edutasker.useCases.task.needOnInitialize.GetAllTasksOfProfessorStudentUseCase
 import com.example.edutasker.useCases.task.needOnInitialize.InsertMockDataUseCase
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -46,7 +41,6 @@ val databaseModule = module {
     }
     single<ITaskDatabaseRepository> {
         TaskDatabaseRepositoryImpl(
-            get(),
             get(),
             get(),
         )
@@ -89,12 +83,7 @@ val databaseModule = module {
     single {
         TaskUseCases(
             insertTask = InsertTaskUseCase(get()),
-            getTaskCountByProfessor = GetTaskCountByProfessorUseCase(get()),
-            getTaskCountPerSubject = GetTaskCountPerSubjectUseCase(get()),
-            getTasksByProfessor = GetTasksByProfessorUseCase(get()),
-            getTasksForSubject = GetTasksForSubjectUseCase(get()),
             getAllTasksOfAllStudents = GetAllTasksOfAllStudents(get()),
-            getAllTasksOfProfessorStudent = GetAllTasksOfProfessorStudentUseCase(get()),
             getAllTasksBySpecificProfessorOfStudent = GetAllTasksBySpecificProfessorOfStudentUseCase(
                 get()
             ),

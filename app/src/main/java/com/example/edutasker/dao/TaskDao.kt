@@ -8,25 +8,12 @@ import androidx.room.Transaction
 import com.example.edutasker.entities.TaskEntity
 import com.example.edutasker.entities.relations.TaskWithStudent
 import com.example.edutasker.entities.relations.TaskWithStudentAndProfessor
-import com.example.edutasker.model.SubjectTaskCount
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface TaskDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertTask(task: TaskEntity)
-
-    @Query(
-        """
-        SELECT subjectName, COUNT(*) as taskCount 
-        FROM tasks
-        GROUP BY subjectName
-    """
-    )
-    suspend fun getTaskCountPerSubject(): List<SubjectTaskCount>
-
-    @Query("SELECT * FROM tasks WHERE subjectName = :subjectName")
-    suspend fun getTasksForSubject(subjectName: String): List<TaskEntity>
 
     @Query("SELECT COUNT(*) FROM tasks WHERE assignBy = :profId")
     suspend fun getTaskCountForProfessor(profId: String): Int
@@ -51,15 +38,6 @@ interface TaskDao {
     """
     )
     fun getAllTasksWithStudentImages(): Flow<List<TaskWithStudent>>
-
-    @Transaction
-    @Query(
-        """
-        SELECT * FROM tasks
-        WHERE assignBy = :assignerId
-    """
-    )
-    suspend fun getTasksByAssignerWithStudentImages(assignerId: String): List<TaskWithStudent>
 
     @Transaction
     @Query(

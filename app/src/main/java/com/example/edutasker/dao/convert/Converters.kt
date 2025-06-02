@@ -1,4 +1,4 @@
-package com.example.edutasker.dao
+package com.example.edutasker.dao.convert
 
 import androidx.room.TypeConverter
 import com.google.gson.Gson
