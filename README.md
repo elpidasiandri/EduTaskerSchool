@@ -47,10 +47,10 @@ student -> maria@mail.com and password 1234
     * student  # student ui
         * menu
     * task  # task ui
-        * preview #ui of tasks on preview on bashboard
+        * preview #ui of tasks on preview 
             * professorActionsOnView
             * studentActionsOnView
-        * taskProfile #ui when user taps on a task
+        * taskProfile #ui task on bashboard
 * db
     * daos             # Data Access Objects (DAO) for interacting with Room database
         *convert
