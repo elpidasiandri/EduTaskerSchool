@@ -14,7 +14,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import com.example.edutasker.R
 import com.example.edutasker.model.TaskStatus
 
 @Composable
@@ -46,7 +48,11 @@ fun DropdownMenuStatusSelector(
                     onStatusSelected(status)
                     expanded = false
                 }) {
-                    Text(status)
+                    Text(
+                        if (status == TaskStatus.IN_PROGRESS.name) {
+                            stringResource(R.string.in_progress_caps)
+                        } else status
+                    )
                 }
             }
         }

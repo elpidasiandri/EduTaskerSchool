@@ -39,7 +39,7 @@ fun ProfessorTaskDetailsAboutProgressSectionComposable(
             )
         } else {
             Text(
-                text = selectedStatus.name,
+                text = if (selectedStatus == TaskStatus.IN_PROGRESS) stringResource(R.string.in_progress_caps) else selectedStatus.name,
                 fontSize = 14.sp,
                 fontWeight = FontWeight.Medium,
                 color = Color.Gray,

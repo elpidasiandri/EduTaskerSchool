@@ -14,6 +14,7 @@
     <string name="edu_tasker_student">EduTasker - Student Panel</string>
     <string name="to_do">To Do</string>
     <string name="in_progress">In progress</string>
+    <string name="in_progress_caps">IN PROGRESS</string>
     <string name="done">Done</string>
     <string name="save">Save</string>
     <string name="created">Created</string>

@@ -11,7 +11,9 @@ import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.example.edutasker.R
 import com.example.edutasker.composable.task.preview.DropdownMenuStatusSelector
 import com.example.edutasker.model.TaskStatus
 
@@ -19,7 +21,7 @@ import com.example.edutasker.model.TaskStatus
 fun StudentTaskDetailsAboutProgressSectionComposable(
     selectedStatus: TaskStatus,
     onStatusSelected: (TaskStatus) -> Unit,
-    onDismiss: () -> Unit
+    onDismiss: () -> Unit,
 ) {
     Row(
         modifier = Modifier.fillMaxWidth(),
@@ -27,10 +29,15 @@ fun StudentTaskDetailsAboutProgressSectionComposable(
         verticalAlignment = Alignment.CenterVertically
     ) {
         DropdownMenuStatusSelector(
-            currentStatus = selectedStatus.name,
+            currentStatus = if (selectedStatus == TaskStatus.IN_PROGRESS) stringResource(R.string.in_progress_caps) else selectedStatus.name,
             onStatusSelected = { statusStr ->
                 onStatusSelected(TaskStatus.valueOf(statusStr))
-            }
+            },
+            allowedStatuses = listOf(
+                TaskStatus.DONE.name,
+                TaskStatus.IN_PROGRESS.name,
+                TaskStatus.TODO.name
+            )
         )
         IconButton(
             modifier = Modifier.padding(top = 8.dp),
