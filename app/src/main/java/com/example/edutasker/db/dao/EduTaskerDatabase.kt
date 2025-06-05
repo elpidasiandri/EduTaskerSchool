@@ -1,13 +1,13 @@
-package com.example.edutasker.dao
+package com.example.edutasker.db.dao
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.example.edutasker.dao.convert.Converters
-import com.example.edutasker.entities.NotificationEntity
-import com.example.edutasker.entities.ProfessorEntity
-import com.example.edutasker.entities.StudentEntity
-import com.example.edutasker.entities.TaskEntity
+import com.example.edutasker.db.dao.convert.Converters
+import com.example.edutasker.db.entities.NotificationEntity
+import com.example.edutasker.db.entities.ProfessorEntity
+import com.example.edutasker.db.entities.StudentEntity
+import com.example.edutasker.db.entities.TaskEntity
 
 @Database(
     entities = [TaskEntity::class,

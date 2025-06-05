@@ -44,7 +44,7 @@ import com.example.edutasker.composable.professor.assignTask.AddTaskDialogCompos
 import com.example.edutasker.composable.professor.menu.MenuProfessorComposable
 import com.example.edutasker.composable.professor.searchBar.ResultsOfSearchedStudentsComposable
 import com.example.edutasker.composable.professor.searchBar.StudentSearchBarComposable
-import com.example.edutasker.composable.task.overview.TaskDetailsDialog
+import com.example.edutasker.composable.task.preview.TaskDetailsDialog
 import com.example.edutasker.screens.professor.viewModel.stateAndEvents.ProfessorEvents
 import com.example.edutasker.screens.professor.viewModel.stateAndEvents.ProfessorState
 

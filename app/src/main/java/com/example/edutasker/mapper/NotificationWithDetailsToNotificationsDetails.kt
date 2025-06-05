@@ -1,6 +1,6 @@
 package com.example.edutasker.mapper
 
-import com.example.edutasker.entities.relations.NotificationWithDetails
+import com.example.edutasker.db.entities.relations.NotificationWithDetails
 import com.example.edutasker.model.NotificationsDetails
 import com.example.edutasker.model.ProfessorBasicModel
 import com.example.edutasker.model.StudentPreviewAsListModel

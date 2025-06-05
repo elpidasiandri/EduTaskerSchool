@@ -1,6 +1,6 @@
 package com.example.edutasker.repo.professorDatabase
 
-import com.example.edutasker.entities.ProfessorEntity
+import com.example.edutasker.db.entities.ProfessorEntity
 import com.example.edutasker.model.StudentPreviewAsListModel
 
 interface IProfessorDatabaseRepository {

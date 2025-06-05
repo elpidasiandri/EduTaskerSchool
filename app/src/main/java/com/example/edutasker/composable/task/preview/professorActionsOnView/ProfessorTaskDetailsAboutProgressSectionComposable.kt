@@ -1,4 +1,4 @@
-package com.example.edutasker.composable.task.overview.professorActionsOnView
+package com.example.edutasker.composable.task.preview.professorActionsOnView
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -10,7 +10,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import com.example.edutasker.R
-import com.example.edutasker.composable.task.overview.DropdownMenuStatusSelector
+import com.example.edutasker.composable.task.preview.DropdownMenuStatusSelector
 import com.example.edutasker.model.TaskStatus
 
 @Composable

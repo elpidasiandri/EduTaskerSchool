@@ -1,6 +1,6 @@
 package com.example.edutasker.repo.taskDatabase
 
-import com.example.edutasker.entities.TaskEntity
+import com.example.edutasker.db.entities.TaskEntity
 import com.example.edutasker.model.UpdateTaskByProfessorModel
 import kotlinx.coroutines.flow.Flow
 

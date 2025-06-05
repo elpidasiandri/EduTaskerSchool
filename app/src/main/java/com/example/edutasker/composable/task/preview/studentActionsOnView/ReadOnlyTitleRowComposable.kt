@@ -1,4 +1,4 @@
-package com.example.edutasker.composable.task.overview.studentActionsOnView
+package com.example.edutasker.composable.task.preview.studentActionsOnView
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons

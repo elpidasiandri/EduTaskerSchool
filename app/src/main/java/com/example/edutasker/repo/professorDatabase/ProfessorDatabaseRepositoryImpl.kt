@@ -1,8 +1,8 @@
 package com.example.edutasker.repo.professorDatabase
 
-import com.example.edutasker.dao.ProfessorDao
-import com.example.edutasker.dao.StudentDao
-import com.example.edutasker.entities.ProfessorEntity
+import com.example.edutasker.db.dao.ProfessorDao
+import com.example.edutasker.db.dao.StudentDao
+import com.example.edutasker.db.entities.ProfessorEntity
 import com.example.edutasker.model.StudentBasicInfoForPreviewIntoList
 import com.example.edutasker.model.StudentPreviewAsListModel
 

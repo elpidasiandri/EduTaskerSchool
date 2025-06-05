@@ -1,10 +1,10 @@
-package com.example.edutasker.dao
+package com.example.edutasker.db.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.edutasker.entities.ProfessorEntity
+import com.example.edutasker.db.entities.ProfessorEntity
 @Dao
 interface ProfessorDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)

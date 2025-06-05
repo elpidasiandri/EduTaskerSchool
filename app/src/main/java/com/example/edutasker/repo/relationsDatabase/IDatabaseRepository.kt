@@ -1,6 +1,6 @@
 package com.example.edutasker.repo.relationsDatabase
 
-import com.example.edutasker.entities.relations.TaskWithStudent
+import com.example.edutasker.db.entities.relations.TaskWithStudent
 import com.example.edutasker.model.OpenedTaskModel
 import com.example.edutasker.model.StudentPreviewAsListModel
 import kotlinx.coroutines.flow.Flow

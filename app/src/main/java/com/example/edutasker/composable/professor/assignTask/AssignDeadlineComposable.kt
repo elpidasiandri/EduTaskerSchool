@@ -1,10 +1,5 @@
 package com.example.edutasker.composable.professor.assignTask
 
-import android.app.DatePickerDialog
-import android.content.Context
-import android.net.Uri
-import android.provider.OpenableColumns
-import android.widget.DatePicker
 import androidx.compose.foundation.border
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
@@ -29,7 +24,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.edutasker.R
-import com.example.edutasker.composable.task.overview.rememberDatePickerDialog
+import com.example.edutasker.composable.task.preview.rememberDatePickerDialog
 import com.example.edutasker.ui.theme.LightBlue
 import com.example.edutasker.utils.noRippleClickable
 

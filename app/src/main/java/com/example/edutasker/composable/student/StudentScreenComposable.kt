@@ -32,7 +32,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.edutasker.R
 import com.example.edutasker.composable.student.menu.MenuStudentComposable
-import com.example.edutasker.composable.task.overview.TaskDetailsDialog
+import com.example.edutasker.composable.task.preview.TaskDetailsDialog
 import com.example.edutasker.composable.task.taskprofile.MainCardTasksContentComposable
 import com.example.edutasker.mockData.CurrentUser
 import com.example.edutasker.model.TasksWithStudentImageModel

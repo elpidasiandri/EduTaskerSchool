@@ -1,6 +1,6 @@
 package com.example.edutasker.useCases.notification
 
-import com.example.edutasker.entities.NotificationEntity
+import com.example.edutasker.db.entities.NotificationEntity
 import com.example.edutasker.repo.notificationDatabase.INotificationDatabaseRepo
 
 class InsertNotificationUseCase(

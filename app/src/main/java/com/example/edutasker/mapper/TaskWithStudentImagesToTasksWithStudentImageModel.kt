@@ -1,6 +1,6 @@
 package com.example.edutasker.mapper
 
-import com.example.edutasker.entities.relations.TaskWithStudent
+import com.example.edutasker.db.entities.relations.TaskWithStudent
 import com.example.edutasker.model.TaskModel
 import com.example.edutasker.model.TaskStatus
 import com.example.edutasker.model.TasksWithStudentImageModel

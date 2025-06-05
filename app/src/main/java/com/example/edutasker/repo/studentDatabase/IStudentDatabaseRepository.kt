@@ -1,6 +1,6 @@
 package com.example.edutasker.repo.studentDatabase
 
-import com.example.edutasker.entities.StudentEntity
+import com.example.edutasker.db.entities.StudentEntity
 
 interface IStudentDatabaseRepository {
     suspend fun insertStudent(student: StudentEntity)

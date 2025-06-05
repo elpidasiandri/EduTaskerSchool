@@ -1,4 +1,4 @@
-package com.example.edutasker.composable.task.overview
+package com.example.edutasker.composable.task.preview
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth

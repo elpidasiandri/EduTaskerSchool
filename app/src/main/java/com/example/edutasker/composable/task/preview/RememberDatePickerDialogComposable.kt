@@ -1,4 +1,4 @@
-package com.example.edutasker.composable.task.overview
+package com.example.edutasker.composable.task.preview
 
 import android.app.DatePickerDialog
 import android.content.Context

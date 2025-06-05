@@ -1,6 +1,6 @@
 package com.example.edutasker.useCases.professor
 
-import com.example.edutasker.entities.ProfessorEntity
+import com.example.edutasker.db.entities.ProfessorEntity
 import com.example.edutasker.repo.professorDatabase.IProfessorDatabaseRepository
 
 class GetProfessorByEmailUseCase(

@@ -1,7 +1,7 @@
 package com.example.edutasker.di
 
 import androidx.room.Room
-import com.example.edutasker.dao.EduTaskerDatabase
+import com.example.edutasker.db.dao.EduTaskerDatabase
 import com.example.edutasker.repo.notificationDatabase.INotificationDatabaseRepo
 import com.example.edutasker.repo.notificationDatabase.NotificationDatabaseRepoImpl
 import com.example.edutasker.repo.relationsDatabase.DatabaseRepositoryImpl

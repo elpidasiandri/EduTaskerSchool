@@ -1,4 +1,4 @@
-package com.example.edutasker.composable.task.overview.professorActionsOnView
+package com.example.edutasker.composable.task.preview.professorActionsOnView
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
@@ -15,27 +15,25 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun EditableDescriptionFieldComposable(
-    value: String,
-    onValueChange: (String) -> Unit,
-    onSaveClick: () -> Unit,
+fun EditableTitleFieldComposable(
+    title: String,
+    onTitleChange: (String) -> Unit,
+    onDoneEditing: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     OutlinedTextField(
-        value = value,
-        onValueChange = onValueChange,
+        value = title,
+        onValueChange = onTitleChange,
         modifier = modifier,
-        textStyle = TextStyle(fontSize = 16.sp),
+        textStyle = TextStyle(fontSize = 20.sp),
+        singleLine = true,
         keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done),
         trailingIcon = {
             IconButton(
                 modifier = Modifier.padding(top = 8.dp),
-                onClick = onSaveClick
+                onClick = onDoneEditing
             ) {
-                Icon(
-                    imageVector = Icons.Default.Check,
-                    contentDescription = "Save description"
-                )
+                Icon(Icons.Default.Check, contentDescription = "Save title")
             }
         }
     )

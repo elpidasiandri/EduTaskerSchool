@@ -1,9 +1,9 @@
-package com.example.edutasker.entities.relations
+package com.example.edutasker.db.entities.relations
 
 import androidx.room.Embedded
 import androidx.room.Relation
-import com.example.edutasker.entities.StudentEntity
-import com.example.edutasker.entities.TaskEntity
+import com.example.edutasker.db.entities.StudentEntity
+import com.example.edutasker.db.entities.TaskEntity
 
 data class TaskWithStudent(
     @Embedded val task: TaskEntity,

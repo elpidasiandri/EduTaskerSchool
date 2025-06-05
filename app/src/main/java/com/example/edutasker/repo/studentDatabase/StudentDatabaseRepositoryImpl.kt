@@ -1,7 +1,7 @@
 package com.example.edutasker.repo.studentDatabase
 
-import com.example.edutasker.dao.StudentDao
-import com.example.edutasker.entities.StudentEntity
+import com.example.edutasker.db.dao.StudentDao
+import com.example.edutasker.db.entities.StudentEntity
 
 class StudentDatabaseRepositoryImpl(
     private val studentDao: StudentDao,

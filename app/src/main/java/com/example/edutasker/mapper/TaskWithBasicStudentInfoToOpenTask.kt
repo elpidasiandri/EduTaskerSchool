@@ -1,6 +1,6 @@
 package com.example.edutasker.mapper
 
-import com.example.edutasker.entities.relations.TaskWithStudentAndProfessor
+import com.example.edutasker.db.entities.relations.TaskWithStudentAndProfessor
 import com.example.edutasker.model.OpenedTaskModel
 import com.example.edutasker.model.ProfessorBasicModel
 import com.example.edutasker.model.StudentPreviewAsListModel

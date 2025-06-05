@@ -1,9 +1,9 @@
 package com.example.edutasker.mockData
 
-import com.example.edutasker.entities.NotificationEntity
-import com.example.edutasker.entities.ProfessorEntity
-import com.example.edutasker.entities.StudentEntity
-import com.example.edutasker.entities.TaskEntity
+import com.example.edutasker.db.entities.NotificationEntity
+import com.example.edutasker.db.entities.ProfessorEntity
+import com.example.edutasker.db.entities.StudentEntity
+import com.example.edutasker.db.entities.TaskEntity
 import com.example.edutasker.model.TaskStatus
 import com.example.edutasker.useCases.task.TaskUseCases
 import kotlinx.coroutines.CoroutineScope

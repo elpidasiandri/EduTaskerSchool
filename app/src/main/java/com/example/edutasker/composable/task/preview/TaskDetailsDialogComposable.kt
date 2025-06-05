@@ -1,4 +1,4 @@
-package com.example.edutasker.composable.task.overview
+package com.example.edutasker.composable.task.preview
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -38,11 +38,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.example.edutasker.R
-import com.example.edutasker.composable.task.overview.professorActionsOnView.EditableDescriptionFieldComposable
-import com.example.edutasker.composable.task.overview.professorActionsOnView.EditableTitleFieldComposable
-import com.example.edutasker.composable.task.overview.professorActionsOnView.ProfessorTaskDetailsAboutProgressSectionComposable
-import com.example.edutasker.composable.task.overview.studentActionsOnView.ReadOnlyTitleRowComposable
-import com.example.edutasker.composable.task.overview.studentActionsOnView.StudentTaskDetailsAboutProgressSectionComposable
+import com.example.edutasker.composable.task.preview.professorActionsOnView.EditableDescriptionFieldComposable
+import com.example.edutasker.composable.task.preview.professorActionsOnView.EditableTitleFieldComposable
+import com.example.edutasker.composable.task.preview.professorActionsOnView.ProfessorTaskDetailsAboutProgressSectionComposable
+import com.example.edutasker.composable.task.preview.studentActionsOnView.ReadOnlyTitleRowComposable
+import com.example.edutasker.composable.task.preview.studentActionsOnView.StudentTaskDetailsAboutProgressSectionComposable
 import com.example.edutasker.mockData.CurrentUser
 import com.example.edutasker.model.OpenedTaskModel
 import com.example.edutasker.model.TaskStatus

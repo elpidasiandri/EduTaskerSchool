@@ -1,4 +1,4 @@
-package com.example.edutasker.entities
+package com.example.edutasker.db.entities
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

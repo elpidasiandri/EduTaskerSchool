@@ -1,10 +1,10 @@
-package com.example.edutasker.dao
+package com.example.edutasker.db.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.edutasker.entities.StudentEntity
+import com.example.edutasker.db.entities.StudentEntity
 import com.example.edutasker.model.StudentBasicInfoForPreviewIntoList
 import com.example.edutasker.model.StudentPreviewAsListModel
 

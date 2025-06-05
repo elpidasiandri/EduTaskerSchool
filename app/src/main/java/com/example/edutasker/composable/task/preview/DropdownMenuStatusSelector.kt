@@ -1,4 +1,4 @@
-package com.example.edutasker.composable.task.overview
+package com.example.edutasker.composable.task.preview
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.material.DropdownMenuItem

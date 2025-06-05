@@ -1,8 +1,8 @@
 package com.example.edutasker.repo.taskDatabase
 
-import com.example.edutasker.dao.StudentDao
-import com.example.edutasker.dao.TaskDao
-import com.example.edutasker.entities.TaskEntity
+import com.example.edutasker.db.dao.StudentDao
+import com.example.edutasker.db.dao.TaskDao
+import com.example.edutasker.db.entities.TaskEntity
 import com.example.edutasker.model.UpdateTaskByProfessorModel
 import kotlinx.coroutines.flow.Flow
 

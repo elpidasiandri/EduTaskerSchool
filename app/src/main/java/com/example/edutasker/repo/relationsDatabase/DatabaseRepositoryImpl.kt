@@ -1,8 +1,8 @@
 package com.example.edutasker.repo.relationsDatabase
 
-import com.example.edutasker.dao.StudentDao
-import com.example.edutasker.dao.TaskDao
-import com.example.edutasker.entities.relations.TaskWithStudent
+import com.example.edutasker.db.dao.StudentDao
+import com.example.edutasker.db.dao.TaskDao
+import com.example.edutasker.db.entities.relations.TaskWithStudent
 import com.example.edutasker.mockData.CurrentUser
 import com.example.edutasker.model.StudentPreviewAsListModel
 import com.example.edutasker.mapper.toOpenedTask
