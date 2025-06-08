@@ -38,7 +38,7 @@ import coil.compose.AsyncImage
 import com.example.edutasker.R
 import com.example.edutasker.model.StudentPreviewAsListModel
 import com.example.edutasker.screens.professor.viewModel.stateAndEvents.ProfessorEvents
-import com.example.edutasker.ui.theme.LightBlue
+import com.example.edutasker.ui.theme.Cream
 
 @Composable
 fun AddTaskDialogComposable(
@@ -78,9 +78,9 @@ fun AddTaskDialogComposable(
         onDismissRequest = {
             onEvent(ProfessorEvents.DismissAddTaskScreen)
         },
-        backgroundColor = LightBlue,
+        backgroundColor = Cream,
         title = {
-            Text(stringResource(R.string.new_task), color = Color.White, fontSize = 22.sp)
+            Text(stringResource(R.string.new_task), color = Color.Black, fontSize = 22.sp)
         },
         text = {
             Column {
@@ -124,7 +124,7 @@ fun AddTaskDialogComposable(
                         Spacer(modifier = Modifier.width(6.dp))
                         Text(
                             text = student.username,
-                            color = Color.White,
+                            color = Color.Black,
                             fontSize = 14.sp,
                             textDecoration = TextDecoration.Underline
                         )
@@ -152,18 +152,18 @@ fun AddTaskDialogComposable(
                                 Icon(
                                     imageVector = Icons.Default.Search,
                                     contentDescription = "Search",
-                                    tint = Color.White,
+                                    tint = Color.Black,
                                     modifier = Modifier.size(18.dp)
                                 )
                                 Spacer(modifier = Modifier.width(6.dp))
                                 Text(
                                     text = stringResource(R.string.assign_to),
-                                    color = Color.White,
+                                    color = Color.Black,
                                     fontSize = 16.sp
                                 )
                             }
                         },
-                        textStyle = TextStyle(color = Color.White, fontSize = 16.sp)
+                        textStyle = TextStyle(color = Color.Black, fontSize = 16.sp)
                     )
                 }
 
@@ -193,7 +193,7 @@ fun AddTaskDialogComposable(
                                         .clip(CircleShape)
                                 )
                                 Spacer(modifier = Modifier.width(8.dp))
-                                Text(text = student.username, color = Color.White)
+                                Text(text = student.username, color = Color.Black)
                             }
                         }
                     }
@@ -221,7 +221,7 @@ fun AddTaskDialogComposable(
             ) {
                 Text(
                     stringResource(R.string.save),
-                    color = if (isFormValid) Color.White else Color.DarkGray,
+                    color = if (isFormValid) Color.Black else Color.DarkGray,
                     fontSize = 14.sp
                 )
             }
@@ -230,7 +230,7 @@ fun AddTaskDialogComposable(
             TextButton(onClick = {
                 onEvent(ProfessorEvents.DismissAddTaskScreen)
             }) {
-                Text(stringResource(R.string.cancel), color = Color.White, fontSize = 14.sp)
+                Text(stringResource(R.string.cancel), color = Color.Black, fontSize = 14.sp)
             }
         }
     )

@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.sp
 import com.example.edutasker.R
 
 @Composable
-fun WriteTaskTitleComposable( isTitleEmpty: (String) -> Unit,) {
+fun WriteTaskTitleComposable(isTitleEmpty: (String) -> Unit) {
     var title by remember { mutableStateOf("") }
     Column {
         OutlinedTextField(
@@ -29,12 +29,12 @@ fun WriteTaskTitleComposable( isTitleEmpty: (String) -> Unit,) {
             label = {
                 Text(
                     stringResource(R.string.title),
-                    color = Color.White,
+                    color = Color.Black,
                     fontSize = 18.sp
                 )
             },
             textStyle = TextStyle(
-                color = Color.White,
+                color = Color.Black,
                 fontSize = 16.sp
             ),
             modifier = Modifier.fillMaxWidth()

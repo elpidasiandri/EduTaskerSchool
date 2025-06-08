@@ -19,8 +19,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.sp
 import com.example.edutasker.R
-import com.example.edutasker.ui.theme.Purple40
-
+import com.example.edutasker.ui.theme.Cream
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -42,13 +41,13 @@ fun SubjectDropdownComposable(
             label = {
                 Text(
                     stringResource(R.string.subject),
-                    color = Color.White,
+                    color = Color.Black,
                     fontSize = 18.sp
                 )
             },
             trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
             textStyle = TextStyle(
-                color = Color.White,
+                color = Color.Black,
                 fontSize = 16.sp
             ),
             modifier = Modifier
@@ -59,7 +58,7 @@ fun SubjectDropdownComposable(
         ExposedDropdownMenu(
             expanded = expanded,
             onDismissRequest = { expanded = false },
-            modifier = Modifier.background(Purple40)
+            modifier = Modifier.background(Cream)
         ) {
             subjects.forEach { subject ->
                 DropdownMenuItem(
@@ -67,7 +66,7 @@ fun SubjectDropdownComposable(
                         Text(
                             subject,
                             fontSize = 16.sp,
-                            color = Color.White,
+                            color = Color.Black,
                         )
                     },
                     onClick = {

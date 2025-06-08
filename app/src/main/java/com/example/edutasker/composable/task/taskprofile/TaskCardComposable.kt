@@ -1,5 +1,6 @@
 package com.example.edutasker.composable.task.taskprofile
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -30,6 +31,7 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.example.edutasker.R
 import com.example.edutasker.model.TasksWithStudentImageModel
+import com.example.edutasker.ui.theme.Cream
 
 @Composable
 fun TaskCardComposable(
@@ -44,51 +46,59 @@ fun TaskCardComposable(
                 onTaskClick(taskWithStudentImage.task.taskId)
             },
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
-        shape = RoundedCornerShape(12.dp)
+        shape = RoundedCornerShape(6.dp)
     ) {
-        Column(modifier = Modifier.padding(12.dp)) {
+        Column(modifier = Modifier.background(Cream)) {
             Text(
+                modifier = Modifier
+                    .padding(start = 4.dp)
+                    .padding(top = 4.dp),
                 text = stringResource(R.string.title) + ":",
                 style = MaterialTheme.typography.labelMedium,
-                fontWeight = FontWeight.SemiBold
+                fontWeight = FontWeight.SemiBold,
+                overflow = TextOverflow.Ellipsis
             )
             Text(
+                modifier = Modifier.padding(start = 4.dp),
                 text = taskWithStudentImage.task.taskTitle,
                 style = MaterialTheme.typography.bodySmall,
                 maxLines = 2,
-                fontWeight = FontWeight.Light,
+                fontSize = 11.sp,
                 overflow = TextOverflow.Ellipsis
             )
 
             Spacer(modifier = Modifier.height(8.dp))
 
             Text(
+                modifier = Modifier.padding(start = 4.dp),
                 text = stringResource(R.string.description) + ":",
                 style = MaterialTheme.typography.labelMedium,
-
                 fontWeight = FontWeight.SemiBold
             )
             Text(
+                modifier = Modifier.padding(start = 4.dp),
                 text = taskWithStudentImage.task.description,
                 style = MaterialTheme.typography.bodySmall,
                 maxLines = 3,
-                fontWeight = FontWeight.Light,
+                fontSize = 11.sp,
                 overflow = TextOverflow.Ellipsis
             )
 
             Spacer(modifier = Modifier.height(8.dp))
 
             Text(
+                modifier = Modifier.padding(start = 4.dp),
                 text = stringResource(R.string.subject) + ":",
                 style = MaterialTheme.typography.labelMedium,
                 fontWeight = FontWeight.SemiBold,
             )
 
             Text(
+                modifier = Modifier.padding(start = 4.dp),
                 text = taskWithStudentImage.task.subjectName,
                 style = MaterialTheme.typography.bodySmall,
                 maxLines = 3,
-                fontWeight = FontWeight.Light,
+                fontSize = 11.sp,
                 overflow = TextOverflow.Ellipsis
             )
             Spacer(modifier = Modifier.height(12.dp))
@@ -104,13 +114,17 @@ fun TaskCardComposable(
                     modifier = Modifier
                         .size(24.dp)
                         .clip(CircleShape)
+                        .padding(start = 3.dp)
+                        .padding(bottom = 4.dp)
                         .border(1.dp, Color.Gray, CircleShape),
                     contentScale = ContentScale.Crop
                 )
                 Text(
+                    modifier = Modifier
+                        .padding(end = 4.dp)
+                        .padding(bottom = 4.dp),
                     text = taskWithStudentImage.task.deadlineDate,
-                    fontWeight = FontWeight.Light,
-                    fontSize = 8.sp
+                    fontSize = 10.sp
                 )
             }
         }

@@ -33,7 +33,6 @@ import androidx.compose.ui.unit.dp
 import com.example.edutasker.R
 import com.example.edutasker.composable.task.taskprofile.MainCardTasksContentComposable
 import com.example.edutasker.ui.theme.Blue
-import com.example.edutasker.ui.theme.LightGray
 import kotlinx.coroutines.launch
 import androidx.compose.material.BottomAppBar
 import androidx.compose.runtime.getValue
@@ -47,6 +46,7 @@ import com.example.edutasker.composable.professor.searchBar.StudentSearchBarComp
 import com.example.edutasker.composable.task.preview.TaskDetailsDialog
 import com.example.edutasker.screens.professor.viewModel.stateAndEvents.ProfessorEvents
 import com.example.edutasker.screens.professor.viewModel.stateAndEvents.ProfessorState
+import com.example.edutasker.ui.theme.Cream
 
 @SuppressLint("ResourceType")
 @Composable
@@ -187,7 +187,7 @@ fun ProfessorScreenComposable(
                 Spacer(modifier = Modifier.height(8.dp))
                 MainCardTasksContentComposable(
                     modifier = Modifier
-                        .background(LightGray)
+                        .background(Cream)
                         .padding(padding),
                     selectedStudentImage = state.selectedStudentFromSearch.image,
                     allTasksByEveryoneWithImage = state.allTasksByProfessorStudent.ifEmpty { state.allTasksByEveryone },

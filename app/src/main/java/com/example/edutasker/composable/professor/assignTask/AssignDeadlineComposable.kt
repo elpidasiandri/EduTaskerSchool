@@ -25,11 +25,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.edutasker.R
 import com.example.edutasker.composable.task.preview.rememberDatePickerDialog
-import com.example.edutasker.ui.theme.LightBlue
 import com.example.edutasker.utils.noRippleClickable
+import com.example.edutasker.ui.theme.Cream
 
 @Composable
-fun AssignDeadlineComposable(deadline:(String)->Unit) {
+fun AssignDeadlineComposable(deadline: (String) -> Unit) {
     val interactionSource = remember { MutableInteractionSource() }
     val context = LocalContext.current
     var deadlineDate by remember { mutableStateOf("") }
@@ -46,7 +46,7 @@ fun AssignDeadlineComposable(deadline:(String)->Unit) {
             .noRippleClickable(interactionSource = interactionSource, onClick = {
                 datePickerDialog.show()
             }),
-        color = LightBlue,
+        color = Cream,
         shape = MaterialTheme.shapes.small
     ) {
         Box(
@@ -58,14 +58,14 @@ fun AssignDeadlineComposable(deadline:(String)->Unit) {
             if (deadlineDate.isNotEmpty()) {
                 Text(
                     text = deadlineDate,
-                    color = Color.White,
+                    color = Color.Black,
                     fontSize = 16.sp,
                     textAlign = TextAlign.Center
                 )
             } else {
                 Text(
                     text = stringResource(R.string.deadline),
-                    color = Color.White,
+                    color = Color.Black,
                     fontSize = 18.sp
                 )
             }

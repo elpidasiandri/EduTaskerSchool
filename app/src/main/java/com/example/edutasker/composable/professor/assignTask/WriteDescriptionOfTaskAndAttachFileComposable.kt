@@ -32,12 +32,12 @@ fun WriteDescriptionOfTaskAndAttachFileComposable(
             label = {
                 Text(
                     stringResource(R.string.description),
-                    color = Color.White,
+                    color = Color.Black,
                     fontSize = 18.sp
                 )
             },
             textStyle = TextStyle(
-                color = Color.White,
+                color = Color.Black,
                 fontSize = 16.sp
             ),
             modifier = Modifier.fillMaxWidth()

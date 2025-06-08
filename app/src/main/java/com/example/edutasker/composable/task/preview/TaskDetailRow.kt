@@ -20,7 +20,7 @@ fun TaskDetailRow(label: String, value: String) {
             text = "$label:",
             fontWeight = FontWeight.SemiBold,
             fontSize = 14.sp,
-            color = Color.Gray
+            color = Color.Black
         )
         Text(
             text = value,

@@ -22,8 +22,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.edutasker.R
 import com.example.edutasker.screens.login.viewModelState.stateAndEvents.LoginEvents
-import com.example.edutasker.ui.theme.Crem
 import com.example.edutasker.ui.theme.LightGray
+import com.example.edutasker.ui.theme.PurpleGrey40
 import com.example.edutasker.utils.noRippleClickable
 
 @Composable
@@ -43,7 +43,7 @@ fun LoginChooseUserComposable(onEvent: (LoginEvents) -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Brush.verticalGradient(colors = listOf(LightGray, Crem)))
+            .background(Brush.verticalGradient(colors = listOf(LightGray, PurpleGrey40)))
             .padding(14.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp, Alignment.Top),
         horizontalAlignment = Alignment.CenterHorizontally

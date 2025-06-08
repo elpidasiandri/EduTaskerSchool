@@ -40,7 +40,7 @@ fun TaskColumnComposable(
         Column(
             modifier = Modifier
                 .background(backgroundColor)
-                .padding(8.dp)
+                .padding(4.dp)
         ) {
             Text(
                 title,

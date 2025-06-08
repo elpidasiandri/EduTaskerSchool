@@ -1,8 +1,6 @@
 package com.example.edutasker.composable.task.preview.studentActionsOnView
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -10,6 +8,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.text.font.FontWeight
+import coil.compose.AsyncImage
+import com.example.edutasker.R
 
 @Composable
 fun ReadOnlyTitleRowComposable(
@@ -28,14 +28,17 @@ fun ReadOnlyTitleRowComposable(
             text = title,
             fontWeight = FontWeight.Bold,
             fontSize = 22.sp,
-            modifier = Modifier.weight(1f)
         )
         if (!isStudent) {
             IconButton(
-                modifier = Modifier.padding(top = 8.dp),
                 onClick = onEditClick
             ) {
-                Icon(Icons.Default.Edit, contentDescription = "Edit title")
+                AsyncImage(
+                    model = R.raw.pencil,
+                    contentDescription = "Edit title",
+                    modifier = Modifier
+                        .size(18.dp)
+                )
             }
         }
     }

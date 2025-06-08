@@ -32,7 +32,9 @@ fun MainCardTasksContentComposable(
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         val screenWidth = LocalConfiguration.current.screenWidthDp.dp
-        val spacing = 8.dp * 2
+        val totalHorizontalPadding = 8.dp * 2
+        val interColumnSpacing = 8.dp * 2
+        val spacing = totalHorizontalPadding + interColumnSpacing
         val columnWidth = (screenWidth - spacing) / 3
 
         TaskColumnComposable(

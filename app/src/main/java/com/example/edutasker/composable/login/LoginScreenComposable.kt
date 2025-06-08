@@ -5,7 +5,6 @@ import android.graphics.BitmapFactory
 import androidx.annotation.RawRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -30,7 +29,6 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import com.example.edutasker.screens.login.viewModelState.stateAndEvents.LoginEvents
-import com.example.edutasker.ui.theme.Crem
 import com.example.edutasker.ui.theme.LightGray
 import com.example.edutasker.ui.theme.Red
 import androidx.compose.material3.Button
@@ -46,6 +44,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.edutasker.R
+import com.example.edutasker.ui.theme.PurpleGrey40
 
 @Composable
 fun LoginScreenComposable(
@@ -70,7 +69,7 @@ fun LoginScreenComposable(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Brush.verticalGradient(colors = listOf(LightGray, Crem)))
+                .background(Brush.verticalGradient(colors = listOf(LightGray, PurpleGrey40)))
         ) {
 
             Column(
