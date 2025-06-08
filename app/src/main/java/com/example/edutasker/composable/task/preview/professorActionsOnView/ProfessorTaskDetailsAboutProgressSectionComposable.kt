@@ -24,6 +24,9 @@ fun ProfessorTaskDetailsAboutProgressSectionComposable(
 
     Row(modifier = Modifier.fillMaxWidth()) {
         Text(
+            modifier = Modifier
+                .padding(top = 15.dp)
+                .padding(end = 5.dp),
             text = stringResource(R.string.status),
             fontWeight = FontWeight.Bold,
             fontSize = 14.sp
@@ -41,7 +44,9 @@ fun ProfessorTaskDetailsAboutProgressSectionComposable(
             )
         } else {
             Text(
-                modifier = Modifier.padding(start = 4.dp),
+                modifier = Modifier
+                    .padding(start = 4.dp)
+                    .padding(top = 15.dp),
                 text = if (selectedStatus == TaskStatus.IN_PROGRESS) stringResource(R.string.in_progress_caps) else selectedStatus.name,
                 fontSize = 14.sp,
                 fontWeight = FontWeight.ExtraBold,
