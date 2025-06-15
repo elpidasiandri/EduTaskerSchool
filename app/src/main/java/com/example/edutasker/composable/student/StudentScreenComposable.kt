@@ -31,6 +31,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.edutasker.R
+import com.example.edutasker.composable.notification.NotificationBadgeComposable
+import com.example.edutasker.composable.notification.NotificationDialogComposable
 import com.example.edutasker.composable.student.menu.MenuStudentComposable
 import com.example.edutasker.composable.task.preview.TaskDetailsDialog
 import com.example.edutasker.composable.task.taskprofile.MainCardTasksContentComposable
@@ -58,6 +60,7 @@ fun StudentScreenComposable(
         BitmapFactory.decodeStream(context.resources.openRawResource(R.raw.exit_icon))
     }
     val tasksOfUser = remember(state.allTasks) { state.allTasks }
+
     if (state.isTaskOpened) {
         TaskDetailsDialog(
             taskInfo = state.openedTask, onDismiss = {
@@ -68,6 +71,19 @@ fun StudentScreenComposable(
             }
         )
     }
+
+    if (state.isNotificationDialogVisible) {
+        NotificationDialogComposable(
+            notifications = state.notifications,
+            onDismiss = {
+                onEvent(StudentEvents.CloseNotificationDialog)
+            },
+            onNotificationClick = { notificationId ->
+                onEvent(StudentEvents.MarkNotificationAsRead(notificationId))
+            }
+        )
+    }
+
     Scaffold(
         scaffoldState = scaffoldState,
         drawerContent = {
@@ -105,12 +121,19 @@ fun StudentScreenComposable(
             ) {
                 Spacer(modifier = Modifier.weight(1f))
 
-                IconButton(onClick = {
-                }) {
-                    Image(
-                        bitmap = notificationBitmap.asImageBitmap(),
-                        contentDescription = "Notifications",
-                        modifier = Modifier.size(28.dp)
+                Box {
+                    IconButton(onClick = {
+                        onEvent(StudentEvents.OpenNotificationDialog)
+                    }) {
+                        Image(
+                            bitmap = notificationBitmap.asImageBitmap(),
+                            contentDescription = "Notifications",
+                            modifier = Modifier.size(28.dp)
+                        )
+                    }
+                    NotificationBadgeComposable(
+                        count = state.unreadNotificationsCount,
+                        modifier = Modifier.padding(start = 20.dp, bottom = 20.dp)
                     )
                 }
                 IconButton(onClick = {

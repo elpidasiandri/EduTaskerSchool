@@ -7,7 +7,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -41,51 +40,41 @@ fun LoginChooseUserComposable(onEvent: (LoginEvents) -> Unit) {
     val studentBitmap = remember { loadImageFromRaw(R.raw.studentimage) }
     val chooseBitmap = remember { loadImageFromRaw(R.raw.chooseimage) }
 
-    Box(
+    Column(
         modifier = Modifier
             .fillMaxSize()
             .background(Brush.verticalGradient(colors = listOf(LightGray, PurpleGrey40)))
+            .padding(14.dp),
+        verticalArrangement = Arrangement.spacedBy(12.dp, Alignment.Top),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        BubbleBackgroundComposable(
-            bubbleColor = LightGray,
-            numberOfBubbles = 30,
-            modifier = Modifier.fillMaxSize()
+        Image(
+            bitmap = chooseBitmap.asImageBitmap(),
+            contentDescription = "Choose Image",
         )
-        Column(
+        Image(
+            bitmap = professorBitmap.asImageBitmap(),
+            contentDescription = "Professor",
             modifier = Modifier
-                .fillMaxSize()
-                .padding(14.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp, Alignment.Top),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Image(
-                bitmap = chooseBitmap.asImageBitmap(),
-                contentDescription = "Choose Image",
-            )
-            Image(
-                bitmap = professorBitmap.asImageBitmap(),
-                contentDescription = "Professor",
-                modifier = Modifier
-                    .height(210.dp)
-                    .noRippleClickable(
-                        interactionSource = interactionSource,
-                        onClick = {
-                            onEvent(LoginEvents.GoToLogin(isStudent = false))
-                        }
-                    )
-            )
-            Image(
-                bitmap = studentBitmap.asImageBitmap(),
-                contentDescription = "Student",
-                modifier = Modifier
-                    .noRippleClickable(
-                        interactionSource = interactionSource,
-                        onClick = {
-                            onEvent(LoginEvents.GoToLogin(isStudent = true))
-                        }
-                    )
-            )
-        }
+                .height(210.dp)
+                .noRippleClickable(
+                    interactionSource = interactionSource,
+                    onClick = {
+                        onEvent(LoginEvents.GoToLogin(isStudent = false))
+                    }
+                )
+        )
+        Image(
+            bitmap = studentBitmap.asImageBitmap(),
+            contentDescription = "Student",
+            modifier = Modifier
+                .noRippleClickable(
+                    interactionSource = interactionSource,
+                    onClick = {
+                        onEvent(LoginEvents.GoToLogin(isStudent = true))
+                    }
+                )
+        )
     }
 }
 

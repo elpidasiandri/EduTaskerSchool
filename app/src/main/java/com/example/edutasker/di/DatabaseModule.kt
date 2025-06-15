@@ -90,4 +90,5 @@ val databaseModule = module {
             insertMockData = InsertMockDataUseCase(get(), get(), get(), get(), get())
         )
     }
+    includes(notificationDatabaseModule)
 }

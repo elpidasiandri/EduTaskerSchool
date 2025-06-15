@@ -8,6 +8,10 @@ sealed class StudentEvents {
     data object CloseTaskDialog : StudentEvents()
     data class OpenTaskDialog(val taskId: String) : StudentEvents()
     data class UpdateTask(val taskInfo: UpdateTaskByProfessorModel) : StudentEvents()
+    data object OpenNotificationDialog : StudentEvents()
+    data object CloseNotificationDialog : StudentEvents()
+    data class MarkNotificationAsRead(val notificationId: String) : StudentEvents()
+    data object LoadNotifications : StudentEvents()
 }
 
 sealed class StudentUiEvents {

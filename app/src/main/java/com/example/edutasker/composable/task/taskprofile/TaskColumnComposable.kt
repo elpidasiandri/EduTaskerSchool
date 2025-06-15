@@ -55,7 +55,11 @@ fun TaskColumnComposable(
                 modifier = Modifier.fillMaxSize()
             ) {
                 items(tasks) { task ->
-                    TaskCardComposable(task, selectedStudentImage) { taskId -> onTaskClick(taskId) }
+                    TaskCardComposable(
+                        taskWithStudentImage = task,
+                        studentImage = selectedStudentImage,
+                        onTaskClick = { taskId -> onTaskClick(taskId) }
+                    )
                 }
             }
         }
