@@ -6,7 +6,7 @@ import com.example.edutasker.repo.taskDatabase.ITaskDatabaseRepository
 class InsertTaskUseCase(
     private val repo: ITaskDatabaseRepository
 ) {
-    suspend operator fun invoke(task: TaskEntity) {
-        repo.insertTask(task)
+    suspend operator fun invoke(task: TaskEntity): String {
+        return repo.insertTask(task)
     }
 }

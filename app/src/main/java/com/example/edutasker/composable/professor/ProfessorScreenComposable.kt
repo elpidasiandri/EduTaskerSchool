@@ -31,6 +31,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.edutasker.R
+import com.example.edutasker.composable.notification.NotificationDialogComposable
+import com.example.edutasker.composable.notification.NotificationBadgeComposable
 import com.example.edutasker.composable.task.taskprofile.MainCardTasksContentComposable
 import com.example.edutasker.ui.theme.Blue
 import kotlinx.coroutines.launch
@@ -73,6 +75,19 @@ fun ProfessorScreenComposable(
             }
         )
     }
+
+    if (state.isNotificationDialogVisible) {
+        NotificationDialogComposable(
+            notifications = state.notifications,
+            onDismiss = {
+                onEvent(ProfessorEvents.CloseNotificationDialog)
+            },
+            onNotificationClick = { notificationId ->
+                onEvent(ProfessorEvents.MarkNotificationAsRead(notificationId))
+            }
+        )
+    }
+
     if (state.isAddDialogVisible) {
         if (loadSuggestedSubjectsToAssignTask) {
             onEvent(ProfessorEvents.GetSubjectsOfProfessor)
@@ -141,12 +156,19 @@ fun ProfessorScreenComposable(
                         modifier = Modifier.size(28.dp)
                     )
                 }
-                IconButton(onClick = {
-                }) {
-                    Image(
-                        bitmap = notificationBitmap.asImageBitmap(),
-                        contentDescription = "Notifications",
-                        modifier = Modifier.size(28.dp)
+                Box {
+                    IconButton(onClick = {
+                        onEvent(ProfessorEvents.OpenNotificationDialog)
+                    }) {
+                        Image(
+                            bitmap = notificationBitmap.asImageBitmap(),
+                            contentDescription = "Notifications",
+                            modifier = Modifier.size(28.dp)
+                        )
+                    }
+                    NotificationBadgeComposable(
+                        count = state.unreadNotificationsCount,
+                        modifier = Modifier.padding(start = 20.dp, bottom = 20.dp)
                     )
                 }
                 IconButton(onClick = {
@@ -191,7 +213,8 @@ fun ProfessorScreenComposable(
                         .padding(padding),
                     selectedStudentImage = state.selectedStudentFromSearch.image,
                     allTasksByEveryoneWithImage = state.allTasksByProfessorStudent.ifEmpty { state.allTasksByEveryone },
-                    onTaskClick = { taskId -> onEvent(ProfessorEvents.OpenTaskDialog(taskId)) }
+                    onTaskClick = { taskId -> onEvent(ProfessorEvents.OpenTaskDialog(taskId)) },
+                    unreadTaskIds = state.unreadTaskIds
                 )
             }
         }

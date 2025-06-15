@@ -12,7 +12,8 @@ import com.example.edutasker.BaseActivity
 import com.example.edutasker.R
 import com.example.edutasker.composable.errorOrSuccessToast.CustomToastComposable
 import com.example.edutasker.databinding.ActivityBaseBinding
-import com.example.edutasker.di.notificationModule
+import com.example.edutasker.di.notificationActivityModule
+import com.example.edutasker.di.notificationDatabaseModule
 import com.example.edutasker.di.studentModule
 import com.example.edutasker.screens.login.LoginMainActivity
 import com.example.edutasker.screens.student.viewModel.StudentViewModel
@@ -31,14 +32,14 @@ class StudentActivity() : BaseActivity<ActivityBaseBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        loadKoinModules(listOf(notificationModule, studentModule))
+        loadKoinModules(listOf(notificationDatabaseModule, notificationActivityModule, studentModule))
         setNavGraph()
         setUpViewModel()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        unloadKoinModules(listOf(notificationModule, studentModule))
+        unloadKoinModules(listOf(notificationDatabaseModule, notificationActivityModule, studentModule))
     }
 
     private fun setUpViewModel() {

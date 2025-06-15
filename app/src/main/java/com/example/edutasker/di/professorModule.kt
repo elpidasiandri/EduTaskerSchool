@@ -14,7 +14,9 @@ import org.koin.dsl.module
 
 val professorModule = module {
     viewModel {
-        ProfessorViewModel(get(), get(), get(), get(), get(), get(), get(), get())
+        ProfessorViewModel(
+            get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get()
+        )
     }
     single {
         GetAllStudentsOfSpecificProfessorUseCase(get())

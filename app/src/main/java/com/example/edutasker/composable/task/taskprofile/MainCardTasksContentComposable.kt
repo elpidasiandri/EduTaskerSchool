@@ -1,3 +1,4 @@
+
 package com.example.edutasker.composable.task.taskprofile
 
 import androidx.compose.foundation.layout.Arrangement
@@ -24,6 +25,7 @@ fun MainCardTasksContentComposable(
     selectedStudentImage: String,
     allTasksByEveryoneWithImage: List<TasksWithStudentImageModel>,
     onTaskClick: (String) -> Unit,
+    unreadTaskIds: Set<String> = emptySet(),
 ) {
     Row(
         modifier = modifier
