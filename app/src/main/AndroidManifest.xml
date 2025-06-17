@@ -35,5 +35,9 @@
             android:name=".screens.student.StudentActivity"
             android:exported="true"
             android:theme="@style/Theme.EduTasker" />
+        <activity
+            android:name=".screens.notification.NotificationActivity"
+            android:exported="true"
+            android:theme="@style/Theme.EduTasker" />
     </application>
 </manifest>

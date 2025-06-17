@@ -1,4 +1,4 @@
-package com.example.edutasker.composable.notification
+package com.example.edutasker.composable.notification.badge
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box

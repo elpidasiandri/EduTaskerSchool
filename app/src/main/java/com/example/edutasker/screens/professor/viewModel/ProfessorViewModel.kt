@@ -23,8 +23,6 @@ import com.example.edutasker.useCases.student.SearchStudentsUseCase
 import com.example.edutasker.useCases.task.GetAllInfoOfTaskAndBasicOfStudentAndProfessorUseCase
 import com.example.edutasker.useCases.task.updateByProfessor.UpdateTaskByProfessorUseCase
 import com.example.edutasker.useCases.notification.GetUnreadCountForProfessorUseCase
-import com.example.edutasker.useCases.notification.GetAllNotificationsForProfessorUseCase
-import com.example.edutasker.useCases.notification.UpdateNotificationReadableByProfessorUseCase
 import com.example.edutasker.useCases.notification.UpdateNotificationReadableByStudentForTaskUseCase
 import com.example.edutasker.useCases.notification.InsertNotificationUseCase
 import com.example.edutasker.utils.DateHelper
@@ -50,8 +48,6 @@ class ProfessorViewModel(
     private val getAllInfoOfTaskAndBasicOfStudentAndProfessorUseCase: GetAllInfoOfTaskAndBasicOfStudentAndProfessorUseCase,
     private val updateTaskByProfessorUseCase: UpdateTaskByProfessorUseCase,
     private val getUnreadCountForProfessorUseCase: GetUnreadCountForProfessorUseCase,
-    private val getAllNotificationsForProfessorUseCase: GetAllNotificationsForProfessorUseCase,
-    private val updateNotificationReadableByProfessorUseCase: UpdateNotificationReadableByProfessorUseCase,
     private val updateNotificationReadableByStudentForTaskUseCase: UpdateNotificationReadableByStudentForTaskUseCase,
     private val insertNotificationUseCase: InsertNotificationUseCase,
     private val ioDispatcher: CoroutineDispatcher,
@@ -65,8 +61,7 @@ class ProfessorViewModel(
     init {
         listenToLocalItems()
         onEvent(ProfessorEvents.Initialize)
-        // TODO ELPIDA
-        loadNotifications()
+        loadUnreadNotifications()
     }
 
     fun onEvent(event: ProfessorEvents) {
@@ -96,6 +91,14 @@ class ProfessorViewModel(
 
             is ProfessorEvents.OpenTaskDialog -> {
                 getInfoAboutOpenedTask(event.taskId)
+            }
+
+            ProfessorEvents.OpenNotification -> {
+                _state.update {
+                    it.copy(
+                        uiEvents = ProfessorUiEvents.OpenNotification
+                    )
+                }
             }
 
             is ProfessorEvents.WillingToAddTask -> {
@@ -147,31 +150,6 @@ class ProfessorViewModel(
                 }
             }
 
-            ProfessorEvents.OpenNotificationDialog -> {
-                _state.update {
-                    it.copy(
-                        isNotificationDialogVisible = true
-                    )
-                }
-                loadNotifications()
-            }
-
-            ProfessorEvents.CloseNotificationDialog -> {
-                _state.update {
-                    it.copy(
-                        isNotificationDialogVisible = false
-                    )
-                }
-            }
-
-            is ProfessorEvents.MarkNotificationAsRead -> {
-                markNotificationAsRead(event.notificationId)
-            }
-
-            ProfessorEvents.LoadNotifications -> {
-                loadNotifications()
-            }
-
             ProfessorEvents.Logout -> {
                 CurrentUser.setCurrentUserNull()
                 _state.update {
@@ -179,10 +157,6 @@ class ProfessorViewModel(
                         uiEvents = ProfessorUiEvents.GoToLogout
                     )
                 }
-            }
-
-            is ProfessorEvents.GetAllTasksByStudent -> {
-
             }
 
             ProfessorEvents.Initialize -> {
@@ -193,9 +167,9 @@ class ProfessorViewModel(
         }
     }
 
-    private fun loadNotifications() {
+    private fun loadUnreadNotifications() {
         viewModelScope.launch {
-            flow { emit(getUnreadCountForProfessorUseCase(CurrentUser.getCurrentUserId())) }
+            getUnreadCountForProfessorUseCase(CurrentUser.getCurrentUserId())
                 .catchAndHandleError { _, errorCode ->
                     handlingError(errorCode)
                 }.collect { count ->
@@ -203,45 +177,15 @@ class ProfessorViewModel(
                         it.copy(unreadNotificationsCount = count)
                     }
                 }
-
-            flow { emit(getAllNotificationsForProfessorUseCase(CurrentUser.getCurrentUserId())) }
-                .catchAndHandleError { _, errorCode ->
-                    handlingError(errorCode)
-                }.collect { notifications ->
-                    val unreadTaskIds = notifications
-                        .filter { !it.taskDetails.progress.name.equals("DONE", true) }
-                        .map { it.taskDetails.taskId }
-                        .toSet()
-
-                    _state.update {
-                        it.copy(
-                            notifications = notifications,
-                            unreadTaskIds = unreadTaskIds
-                        )
-                    }
-                }
         }
     }
 
-    private fun markNotificationAsRead(notificationId: String) {
-        viewModelScope.launch {
-            flow { emit(updateNotificationReadableByProfessorUseCase(notificationId, true)) }
-                .catchAndHandleError { _, errorCode ->
-                    handlingError(errorCode)
-                }.collect {
-                    loadNotifications()
-                }
-        }
-    }
-// TODO ELPIDA
     private fun updateNotificationForTaskStatusChange(taskId: String) {
         viewModelScope.launch {
             flow { emit(updateNotificationReadableByStudentForTaskUseCase(taskId, false)) }
                 .catchAndHandleError { _, errorCode ->
                     handlingError(errorCode)
-                }.collect {
-                    loadNotifications()
-                }
+                }.collect {}
         }
     }
 
@@ -260,7 +204,6 @@ class ProfessorViewModel(
                 .catchAndHandleError { _, errorCode ->
                     handlingError(errorCode)
                 }.collect {
-                    loadNotifications()
                 }
         }
     }

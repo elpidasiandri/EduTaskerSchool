@@ -1,6 +1,7 @@
 package com.example.edutasker.di
 
 import com.example.edutasker.screens.professor.viewModel.ProfessorViewModel
+import com.example.edutasker.useCases.notification.GetUnreadCountForProfessorUseCase
 import com.example.edutasker.useCases.student.GetAllStudentsOfSpecificProfessorUseCase
 import com.example.edutasker.useCases.professor.GetProfessorTitlesOfSubjectWhichAreSuitableIfExistSelectedStudentUseCase
 import com.example.edutasker.useCases.student.GetNameIdsAndImageOfStudentUseCase
@@ -15,7 +16,17 @@ import org.koin.dsl.module
 val professorModule = module {
     viewModel {
         ProfessorViewModel(
-            get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get()
+            get(),
+            get(),
+            get(),
+            get(),
+            get(),
+            get(),
+            get(),
+            get(),
+            get(),
+            get(),
+            get()
         )
     }
     single {
@@ -33,6 +44,10 @@ val professorModule = module {
     single {
         GetAllInfoOfTaskAndBasicOfStudentAndProfessorUseCase(get())
     }
+    single {
+        GetUnreadCountForProfessorUseCase(get())
+    }
+
     single {
         UpdateTaskByProfessorUseCase(get())
     }

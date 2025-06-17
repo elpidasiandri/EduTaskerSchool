@@ -24,6 +24,7 @@ navigationFragmentKtx = "2.9.0"
 navigationUiKtx = "2.9.0"
 gson = "2.10.1"
 foundation = "1.8.2"
+timber = "5.0.1"
 
 [libraries]
 google-ksp-api = { group = "com.google.devtools.ksp", name = "symbol-processing-api", version.ref = "ksp" }

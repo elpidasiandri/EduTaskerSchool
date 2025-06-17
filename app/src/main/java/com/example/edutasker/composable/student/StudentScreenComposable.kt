@@ -31,8 +31,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.edutasker.R
-import com.example.edutasker.composable.notification.NotificationBadgeComposable
-import com.example.edutasker.composable.notification.NotificationDialogComposable
+import com.example.edutasker.composable.notification.badge.NotificationBadgeComposable
 import com.example.edutasker.composable.student.menu.MenuStudentComposable
 import com.example.edutasker.composable.task.preview.TaskDetailsDialog
 import com.example.edutasker.composable.task.taskprofile.MainCardTasksContentComposable
@@ -47,7 +46,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun StudentScreenComposable(
     onEvent: (StudentEvents) -> Unit,
-    state: StudentState
+    state: StudentState,
 ) {
 
     val context = LocalContext.current
@@ -68,18 +67,6 @@ fun StudentScreenComposable(
             },
             onSaveStatusChange = { taskInfo ->
                 onEvent(StudentEvents.UpdateTask(taskInfo))
-            }
-        )
-    }
-// TODO ELPIDA
-    if (state.isNotificationDialogVisible) {
-        NotificationDialogComposable(
-            notifications = state.notifications,
-            onDismiss = {
-                onEvent(StudentEvents.CloseNotificationDialog)
-            },
-            onNotificationClick = { notificationId ->
-                onEvent(StudentEvents.MarkNotificationAsRead(notificationId))
             }
         )
     }
@@ -123,7 +110,7 @@ fun StudentScreenComposable(
 
                 Box {
                     IconButton(onClick = {
-                        onEvent(StudentEvents.OpenNotificationDialog)
+                        onEvent(StudentEvents.OpenNotification)
                     }) {
                         Image(
                             bitmap = notificationBitmap.asImageBitmap(),

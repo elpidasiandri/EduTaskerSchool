@@ -33,9 +33,10 @@ class LoginMainActivity() : BaseActivity<ActivityBaseBinding>() {
     }
 
     override fun onDestroy() {
-        super.onDestroy()
         unloadKoinModules(loginModule)
+        super.onDestroy()
     }
+
     override fun inflateBinding(): ActivityBaseBinding {
         return ActivityBaseBinding.inflate(layoutInflater)
     }
