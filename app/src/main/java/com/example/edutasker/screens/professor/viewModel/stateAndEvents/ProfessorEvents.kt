@@ -28,6 +28,10 @@ sealed class ProfessorEvents {
     data class GetAllTasksByStudent(val studentId: String) : ProfessorEvents()
     data class UpdateTask(val taskInfo: UpdateTaskByProfessorModel) : ProfessorEvents()
     data class SelectStudentToSeeBacklog(val student: StudentPreviewAsListModel) : ProfessorEvents()
+    data object OpenNotificationDialog : ProfessorEvents()
+    data object CloseNotificationDialog : ProfessorEvents()
+    data class MarkNotificationAsRead(val notificationId: String) : ProfessorEvents()
+    data object LoadNotifications : ProfessorEvents()
     data object None : ProfessorEvents()
 }
 

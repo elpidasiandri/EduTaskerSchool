@@ -71,7 +71,7 @@ fun LoginScreenComposable(
                 .fillMaxSize()
                 .background(Brush.verticalGradient(colors = listOf(LightGray, PurpleGrey40)))
         ) {
-            BubbleBackgroundComposable(bubbleColor = LightGray)
+
             Column(
                 modifier = Modifier
                     .fillMaxWidth()

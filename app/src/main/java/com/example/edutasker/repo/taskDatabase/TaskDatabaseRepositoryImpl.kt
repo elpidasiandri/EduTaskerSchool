@@ -10,7 +10,7 @@ class TaskDatabaseRepositoryImpl(
     private val taskDao: TaskDao,
     private val studentDao: StudentDao,
 ) : ITaskDatabaseRepository {
-    override suspend fun insertTask(task: TaskEntity) {
+    override suspend fun insertTask(task: TaskEntity): String {
         val finalTask = if (task.taskId.isEmpty())
             task.copy(taskId = getNewTaskId(getLastTaskId()))
         else
@@ -20,8 +20,10 @@ class TaskDatabaseRepositoryImpl(
         if (studentExists != 0) {
             if (taskDao.isTaskIdExists(finalTask.taskId) == 0) {
                 taskDao.insertTask(finalTask)
+                return finalTask.taskId
             }
         }
+        return ""
     }
 
     override suspend fun updateTaskByProfessor(taskInfo: UpdateTaskByProfessorModel) {

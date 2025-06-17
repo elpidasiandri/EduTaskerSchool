@@ -106,4 +106,4 @@ To reduce boilerplate code across activities, a reusable abstract class BaseActi
 A utility file has been created under edutasker.utils to organize helpful Kotlin extensions used throughout the app.
 - Compose Click Handling: noRippleClickable. A custom modifier that disables the default ripple effect in Jetpack Compose when an element is clicked.This improves UX in cases where visual click feedback is not desired.
 - Error Handling:catchAndHandleError and showErrorBasedOnErrorCode. The catchAndHandleError catches exceptions and extracts both the error code and message in a structured way. Useful for centralized error processing across use cases and view models.The showErrorBasedOnErrorCode returns known error codes to specific string resource IDs to show relevant and localized error messages to users.
-- Null Safety Extensions:orEmptyIfNull. To reduce repeated null checks and ensure default values
+- Null Safety Extensions:orEmptyIfNull. To reduce repeated null checks and ensure default values.

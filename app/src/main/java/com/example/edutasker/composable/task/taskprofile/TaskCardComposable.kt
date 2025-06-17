@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -35,7 +36,8 @@ import com.example.edutasker.ui.theme.Cream
 
 @Composable
 fun TaskCardComposable(
-    taskWithStudentImage: TasksWithStudentImageModel, studentImage: String,
+    taskWithStudentImage: TasksWithStudentImageModel,
+    studentImage: String,
     onTaskClick: (String) -> Unit,
 ) {
     Card(
@@ -130,4 +132,3 @@ fun TaskCardComposable(
         }
     }
 }
-
