@@ -65,6 +65,7 @@ class ProfessorViewModel(
     init {
         listenToLocalItems()
         onEvent(ProfessorEvents.Initialize)
+        // TODO ELPIDA
         loadNotifications()
     }
 
@@ -232,7 +233,7 @@ class ProfessorViewModel(
                 }
         }
     }
-
+// TODO ELPIDA
     private fun updateNotificationForTaskStatusChange(taskId: String) {
         viewModelScope.launch {
             flow { emit(updateNotificationReadableByStudentForTaskUseCase(taskId, false)) }

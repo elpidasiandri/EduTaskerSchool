@@ -24,8 +24,7 @@ fun MainCardTasksContentComposable(
     modifier: Modifier = Modifier,
     selectedStudentImage: String,
     allTasksByEveryoneWithImage: List<TasksWithStudentImageModel>,
-    onTaskClick: (String) -> Unit,
-    unreadTaskIds: Set<String> = emptySet(),
+    onTaskClick: (String) -> Unit
 ) {
     Row(
         modifier = modifier

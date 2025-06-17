@@ -71,7 +71,7 @@ fun StudentScreenComposable(
             }
         )
     }
-
+// TODO ELPIDA
     if (state.isNotificationDialogVisible) {
         NotificationDialogComposable(
             notifications = state.notifications,

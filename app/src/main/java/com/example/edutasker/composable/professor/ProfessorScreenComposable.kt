@@ -75,7 +75,7 @@ fun ProfessorScreenComposable(
             }
         )
     }
-
+//TODO ELPIDA
     if (state.isNotificationDialogVisible) {
         NotificationDialogComposable(
             notifications = state.notifications,
@@ -214,7 +214,6 @@ fun ProfessorScreenComposable(
                     selectedStudentImage = state.selectedStudentFromSearch.image,
                     allTasksByEveryoneWithImage = state.allTasksByProfessorStudent.ifEmpty { state.allTasksByEveryone },
                     onTaskClick = { taskId -> onEvent(ProfessorEvents.OpenTaskDialog(taskId)) },
-                    unreadTaskIds = state.unreadTaskIds
                 )
             }
         }
