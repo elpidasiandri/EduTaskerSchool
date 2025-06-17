@@ -1,11 +1,12 @@
 package com.example.edutasker.useCases.notification
 
-import com.example.edutasker.repo.notificationDatabase.INotificationDatabaseRepo
+import com.example.edutasker.repo.notificationDatabase.common.INotificationCommonDatabaseRepo
+import kotlinx.coroutines.flow.Flow
 
 class GetUnreadCountForProfessorUseCase(
-    private val repo: INotificationDatabaseRepo
+    private val repo: INotificationCommonDatabaseRepo
 ) {
-    suspend operator fun invoke(professorId: String): Int {
+    suspend operator fun invoke(professorId: String): Flow<Int> {
         return repo.getUnreadCountForProfessor(professorId)
     }
 }

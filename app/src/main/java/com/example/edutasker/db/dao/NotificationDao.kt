@@ -7,13 +7,14 @@ import androidx.room.Query
 import androidx.room.Transaction
 import com.example.edutasker.db.entities.NotificationEntity
 import com.example.edutasker.db.entities.relations.NotificationWithDetails
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface NotificationDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertNotification(notification: NotificationEntity)
 
-    @Query ("SELECT EXISTS(SELECT 1 FROM notifications WHERE notificationId = :notificationId)")
+    @Query("SELECT EXISTS(SELECT 1 FROM notifications WHERE notificationId = :notificationId)")
     suspend fun existsById(notificationId: String): Boolean
 
     @Transaction
@@ -99,7 +100,7 @@ interface NotificationDao {
         AND readableByProfessor = 0
     """
     )
-    suspend fun getUnreadCountForProfessor(professorId: String): Int
+    fun getUnreadCountForProfessor(professorId: String): Flow<Int>
 
     @Query(
         """
@@ -108,7 +109,7 @@ interface NotificationDao {
         AND readableByStudent = 0
     """
     )
-    suspend fun getUnreadCountForStudent(studentId: String): Int
+    fun getUnreadCountForStudent(studentId: String): Flow<Int>
 
     @Transaction
     @Query(

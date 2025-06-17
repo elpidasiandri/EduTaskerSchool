@@ -12,12 +12,10 @@ import com.example.edutasker.model.UpdateTaskByProfessorModel
 import com.example.edutasker.screens.student.viewModel.stateAndEvents.StudentEvents
 import com.example.edutasker.screens.student.viewModel.stateAndEvents.StudentState
 import com.example.edutasker.screens.student.viewModel.stateAndEvents.StudentUiEvents
+import com.example.edutasker.useCases.notification.GetUnreadCountForStudentUseCase
 import com.example.edutasker.useCases.task.GetAllInfoOfTaskAndBasicOfStudentAndProfessorUseCase
 import com.example.edutasker.useCases.task.GetAllTasksByStudentIdUseCase
 import com.example.edutasker.useCases.task.updateByStudent.UpdateTaskByStudentUseCase
-import com.example.edutasker.useCases.notification.GetUnreadCountForStudentUseCase
-import com.example.edutasker.useCases.notification.GetAllNotificationsForStudentUseCase
-import com.example.edutasker.useCases.notification.UpdateNotificationReadableByStudentUseCase
 import com.example.edutasker.useCases.notification.UpdateNotificationReadableByProfessorForTaskUseCase
 import com.example.edutasker.utils.catchAndHandleError
 import com.example.edutasker.utils.showErrorBasedErrorCode
@@ -35,8 +33,6 @@ class StudentViewModel(
     private val getAllInfoOfOpenedTaskUseCase: GetAllInfoOfTaskAndBasicOfStudentAndProfessorUseCase,
     private val updateTaskByStudentUseCase: UpdateTaskByStudentUseCase,
     private val getUnreadCountForStudentUseCase: GetUnreadCountForStudentUseCase,
-    private val getAllNotificationsForStudentUseCase: GetAllNotificationsForStudentUseCase,
-    private val updateNotificationReadableByStudentUseCase: UpdateNotificationReadableByStudentUseCase,
     private val updateNotificationReadableByProfessorForTaskUseCase: UpdateNotificationReadableByProfessorForTaskUseCase,
 ) : ViewModel() {
     private val _state = MutableStateFlow(StudentState())
@@ -44,7 +40,42 @@ class StudentViewModel(
 
     init {
         getLocalTasksOfStudent()
-        loadNotifications()
+        loadUnreadNotifications()
+    }
+
+    fun onEvent(event: StudentEvents) {
+        when (event) {
+            StudentEvents.Logout -> {
+                CurrentUser.setCurrentUserNull()
+                _state.update {
+                    it.copy(
+                        uiEvents = StudentUiEvents.GoToLogout
+                    )
+                }
+            }
+
+            is StudentEvents.OpenTaskDialog -> {
+                getInfoAboutOpenedTask(event.taskId)
+            }
+
+            StudentEvents.CloseTaskDialog -> {
+                closeTaskDialogAndCleaningData()
+            }
+
+            is StudentEvents.UpdateTask -> {
+                updateProgressStatusOfTask(event.taskInfo)
+            }
+
+            StudentEvents.OpenNotification -> {
+                _state.update {
+                    it.copy(
+                        uiEvents = StudentUiEvents.OpenNotification
+                    )
+                }
+            }
+
+            else -> {}
+        }
     }
 
     private fun getLocalTasksOfStudent() {
@@ -72,87 +103,15 @@ class StudentViewModel(
         }
     }
 
-    fun onEvent(event: StudentEvents) {
-        when (event) {
-            StudentEvents.Logout -> {
-                CurrentUser.setCurrentUserNull()
-                _state.update {
-                    it.copy(
-                        uiEvents = StudentUiEvents.GoToLogout
-                    )
-                }
-            }
-
-            is StudentEvents.OpenTaskDialog -> {
-                getInfoAboutOpenedTask(event.taskId)
-            }
-
-            StudentEvents.CloseTaskDialog -> {
-                closeTaskDialogAndCleaningData()
-            }
-
-            is StudentEvents.UpdateTask -> {
-                updateProgressStatusOfTask(event.taskInfo)
-            }
-
-            StudentEvents.OpenNotificationDialog -> {
-                _state.update {
-                    it.copy(
-                        isNotificationDialogVisible = true
-                    )
-                }
-                loadNotifications()
-            }
-
-            StudentEvents.CloseNotificationDialog -> {
-                _state.update {
-                    it.copy(
-                        isNotificationDialogVisible = false
-                    )
-                }
-            }
-
-            is StudentEvents.MarkNotificationAsRead -> {
-                markNotificationAsRead(event.notificationId)
-            }
-
-            StudentEvents.LoadNotifications -> {
-                loadNotifications()
-            }
-
-            else -> {}
-        }
-    }
-
-    private fun loadNotifications() {
+    private fun loadUnreadNotifications() {
         viewModelScope.launch {
-            flow { emit(getUnreadCountForStudentUseCase(CurrentUser.getCurrentUserId())) }
+            getUnreadCountForStudentUseCase(CurrentUser.getCurrentUserId())
                 .catchAndHandleError { _, errorCode ->
                     handlingError(errorCode)
                 }.collect { count ->
                     _state.update {
                         it.copy(unreadNotificationsCount = count)
                     }
-                }
-
-            flow { emit(getAllNotificationsForStudentUseCase(CurrentUser.getCurrentUserId())) }
-                .catchAndHandleError { _, errorCode ->
-                    handlingError(errorCode)
-                }.collect { notifications ->
-                    _state.update {
-                        it.copy(notifications = notifications)
-                    }
-                }
-        }
-    }
-
-    private fun markNotificationAsRead(notificationId: String) {
-        viewModelScope.launch {
-            flow { emit(updateNotificationReadableByStudentUseCase(notificationId, true)) }
-                .catchAndHandleError { _, errorCode ->
-                    handlingError(errorCode)
-                }.collect {
-                    loadNotifications()
                 }
         }
     }
@@ -162,9 +121,7 @@ class StudentViewModel(
             flow { emit(updateNotificationReadableByProfessorForTaskUseCase(taskId, false)) }
                 .catchAndHandleError { _, errorCode ->
                     handlingError(errorCode)
-                }.collect {
-                    loadNotifications()
-                }
+                }.collect {}
         }
     }
 

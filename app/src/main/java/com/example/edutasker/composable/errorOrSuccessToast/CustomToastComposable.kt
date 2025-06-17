@@ -27,11 +27,13 @@ fun CustomToastComposable(
     modifier: Modifier = Modifier,
     position: Alignment = Alignment.BottomCenter,
     duration: Long = 2000L,
+    initializeMessage: (() -> Unit)? = {},
 ) {
     val isVisible = remember { mutableStateOf(true) }
 
     LaunchedEffect(Unit) {
         delay(duration)
+        initializeMessage?.invoke()
         isVisible.value = false
     }
 

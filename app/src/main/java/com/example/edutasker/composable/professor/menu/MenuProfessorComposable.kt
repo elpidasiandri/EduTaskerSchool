@@ -22,23 +22,40 @@ fun MenuProfessorComposable(onEvent: (ProfessorEvents) -> Unit, scaffoldState: S
     val coroutineScope = rememberCoroutineScope()
 
     Column {
-        Text(stringResource(R.string.dashboard), modifier = Modifier.padding(16.dp).noRippleClickable(
-            interactionSource = interactionSource,
-            onClick = {
-                coroutineScope.launch {
-                    scaffoldState.drawerState.close()
-                }
-            }
-        ))
-        Text(stringResource(R.string.add_new_task), modifier = Modifier.padding(16.dp).noRippleClickable(
-            interactionSource = interactionSource,
-            onClick = {
-                onEvent(ProfessorEvents.OpenDialogToAddNewTask)
-                coroutineScope.launch {
-                    scaffoldState.drawerState.close()
-                }
-            }
-        ))
-        Text(stringResource(R.string.notifications), modifier = Modifier.padding(16.dp))
+        Text(
+            stringResource(R.string.dashboard),
+            modifier = Modifier
+                .padding(16.dp)
+                .noRippleClickable(
+                    interactionSource = interactionSource,
+                    onClick = {
+                        coroutineScope.launch {
+                            scaffoldState.drawerState.close()
+                        }
+                    }
+                ))
+        Text(
+            stringResource(R.string.add_new_task),
+            modifier = Modifier
+                .padding(16.dp)
+                .noRippleClickable(
+                    interactionSource = interactionSource,
+                    onClick = {
+                        onEvent(ProfessorEvents.OpenDialogToAddNewTask)
+                        coroutineScope.launch {
+                            scaffoldState.drawerState.close()
+                        }
+                    }
+                ))
+        Text(
+            stringResource(R.string.notifications),
+            modifier = Modifier
+                .padding(16.dp)
+                .noRippleClickable(
+                    interactionSource = interactionSource,
+                    onClick = {
+                        onEvent(ProfessorEvents.OpenNotification)
+                    }
+                ))
     }
 }

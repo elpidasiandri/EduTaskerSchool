@@ -33,7 +33,4 @@ data class ProfessorState(
     ),
     val isTaskOpened: Boolean = false,
     val unreadNotificationsCount: Int = 0,
-    val notifications: List<NotificationsDetails> = listOf(),
-    val isNotificationDialogVisible: Boolean = false,
-    val unreadTaskIds: Set<String> = emptySet()
 )

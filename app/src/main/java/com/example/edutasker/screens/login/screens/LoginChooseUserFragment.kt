@@ -1,5 +1,6 @@
 package com.example.edutasker.screens.login.screens
 
+import LoginChooseUserComposable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +12,6 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.example.edutasker.R
-import com.example.edutasker.composable.login.LoginChooseUserComposable
 import com.example.edutasker.screens.login.viewModelState.LoginScreenViewModel
 import com.example.edutasker.screens.login.viewModelState.stateAndEvents.LoginUiEvents
 import org.koin.androidx.viewmodel.ext.android.activityViewModel

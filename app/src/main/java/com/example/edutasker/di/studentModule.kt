@@ -11,16 +11,17 @@ import org.koin.dsl.module
 
 val studentModule = module {
     viewModel {
-        StudentViewModel(get(), get(), get(), get(), get(), get(), get(), get())
+        StudentViewModel(get(), get(), get(), get(), get(), get())
     }
     single {
         GetAllTasksByStudentIdUseCase(get())
     }
     single<CoroutineDispatcher> { Dispatchers.IO }
-    single {
-        GetAllInfoOfTaskAndBasicOfStudentAndProfessorUseCase(get())
-    }
+
     single {
         UpdateTaskByStudentUseCase(get())
+    }
+    single {
+        GetAllInfoOfTaskAndBasicOfStudentAndProfessorUseCase(get())
     }
 }

@@ -1,8 +1,11 @@
 package com.example.edutasker.screens.student
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.key
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -12,11 +15,12 @@ import com.example.edutasker.BaseActivity
 import com.example.edutasker.R
 import com.example.edutasker.composable.errorOrSuccessToast.CustomToastComposable
 import com.example.edutasker.databinding.ActivityBaseBinding
-import com.example.edutasker.di.notificationActivityModule
-import com.example.edutasker.di.notificationDatabaseModule
+import com.example.edutasker.di.notificationCommonModule
 import com.example.edutasker.di.studentModule
 import com.example.edutasker.screens.login.LoginMainActivity
+import com.example.edutasker.screens.notification.NotificationActivity
 import com.example.edutasker.screens.student.viewModel.StudentViewModel
+import com.example.edutasker.screens.student.viewModel.stateAndEvents.StudentEvents
 import com.example.edutasker.screens.student.viewModel.stateAndEvents.StudentUiEvents
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -25,6 +29,7 @@ import org.koin.core.context.unloadKoinModules
 
 class StudentActivity() : BaseActivity<ActivityBaseBinding>() {
     private val viewModel: StudentViewModel by viewModel()
+    private lateinit var notificationLauncher: ActivityResultLauncher<Intent>
 
     override fun inflateBinding(): ActivityBaseBinding {
         return ActivityBaseBinding.inflate(layoutInflater)
@@ -32,14 +37,27 @@ class StudentActivity() : BaseActivity<ActivityBaseBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        loadKoinModules(listOf(notificationDatabaseModule, notificationActivityModule, studentModule))
+        loadKoinModules(listOf(notificationCommonModule, studentModule))
+        setUpLauncher()
         setNavGraph()
         setUpViewModel()
     }
 
+    private fun setUpLauncher() {
+        notificationLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                if (result.resultCode == Activity.RESULT_OK) {
+                    val taskId = result.data?.getStringExtra("taskId")
+                    taskId?.let { taskIdNotNull ->
+                        viewModel.onEvent(StudentEvents.OpenTaskDialog(taskIdNotNull))
+                    }
+                }
+            }
+    }
+
     override fun onDestroy() {
         super.onDestroy()
-        unloadKoinModules(listOf(notificationDatabaseModule, notificationActivityModule, studentModule))
+        unloadKoinModules(listOf(notificationCommonModule, studentModule))
     }
 
     private fun setUpViewModel() {
@@ -55,6 +73,13 @@ class StudentActivity() : BaseActivity<ActivityBaseBinding>() {
                         StudentUiEvents.Error -> {
                             showMessage(state.messageErrorId, isError = true)
 
+                        }
+
+                        StudentUiEvents.OpenNotification -> {
+                            val intent =
+                                Intent(this@StudentActivity, NotificationActivity::class.java)
+                            notificationLauncher.launch(intent)
+                            viewModel.setEventNone()
                         }
 
                         StudentUiEvents.Success -> {

@@ -1,6 +1,5 @@
 package com.example.edutasker.screens.student.viewModel.stateAndEvents
 
-import com.example.edutasker.model.NotificationsDetails
 import com.example.edutasker.model.OpenedTaskModel
 import com.example.edutasker.model.ProfessorBasicModel
 import com.example.edutasker.model.StudentPreviewAsListModel
@@ -17,6 +16,4 @@ data class StudentState(
         ProfessorBasicModel()
     ),
     val unreadNotificationsCount: Int = 0,
-    val notifications: List<NotificationsDetails> = listOf(),
-    val isNotificationDialogVisible: Boolean = false,
 )

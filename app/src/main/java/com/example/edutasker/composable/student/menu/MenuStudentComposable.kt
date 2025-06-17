@@ -1,5 +1,6 @@
 package com.example.edutasker.composable.student.menu
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -34,6 +35,10 @@ fun MenuStudentComposable(onEvent: (StudentEvents) -> Unit, scaffoldState: Scaff
                         }
                     }
                 ))
-        Text(stringResource(R.string.notifications), modifier = Modifier.padding(16.dp))
+        Text(
+            stringResource(R.string.notifications),
+            modifier = Modifier
+                .padding(16.dp)
+                .clickable { onEvent(StudentEvents.OpenNotification) })
     }
 }

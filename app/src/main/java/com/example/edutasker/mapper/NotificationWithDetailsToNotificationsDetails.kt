@@ -30,6 +30,8 @@ fun NotificationWithDetails.toNotificationsDetails(): NotificationsDetails {
             studentId = this.student.studentId,
             username = "${this.student.username} ${this.student.name}",
             image = this.student.image
-        )
+        ),
+        readableByProfessor = notification.readableByProfessor,
+        readableByStudent = notification.readableByStudent
     )
 }
