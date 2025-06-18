@@ -5,10 +5,10 @@ import androidx.lifecycle.viewModelScope
 import com.example.edutasker.mockData.CurrentUser
 import com.example.edutasker.screens.notification.viewModel.viewModelAndStaet.NotificationEvents
 import com.example.edutasker.screens.notification.viewModel.viewModelAndStaet.NotificationState
-import com.example.edutasker.useCases.notification.GetAllNotificationsForProfessorUseCase
-import com.example.edutasker.useCases.notification.GetAllNotificationsForStudentUseCase
-import com.example.edutasker.useCases.notification.UpdateNotificationReadableByProfessorUseCase
-import com.example.edutasker.useCases.notification.UpdateNotificationReadableByStudentUseCase
+import com.example.edutasker.useCases.notification.view.GetAllNotificationsForProfessorUseCase
+import com.example.edutasker.useCases.notification.view.GetAllNotificationsForStudentUseCase
+import com.example.edutasker.useCases.notification.view.UpdateNotificationReadableByProfessorUseCase
+import com.example.edutasker.useCases.notification.view.UpdateNotificationReadableByStudentUseCase
 import com.example.edutasker.utils.catchAndHandleError
 import com.example.edutasker.utils.showErrorBasedErrorCode
 import kotlinx.coroutines.flow.MutableStateFlow

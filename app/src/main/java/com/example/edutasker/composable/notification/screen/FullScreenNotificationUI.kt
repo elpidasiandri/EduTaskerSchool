@@ -47,7 +47,7 @@ fun FullScreenNotificationUI(
             .fillMaxWidth(0.95f)
             .fillMaxHeight()
             .background(Cream, shape = RoundedCornerShape(16.dp))
-            .padding(top = 20.dp, bottom = 20.dp)
+            .padding( 20.dp)
     ) {
         Column(modifier = Modifier.fillMaxSize()) {
             Row(

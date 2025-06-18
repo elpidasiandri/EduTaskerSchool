@@ -1,7 +1,7 @@
-package com.example.edutasker.useCases.notification
+package com.example.edutasker.useCases.notification.view
 
 import com.example.edutasker.model.NotificationsDetails
-import com.example.edutasker.repo.notificationDatabase.INotificationDatabaseRepo
+import com.example.edutasker.repo.notificationDatabase.view.INotificationDatabaseRepo
 
 class GetAllNotificationsForProfessorUseCase(
     private val repo: INotificationDatabaseRepo

@@ -49,7 +49,7 @@ fun NotificationItemComposable(
     ) {
         Column(
             modifier = Modifier
-                .background(Color.White)
+                .background(if ((CurrentUser.getCurrentUserIfIsStudent() && !notification.readableByStudent) || (!CurrentUser.getCurrentUserIfIsStudent() && !notification.readableByProfessor)) PurpleGrey40 else Color.White)
                 .padding(16.dp)
         ) {
             Row(

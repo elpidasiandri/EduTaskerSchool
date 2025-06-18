@@ -12,11 +12,11 @@ import com.example.edutasker.model.UpdateTaskByProfessorModel
 import com.example.edutasker.screens.student.viewModel.stateAndEvents.StudentEvents
 import com.example.edutasker.screens.student.viewModel.stateAndEvents.StudentState
 import com.example.edutasker.screens.student.viewModel.stateAndEvents.StudentUiEvents
-import com.example.edutasker.useCases.notification.GetUnreadCountForStudentUseCase
+import com.example.edutasker.useCases.notification.common.GetUnreadCountForStudentUseCase
 import com.example.edutasker.useCases.task.GetAllInfoOfTaskAndBasicOfStudentAndProfessorUseCase
 import com.example.edutasker.useCases.task.GetAllTasksByStudentIdUseCase
 import com.example.edutasker.useCases.task.updateByStudent.UpdateTaskByStudentUseCase
-import com.example.edutasker.useCases.notification.UpdateNotificationReadableByProfessorForTaskUseCase
+import com.example.edutasker.useCases.notification.common.UpdateNotificationReadableByProfessorForTaskUseCase
 import com.example.edutasker.utils.catchAndHandleError
 import com.example.edutasker.utils.showErrorBasedErrorCode
 import kotlinx.coroutines.CoroutineDispatcher

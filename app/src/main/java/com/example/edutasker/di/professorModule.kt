@@ -1,7 +1,7 @@
 package com.example.edutasker.di
 
 import com.example.edutasker.screens.professor.viewModel.ProfessorViewModel
-import com.example.edutasker.useCases.notification.GetUnreadCountForProfessorUseCase
+import com.example.edutasker.useCases.notification.common.GetUnreadCountForProfessorUseCase
 import com.example.edutasker.useCases.student.GetAllStudentsOfSpecificProfessorUseCase
 import com.example.edutasker.useCases.professor.GetProfessorTitlesOfSubjectWhichAreSuitableIfExistSelectedStudentUseCase
 import com.example.edutasker.useCases.student.GetNameIdsAndImageOfStudentUseCase
