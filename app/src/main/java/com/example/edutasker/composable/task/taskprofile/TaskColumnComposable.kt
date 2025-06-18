@@ -57,7 +57,7 @@ fun TaskColumnComposable(
                 items(tasks) { task ->
                     TaskCardComposable(
                         taskWithStudentImage = task,
-                        studentImage = selectedStudentImage,
+                        studentImage = selectedStudentImage.ifEmpty { task.studentImage },
                         onTaskClick = { taskId -> onTaskClick(taskId) }
                     )
                 }
