@@ -11,13 +11,6 @@ class NotificationCommonDatabaseRepoImpl(
         return notificationDao.getUnreadCountForStudent(studentId)
     }
 
-    override suspend fun updateNotificationReadableByStudent(
-        notificationId: String,
-        isRead: Boolean,
-    ) {
-        notificationDao.updateNotificationReadableByStudent(notificationId, isRead)
-    }
-
     override suspend fun updateNotificationReadableByProfessorForTask(
         taskId: String,
         isRead: Boolean,
