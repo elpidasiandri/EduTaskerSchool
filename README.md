@@ -118,3 +118,9 @@ A utility file has been created under edutasker.utils to organize helpful Kotlin
 - Compose Click Handling: noRippleClickable. A custom modifier that disables the default ripple effect in Jetpack Compose when an element is clicked.This improves UX in cases where visual click feedback is not desired.
 - Error Handling:catchAndHandleError and showErrorBasedOnErrorCode. The catchAndHandleError catches exceptions and extracts both the error code and message in a structured way. Useful for centralized error processing across use cases and view models.The showErrorBasedOnErrorCode returns known error codes to specific string resource IDs to show relevant and localized error messages to users.
 - Null Safety Extensions:orEmptyIfNull. To reduce repeated null checks and ensure default values.
+
+  
+
+https://github.com/user-attachments/assets/b0625eec-680c-4b32-88ce-7c76769814eb
+
+
