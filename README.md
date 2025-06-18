@@ -11,11 +11,13 @@ This app facilitates a task management system where:
      - Search users on search bar
      - Filter students on dashboard to see the progress of their tasks
      - Tap notification icon to see the notifications of tasks
+     - Tap on  a notification and redirects to task
      - Tap on exit icon to go to login
 - Students can:
      - View their assigned tasks
      - Update the progress status of each task
      - Tap notification icon to see the notifications of tasks
+     - Tap on  a notification and redirects to task
      - Tap on exit icon to go to login
 > ⚠️ Note: This project uses mock data. You can view all user credentials and related data in the edutasker.mockData file.
 To login suggested users:
@@ -39,6 +41,9 @@ student -> maria@mail.com and password 1234
 * composable # composable files
     * errorOrSuccessToast  # Error message component
     * login         # login ui
+    * notification  $notification ui
+        *  badge #badge icon
+        *  screen
     * professor  # professor ui
         * arrowWithStudents #arrow with all students (when the user taps on icon of student, the student's tasks appear)
         * assignTask #tapping on add icon, which is on bottom bar, professor can create a task
@@ -61,7 +66,9 @@ student -> maria@mail.com and password 1234
 * mockdata
 * model  # Domain models
 * repositories
-    * notificationDatabase    
+    * notificationDatabase
+        * common #reusable from other screens
+        * view
     * professorDatabase   
     * relationsDatabase
     * studentDatabase
@@ -70,7 +77,9 @@ student -> maria@mail.com and password 1234
     * login  
         * screens
         * viewModelState
-    * notification    
+    * notification
+        * viewModel
+           * viewModelAndState
     * professor   
         * screens
         * viewModel
@@ -79,7 +88,9 @@ student -> maria@mail.com and password 1234
         * viewModel
 * uiTheme
 * useCases
-    * notification     
+    * notification
+        * common
+        * view 
     * professor   
     * student
     * task
@@ -107,3 +118,9 @@ A utility file has been created under edutasker.utils to organize helpful Kotlin
 - Compose Click Handling: noRippleClickable. A custom modifier that disables the default ripple effect in Jetpack Compose when an element is clicked.This improves UX in cases where visual click feedback is not desired.
 - Error Handling:catchAndHandleError and showErrorBasedOnErrorCode. The catchAndHandleError catches exceptions and extracts both the error code and message in a structured way. Useful for centralized error processing across use cases and view models.The showErrorBasedOnErrorCode returns known error codes to specific string resource IDs to show relevant and localized error messages to users.
 - Null Safety Extensions:orEmptyIfNull. To reduce repeated null checks and ensure default values.
+
+  
+
+https://github.com/user-attachments/assets/b0625eec-680c-4b32-88ce-7c76769814eb
+
+
