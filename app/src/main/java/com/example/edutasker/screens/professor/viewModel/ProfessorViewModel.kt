@@ -22,9 +22,9 @@ import com.example.edutasker.useCases.student.GetNameIdsAndImageOfStudentUseCase
 import com.example.edutasker.useCases.student.SearchStudentsUseCase
 import com.example.edutasker.useCases.task.GetAllInfoOfTaskAndBasicOfStudentAndProfessorUseCase
 import com.example.edutasker.useCases.task.updateByProfessor.UpdateTaskByProfessorUseCase
-import com.example.edutasker.useCases.notification.GetUnreadCountForProfessorUseCase
-import com.example.edutasker.useCases.notification.UpdateNotificationReadableByStudentForTaskUseCase
-import com.example.edutasker.useCases.notification.InsertNotificationUseCase
+import com.example.edutasker.useCases.notification.common.GetUnreadCountForProfessorUseCase
+import com.example.edutasker.useCases.notification.common.UpdateNotificationReadableByStudentForTaskUseCase
+import com.example.edutasker.useCases.notification.common.InsertNotificationUseCase
 import com.example.edutasker.utils.DateHelper
 import com.example.edutasker.utils.catchAndHandleError
 import com.example.edutasker.utils.showErrorBasedErrorCode

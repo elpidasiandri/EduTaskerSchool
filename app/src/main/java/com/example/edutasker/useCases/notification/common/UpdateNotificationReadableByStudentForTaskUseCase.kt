@@ -1,4 +1,4 @@
-package com.example.edutasker.useCases.notification
+package com.example.edutasker.useCases.notification.common
 
 import com.example.edutasker.repo.notificationDatabase.common.INotificationCommonDatabaseRepo
 

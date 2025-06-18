@@ -1,4 +1,4 @@
-package com.example.edutasker.repo.notificationDatabase
+package com.example.edutasker.repo.notificationDatabase.view
 
 import com.example.edutasker.db.dao.NotificationDao
 import com.example.edutasker.mapper.toNotificationsDetails
@@ -15,18 +15,6 @@ class NotificationDatabaseRepoImpl(
         notificationDao.updateNotificationReadableByProfessor(notificationId, isRead)
     }
 
-    override suspend fun getUnreadNotificationsForProfessor(professorId: String): List<NotificationsDetails> {
-        return notificationDao.getUnreadNotificationsForProfessor(professorId).map {
-            it.toNotificationsDetails()
-        }
-    }
-
-    override suspend fun getUnreadNotificationsForStudent(studentId: String): List<NotificationsDetails> {
-        return notificationDao.getUnreadNotificationsForStudent(studentId).map {
-            it.toNotificationsDetails()
-        }
-    }
-
     override suspend fun getAllNotificationsForProfessor(professorId: String): List<NotificationsDetails> {
         return notificationDao.getAllNotificationsForProfessor(professorId).map {
             it.toNotificationsDetails()
@@ -37,5 +25,12 @@ class NotificationDatabaseRepoImpl(
         return notificationDao.getAllNotificationsForStudent(studentId).map {
             it.toNotificationsDetails()
         }
+    }
+
+    override suspend fun updateNotificationReadableByStudent(
+        notificationId: String,
+        isRead: Boolean,
+    ) {
+        notificationDao.updateNotificationReadableByStudent(notificationId, isRead)
     }
 }

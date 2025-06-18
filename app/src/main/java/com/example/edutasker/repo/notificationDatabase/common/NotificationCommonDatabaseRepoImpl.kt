@@ -5,17 +5,10 @@ import com.example.edutasker.db.entities.NotificationEntity
 import kotlinx.coroutines.flow.Flow
 
 class NotificationCommonDatabaseRepoImpl(
-    private val notificationDao: NotificationDao
+    private val notificationDao: NotificationDao,
 ) : INotificationCommonDatabaseRepo {
     override suspend fun getUnreadCountForStudent(studentId: String): Flow<Int> {
         return notificationDao.getUnreadCountForStudent(studentId)
-    }
-
-    override suspend fun updateNotificationReadableByStudent(
-        notificationId: String,
-        isRead: Boolean,
-    ) {
-        notificationDao.updateNotificationReadableByStudent(notificationId, isRead)
     }
 
     override suspend fun updateNotificationReadableByProfessorForTask(
@@ -53,6 +46,7 @@ class NotificationCommonDatabaseRepoImpl(
             "n${number + 1}"
         }
     }
+
     override suspend fun getUnreadCountForProfessor(professorId: String): Flow<Int> {
         return notificationDao.getUnreadCountForProfessor(professorId)
     }

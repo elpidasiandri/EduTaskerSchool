@@ -42,14 +42,11 @@ fun NotificationItemComposable(
             .fillMaxWidth()
             .clickable { onClick() },
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
-        shape = RoundedCornerShape(8.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = if ((CurrentUser.getCurrentUserIfIsStudent() && !notification.readableByStudent) || (!CurrentUser.getCurrentUserIfIsStudent() && !notification.readableByProfessor)) PurpleGrey40 else Color.White
-        )
+        shape = RoundedCornerShape(8.dp)
     ) {
         Column(
             modifier = Modifier
-                .background(Color.White)
+                .background(if ((CurrentUser.getCurrentUserIfIsStudent() && !notification.readableByStudent) || (!CurrentUser.getCurrentUserIfIsStudent() && !notification.readableByProfessor)) PurpleGrey40 else Color.White)
                 .padding(16.dp)
         ) {
             Row(

@@ -2,8 +2,8 @@ package com.example.edutasker.di
 
 import androidx.room.Room
 import com.example.edutasker.db.dao.EduTaskerDatabase
-import com.example.edutasker.repo.notificationDatabase.INotificationDatabaseRepo
-import com.example.edutasker.repo.notificationDatabase.NotificationDatabaseRepoImpl
+import com.example.edutasker.repo.notificationDatabase.view.INotificationDatabaseRepo
+import com.example.edutasker.repo.notificationDatabase.view.NotificationDatabaseRepoImpl
 import com.example.edutasker.repo.relationsDatabase.DatabaseRepositoryImpl
 import com.example.edutasker.repo.relationsDatabase.IDatabaseRepository
 import com.example.edutasker.repo.professorDatabase.IProfessorDatabaseRepository
@@ -47,9 +47,6 @@ val databaseModule = module {
     }
     single<IStudentDatabaseRepository> {
         StudentDatabaseRepositoryImpl(get())
-    }
-    single<INotificationDatabaseRepo> {
-        NotificationDatabaseRepoImpl(get())
     }
     single<IProfessorDatabaseRepository> {
         ProfessorDatabaseRepositoryImpl(get(), get())
