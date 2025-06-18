@@ -1,6 +1,5 @@
 package com.example.edutasker.screens.professor.viewModel.stateAndEvents
 
-import com.example.edutasker.model.NotificationsDetails
 import com.example.edutasker.model.OpenedTaskModel
 import com.example.edutasker.model.ProfessorBasicModel
 import com.example.edutasker.model.StudentPreviewAsListModel

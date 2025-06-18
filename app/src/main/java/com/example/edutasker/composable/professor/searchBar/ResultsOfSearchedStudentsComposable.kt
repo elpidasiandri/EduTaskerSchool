@@ -27,6 +27,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import com.example.edutasker.R
+import androidx.compose.ui.platform.LocalFocusManager
 
 @Composable
 fun ResultsOfSearchedStudentsComposable(
@@ -34,6 +35,7 @@ fun ResultsOfSearchedStudentsComposable(
     keyword: String,
     selectStudent: (StudentPreviewAsListModel) -> Unit,
 ) {
+    val focusManager = LocalFocusManager.current
     if (searchedStudents.isNotEmpty()) {
         LazyColumn(
             modifier = Modifier
@@ -46,6 +48,7 @@ fun ResultsOfSearchedStudentsComposable(
                     modifier = Modifier
                         .fillMaxWidth()
                         .clickable {
+                            focusManager.clearFocus(force = true)
                             selectStudent(student)
                         }
                         .padding(8.dp),
