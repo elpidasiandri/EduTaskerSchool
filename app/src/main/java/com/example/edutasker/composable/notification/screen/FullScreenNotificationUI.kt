@@ -47,7 +47,7 @@ fun FullScreenNotificationUI(
             .fillMaxWidth(0.95f)
             .fillMaxHeight()
             .background(Cream, shape = RoundedCornerShape(16.dp))
-            .padding( 20.dp)
+            .padding(20.dp)
     ) {
         Column(modifier = Modifier.fillMaxSize()) {
             Row(
@@ -88,9 +88,7 @@ fun FullScreenNotificationUI(
                         NotificationItemComposable(
                             notification = notification,
                             onClick = {
-                                if (CurrentUser.getCurrentUserIfIsStudent() && !notification.readableByStudent) {
-                                    onNotificationClick(notification.notificationId)
-                                } else if (!CurrentUser.getCurrentUserIfIsStudent() && !notification.readableByProfessor) {
+                                if ((CurrentUser.getCurrentUserIfIsStudent() && !notification.readableByStudent) || (!CurrentUser.getCurrentUserIfIsStudent() && !notification.readableByProfessor)) {
                                     onNotificationClick(notification.notificationId)
                                 }
                                 openTask(notification.taskDetails.taskId)
