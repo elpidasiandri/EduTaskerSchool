@@ -57,7 +57,7 @@ fun NotificationItemComposable(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 AsyncImage(
-                    model = notification.professorDetails.image.ifEmpty { R.raw.professoravatar },
+                    model = if (CurrentUser.getCurrentUserIfIsStudent()) notification.professorDetails.image.ifEmpty { R.raw.professoravatar } else notification.studentBasic.image.ifEmpty { R.raw.studentavatar },
                     contentDescription = null,
                     modifier = Modifier
                         .size(40.dp)
